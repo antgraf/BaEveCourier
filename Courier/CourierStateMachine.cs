@@ -27,6 +27,10 @@ namespace Courier
 
 		private Timer pHeartBeat = new Timer(pHeartBeatInterval);
 
+		public CourierStateMachine()
+			: this(new IdleState())
+		{}
+
 		public CourierStateMachine(EveCourierState initialState)
 			: base(initialState)
 		{

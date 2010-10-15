@@ -34,6 +34,12 @@
     <Reference Include="ExecutionActors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BA\Bin\ExecutionActors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\nunit.framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -55,9 +61,13 @@
     <Compile Include="States\IdleState.cs" />
     <Compile Include="States\SleepState.cs" />
     <Compile Include="States\WorkState.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Transitions\" />
+    <Compile Include="Tests\CourierStateMachineTest.cs" />
+    <Compile Include="Transitions\IdleSleepTransition.cs" />
+    <Compile Include="Transitions\IdleWorkTransition.cs" />
+    <Compile Include="Transitions\SleepIdleTransition.cs" />
+    <Compile Include="Transitions\SleepWorkTransition.cs" />
+    <Compile Include="Transitions\WorkIdleTransition.cs" />
+    <Compile Include="Transitions\WorkSleepTransition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
