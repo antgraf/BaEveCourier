@@ -36,6 +36,10 @@
       <HintPath>..\..\BA\Bin\ExecutionActors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Logger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BA\Bin\Logger.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\nunit.framework.dll</HintPath>
@@ -45,6 +49,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,23 +59,49 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowEntity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BA\Bin\WindowEntity.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CourierActor.cs" />
     <Compile Include="CourierPlugin.cs" />
+    <Compile Include="CourierSettings.cs" />
     <Compile Include="CourierStateMachine.cs" />
+    <Compile Include="Eve.cs" />
+    <Compile Include="Exceptions\CannotLaunchProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="States\CharacterSelectState.cs" />
+    <Compile Include="States\DoCourierMissionsState.cs" />
     <Compile Include="States\EveCourierState.cs" />
     <Compile Include="States\IdleState.cs" />
+    <Compile Include="States\InitializationState.cs" />
+    <Compile Include="States\LaunchGameState.cs" />
+    <Compile Include="States\LoginState.cs" />
     <Compile Include="States\SleepState.cs" />
     <Compile Include="States\WorkState.cs" />
     <Compile Include="Tests\CourierStateMachineTest.cs" />
     <Compile Include="Transitions\IdleSleepTransition.cs" />
     <Compile Include="Transitions\IdleWorkTransition.cs" />
+    <Compile Include="Transitions\InitializationDoCourierMissionsTransition.cs" />
+    <Compile Include="Transitions\LaunchLoginTransition.cs" />
+    <Compile Include="Transitions\LoginSelectCharacterTransition.cs" />
     <Compile Include="Transitions\SleepIdleTransition.cs" />
     <Compile Include="Transitions\SleepWorkTransition.cs" />
     <Compile Include="Transitions\WorkIdleTransition.cs" />
     <Compile Include="Transitions\WorkSleepTransition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

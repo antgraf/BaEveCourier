@@ -12,5 +12,13 @@ namespace Courier.States
 		{
 			pStateMachineId = CourierStateMachine.Id;
 		}
+
+		protected static CourierStateMachine pMachine
+		{
+			get
+			{
+				return (CourierStateMachine)StateMachine.GetInstance(CourierStateMachine.Id);
+			}
+		}
 	}
 }

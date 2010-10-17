@@ -12,6 +12,7 @@ namespace Courier.States
 		{
 			pTransitions.Add(new WorkIdleTransition());
 			pTransitions.Add(new WorkSleepTransition());
+			pCurrentSubState = new InitializationState();
 		}
 	}
 }

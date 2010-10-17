@@ -12,15 +12,21 @@ namespace Courier
 		public CourierPlugin()
 		{
 			pPluginName = "Eve Courier BA plug-in";
-			pActor = ActorsMan.NewActor(typeof(CourierActor), this);
+			// TODO check if already exists
+			pActor = ActorsMan.NewActor(typeof(CourierActor), this, this);
 		}
 
 		public override void ShowUI()
 		{
-			if(MessageBox.Show("NOT IMPLEMENTED\r\nStart worker?", "TODO", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)
-				== DialogResult.Yes)
+			SettingsForm form = new SettingsForm(this);
+			form.ShowDialog();
+			if(form.Result == SettingsFormResult.Run)
 			{
 				Run();
+			}
+			else if(form.Result == SettingsFormResult.Setup)
+			{
+				throw new NotImplementedException();
 			}
 		}
 	}

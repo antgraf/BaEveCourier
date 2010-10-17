@@ -13,5 +13,10 @@ namespace Courier.States
 			pTransitions.Add(new SleepIdleTransition());
 			pTransitions.Add(new SleepWorkTransition());
 		}
+
+		public override void Enter()
+		{
+			pMachine.Eve.Close();
+		}
 	}
 }
