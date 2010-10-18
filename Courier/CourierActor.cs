@@ -22,6 +22,8 @@ namespace Courier
 			pObserver.Notify(this, "Start", 100, "Eve Courier actor started");
 			CourierStateMachine machine = (CourierStateMachine)StateMachine.GetInstance(CourierStateMachine.Id);
 			machine.Eve.PathToEve = (string)pPlugin.Settings[CourierSettings.Path];
+			machine.Eve.Login = (string)pPlugin.Settings[CourierSettings.Login];
+			machine.Eve.Password = (string)pPlugin.Settings[CourierSettings.Password];
 			// TODO: transfer other settings
 			machine.HandleEvent(CourierEvents.Start);
 			pObserver.Notify(this, "End", 100, "Eve Courier actor returned");

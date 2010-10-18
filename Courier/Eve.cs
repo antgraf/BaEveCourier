@@ -25,6 +25,8 @@ namespace Courier
 		private Process pEveProcess = null;
 		private FileLogger pLogger = null;
 		private string pPathToEve = null;
+		private string pLogin = null;
+		private string pPassword = null;
 
 		public Eve(FileLogger logger)
 		{
@@ -75,47 +77,93 @@ namespace Courier
 			}
 		}
 
+		private void LaunchApplication(string pathToEve)
+		{
+			pEveProcess = WindowsMan.RunProcess(pathToEve);
+			if(pEveProcess == null)
+			{
+				throw new CannotLaunchProcessException(pathToEve);
+			}
+			pEveWindow = WindowsMan.WaitAndAttachTo(pEveProcessName, pWindowWaitTime, pWindowWaitInterval, pWindowWaitAttempts);
+			if(pEveWindow == null)
+			{
+				throw new CannotLaunchProcessException(pEveProcessName);
+			}
+		}
+
+		private void SkipSplashAndAttach()
+		{
+			int attempts = pWindowWaitAttempts;
+			if(pEveWindow.Width < pMinWindowWidth)
+			{
+				System.Threading.ManualResetEvent wait = new System.Threading.ManualResetEvent(false);
+				Timer timer = new Timer(pWindowWaitInterval * 1000);
+				timer.AutoReset = true;
+				timer.Elapsed += delegate(object sender, ElapsedEventArgs e)
+				{
+					if(attempts-- <= 0)
+					{
+						timer.Stop();
+						wait.Set();
+					}
+					pEveWindow = WindowsMan.UpdateWindow(pEveWindow);
+					if(pEveWindow != null && pEveWindow.Width > pMinWindowWidth)
+					{
+						timer.Stop();
+						wait.Set();
+					}
+				};
+				timer.Start();
+				wait.WaitOne();
+			}
+			if(pEveWindow == null || pEveWindow.Width < pMinWindowWidth)
+			{
+				throw new CannotLaunchProcessException(string.Format("Eve window not found. Attempts remain: {0}", attempts));
+			}
+		}
+
+		private bool CheckLoginScreen()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void EraseLogin()
+		{
+			// POINT: login field
+			Coordinate login_pt = new Coordinate(
+				new StretchedPoint() { X = 0.451456310679612, Y = 0.896595208070618 });
+			pEveWindow.LeftClick(login_pt);
+			// TODO
+			throw new NotImplementedException();
+		}
+
 		public bool Launch(string pathToEve)
 		{
 			try
 			{
-				pEveProcess = WindowsMan.RunProcess(pathToEve);
-				if(pEveProcess == null)
+				LaunchApplication(pathToEve);
+				SkipSplashAndAttach();
+			}
+			catch(Exception ex)
+			{
+				Log(ex.ToString());
+				CleanUp();
+				return false;
+			}
+			return true;
+		}
+
+		public bool DoLogin(string login, string password)
+		{
+			try
+			{
+				if(!CheckLoginScreen())
 				{
-					throw new CannotLaunchProcess(pathToEve);
+					throw new CannotFindLoginScreenException();
 				}
-				pEveWindow = WindowsMan.WaitAndAttachTo(pEveProcessName, pWindowWaitTime, pWindowWaitInterval, pWindowWaitAttempts);
-				if(pEveWindow == null)
-				{
-					throw new CannotLaunchProcess(pEveProcessName);
-				}
-				int attempts = pWindowWaitAttempts;
-				if(pEveWindow.Width < pMinWindowWidth)
-				{
-					System.Threading.ManualResetEvent wait = new System.Threading.ManualResetEvent(false);
-					Timer timer = new Timer(pWindowWaitInterval * 1000);
-					timer.AutoReset = true;
-					timer.Elapsed += delegate(object sender, ElapsedEventArgs e)
-					{
-						if(attempts-- <= 0)
-						{
-							timer.Stop();
-							wait.Set();
-						}
-						pEveWindow = WindowsMan.UpdateWindow(pEveWindow);
-						if(pEveWindow != null && pEveWindow.Width > pMinWindowWidth)
-						{
-							timer.Stop();
-							wait.Set();
-						}
-					};
-					timer.Start();
-					wait.WaitOne();
-				}
-				if(pEveWindow == null || pEveWindow.Width < pMinWindowWidth)
-				{
-					throw new CannotLaunchProcess(string.Format("Eve window not found. Attempts remain: {0}", attempts));
-				}
+				EraseLogin();
+				// TODO
+				throw new NotImplementedException();
 			}
 			catch(Exception ex)
 			{
@@ -143,6 +191,18 @@ namespace Courier
 		{
 			get { return pPathToEve; }
 			set { pPathToEve = value; }
+		}
+
+		public string Login
+		{
+			get { return pLogin; }
+			set { pLogin = value; }
+		}
+
+		public string Password
+		{
+			get { return pPassword; }
+			set { pPassword = value; }
 		}
 	}
 }

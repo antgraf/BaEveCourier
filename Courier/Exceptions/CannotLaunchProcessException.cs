@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Courier.Exceptions
 {
-	public class CannotLaunchProcess : ApplicationException
+	public class CannotLaunchProcessException : ApplicationException
 	{
-		public CannotLaunchProcess()
+		public CannotLaunchProcessException()
 			: base()
 		{}
 
-		public CannotLaunchProcess(string path)
+		public CannotLaunchProcessException(string path)
 			: base(path)
 		{}
 	}

@@ -70,7 +70,8 @@
     <Compile Include="CourierSettings.cs" />
     <Compile Include="CourierStateMachine.cs" />
     <Compile Include="Eve.cs" />
-    <Compile Include="Exceptions\CannotLaunchProcess.cs" />
+    <Compile Include="Exceptions\CannotFindLoginScreenException.cs" />
+    <Compile Include="Exceptions\CannotLaunchProcessException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>

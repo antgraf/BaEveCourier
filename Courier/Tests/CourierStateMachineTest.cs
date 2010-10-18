@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Courier.States;
+using ExecutionActors;
 
 namespace Courier.Tests
 {
@@ -14,6 +15,7 @@ namespace Courier.Tests
 		public void HighLevelStatesTest()
 		{
 			CourierStateMachine m = new CourierStateMachine();
+			StateMachine.Register(CourierStateMachine.Id, m);
 			Assert.NotNull(m);
 			Assert.AreEqual(typeof(IdleState), m.CurrentSubState.GetType());
 			m.HandleEvent(CourierEvents.Start);
