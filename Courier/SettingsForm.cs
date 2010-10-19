@@ -39,6 +39,7 @@ namespace Courier
 			pPlugin.Settings[CourierSettings.Path] = txtPath.Text;
 			pPlugin.Settings[CourierSettings.Login] = txtLogin.Text;
 			pPlugin.Settings[CourierSettings.Password] = txtPassword.Text;
+			pPlugin.Settings[CourierSettings.Position] = (CharacterPosition)cmbPosition.SelectedIndex;
 			pPlugin.SaveSettings();
 		}
 
@@ -51,6 +52,8 @@ namespace Courier
 				(string)pPlugin.Settings[CourierSettings.Login] : CourierSettings.DefaultLogin;
 			txtPassword.Text = pPlugin.Settings.ContainsKey(CourierSettings.Password) ?
 				(string)pPlugin.Settings[CourierSettings.Password] : CourierSettings.DefaultPassword;
+			cmbPosition.SelectedIndex = pPlugin.Settings.ContainsKey(CourierSettings.Position) ?
+				(int)pPlugin.Settings[CourierSettings.Position] : (int)CourierSettings.DefaultPosition;
 		}
 
 		private void Return(SettingsFormResult result)

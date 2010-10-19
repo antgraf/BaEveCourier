@@ -29,32 +29,36 @@
 		private void InitializeComponent()
 		{
 			this.menuMain = new System.Windows.Forms.MenuStrip();
+			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusBar = new System.Windows.Forms.StatusStrip();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabSettings = new System.Windows.Forms.TabPage();
+			this.grpLogin = new System.Windows.Forms.GroupBox();
+			this.txtPassword = new System.Windows.Forms.MaskedTextBox();
+			this.btnBrowse = new System.Windows.Forms.Button();
+			this.txtLogin = new System.Windows.Forms.TextBox();
+			this.txtPath = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.btnSetup = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnStart = new System.Windows.Forms.Button();
-			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.grpLogin = new System.Windows.Forms.GroupBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.txtPath = new System.Windows.Forms.TextBox();
-			this.txtLogin = new System.Windows.Forms.TextBox();
-			this.btnBrowse = new System.Windows.Forms.Button();
-			this.txtPassword = new System.Windows.Forms.MaskedTextBox();
 			this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
+			this.grpCharacter = new System.Windows.Forms.GroupBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.cmbPosition = new System.Windows.Forms.ComboBox();
 			this.menuMain.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabSettings.SuspendLayout();
 			this.grpLogin.SuspendLayout();
+			this.grpCharacter.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuMain
@@ -67,6 +71,59 @@
 			this.menuMain.Name = "menuMain";
 			this.menuMain.Size = new System.Drawing.Size(632, 24);
 			this.menuMain.TabIndex = 0;
+			// 
+			// fileToolStripMenuItem
+			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+			this.fileToolStripMenuItem.Text = "&File";
+			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+			this.exitToolStripMenuItem.Text = "E&xit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			// 
+			// settingsToolStripMenuItem
+			// 
+			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setupToolStripMenuItem,
+            this.saveToolStripMenuItem});
+			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+			this.settingsToolStripMenuItem.Text = "&Settings";
+			// 
+			// setupToolStripMenuItem
+			// 
+			this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
+			this.setupToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+			this.setupToolStripMenuItem.Text = "Set&up";
+			this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
+			// 
+			// saveToolStripMenuItem
+			// 
+			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+			this.saveToolStripMenuItem.Text = "Sa&ve";
+			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.helpToolStripMenuItem.Text = "&Help";
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.aboutToolStripMenuItem.Text = "&About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// statusBar
 			// 
@@ -87,6 +144,7 @@
 			// 
 			// tabSettings
 			// 
+			this.tabSettings.Controls.Add(this.grpCharacter);
 			this.tabSettings.Controls.Add(this.grpLogin);
 			this.tabSettings.Location = new System.Drawing.Point(4, 22);
 			this.tabSettings.Name = "tabSettings";
@@ -95,6 +153,81 @@
 			this.tabSettings.TabIndex = 0;
 			this.tabSettings.Text = "Settings";
 			this.tabSettings.UseVisualStyleBackColor = true;
+			// 
+			// grpLogin
+			// 
+			this.grpLogin.Controls.Add(this.txtPassword);
+			this.grpLogin.Controls.Add(this.btnBrowse);
+			this.grpLogin.Controls.Add(this.txtLogin);
+			this.grpLogin.Controls.Add(this.txtPath);
+			this.grpLogin.Controls.Add(this.label3);
+			this.grpLogin.Controls.Add(this.label2);
+			this.grpLogin.Controls.Add(this.label1);
+			this.grpLogin.Location = new System.Drawing.Point(8, 6);
+			this.grpLogin.Name = "grpLogin";
+			this.grpLogin.Size = new System.Drawing.Size(279, 139);
+			this.grpLogin.TabIndex = 0;
+			this.grpLogin.TabStop = false;
+			this.grpLogin.Text = "Login information";
+			// 
+			// txtPassword
+			// 
+			this.txtPassword.Location = new System.Drawing.Point(9, 110);
+			this.txtPassword.Name = "txtPassword";
+			this.txtPassword.PasswordChar = '*';
+			this.txtPassword.Size = new System.Drawing.Size(264, 20);
+			this.txtPassword.TabIndex = 6;
+			// 
+			// btnBrowse
+			// 
+			this.btnBrowse.Location = new System.Drawing.Point(246, 32);
+			this.btnBrowse.Name = "btnBrowse";
+			this.btnBrowse.Size = new System.Drawing.Size(27, 20);
+			this.btnBrowse.TabIndex = 4;
+			this.btnBrowse.Text = "...";
+			this.btnBrowse.UseVisualStyleBackColor = true;
+			this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+			// 
+			// txtLogin
+			// 
+			this.txtLogin.Location = new System.Drawing.Point(9, 71);
+			this.txtLogin.Name = "txtLogin";
+			this.txtLogin.Size = new System.Drawing.Size(264, 20);
+			this.txtLogin.TabIndex = 5;
+			// 
+			// txtPath
+			// 
+			this.txtPath.Location = new System.Drawing.Point(9, 32);
+			this.txtPath.Name = "txtPath";
+			this.txtPath.Size = new System.Drawing.Size(236, 20);
+			this.txtPath.TabIndex = 3;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(6, 94);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(56, 13);
+			this.label3.TabIndex = 2;
+			this.label3.Text = "Password:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 55);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(36, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Login:";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 16);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(85, 13);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Path to eve.exe:";
 			// 
 			// btnSetup
 			// 
@@ -126,138 +259,42 @@
 			this.btnStart.UseVisualStyleBackColor = true;
 			this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
 			// 
-			// fileToolStripMenuItem
-			// 
-			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem});
-			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
-			this.fileToolStripMenuItem.Text = "&File";
-			// 
-			// settingsToolStripMenuItem
-			// 
-			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.setupToolStripMenuItem,
-            this.saveToolStripMenuItem});
-			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-			this.settingsToolStripMenuItem.Text = "&Settings";
-			// 
-			// helpToolStripMenuItem
-			// 
-			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-			this.helpToolStripMenuItem.Text = "&Help";
-			// 
-			// aboutToolStripMenuItem
-			// 
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.aboutToolStripMenuItem.Text = "&About";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-			// 
-			// exitToolStripMenuItem
-			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.exitToolStripMenuItem.Text = "E&xit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-			// 
-			// setupToolStripMenuItem
-			// 
-			this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
-			this.setupToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.setupToolStripMenuItem.Text = "Set&up";
-			this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
-			// 
-			// saveToolStripMenuItem
-			// 
-			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.saveToolStripMenuItem.Text = "Sa&ve";
-			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-			// 
-			// grpLogin
-			// 
-			this.grpLogin.Controls.Add(this.txtPassword);
-			this.grpLogin.Controls.Add(this.btnBrowse);
-			this.grpLogin.Controls.Add(this.txtLogin);
-			this.grpLogin.Controls.Add(this.txtPath);
-			this.grpLogin.Controls.Add(this.label3);
-			this.grpLogin.Controls.Add(this.label2);
-			this.grpLogin.Controls.Add(this.label1);
-			this.grpLogin.Location = new System.Drawing.Point(8, 6);
-			this.grpLogin.Name = "grpLogin";
-			this.grpLogin.Size = new System.Drawing.Size(279, 139);
-			this.grpLogin.TabIndex = 0;
-			this.grpLogin.TabStop = false;
-			this.grpLogin.Text = "Login information";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 16);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(85, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Path to eve.exe:";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(6, 55);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(36, 13);
-			this.label2.TabIndex = 1;
-			this.label2.Text = "Login:";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 94);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(56, 13);
-			this.label3.TabIndex = 2;
-			this.label3.Text = "Password:";
-			// 
-			// txtPath
-			// 
-			this.txtPath.Location = new System.Drawing.Point(9, 32);
-			this.txtPath.Name = "txtPath";
-			this.txtPath.Size = new System.Drawing.Size(236, 20);
-			this.txtPath.TabIndex = 3;
-			// 
-			// txtLogin
-			// 
-			this.txtLogin.Location = new System.Drawing.Point(9, 71);
-			this.txtLogin.Name = "txtLogin";
-			this.txtLogin.Size = new System.Drawing.Size(264, 20);
-			this.txtLogin.TabIndex = 5;
-			// 
-			// btnBrowse
-			// 
-			this.btnBrowse.Location = new System.Drawing.Point(246, 32);
-			this.btnBrowse.Name = "btnBrowse";
-			this.btnBrowse.Size = new System.Drawing.Size(27, 20);
-			this.btnBrowse.TabIndex = 4;
-			this.btnBrowse.Text = "...";
-			this.btnBrowse.UseVisualStyleBackColor = true;
-			this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-			// 
-			// txtPassword
-			// 
-			this.txtPassword.Location = new System.Drawing.Point(9, 110);
-			this.txtPassword.Name = "txtPassword";
-			this.txtPassword.PasswordChar = '*';
-			this.txtPassword.Size = new System.Drawing.Size(264, 20);
-			this.txtPassword.TabIndex = 6;
-			// 
 			// dlgOpen
 			// 
 			this.dlgOpen.FileName = "eve.exe";
 			this.dlgOpen.Filter = "Eve|eve.exe";
+			// 
+			// grpCharacter
+			// 
+			this.grpCharacter.Controls.Add(this.cmbPosition);
+			this.grpCharacter.Controls.Add(this.label4);
+			this.grpCharacter.Location = new System.Drawing.Point(8, 151);
+			this.grpCharacter.Name = "grpCharacter";
+			this.grpCharacter.Size = new System.Drawing.Size(279, 100);
+			this.grpCharacter.TabIndex = 1;
+			this.grpCharacter.TabStop = false;
+			this.grpCharacter.Text = "Character";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 16);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(47, 13);
+			this.label4.TabIndex = 0;
+			this.label4.Text = "Position:";
+			// 
+			// cmbPosition
+			// 
+			this.cmbPosition.FormattingEnabled = true;
+			this.cmbPosition.Items.AddRange(new object[] {
+            "Main",
+            "Left",
+            "Right"});
+			this.cmbPosition.Location = new System.Drawing.Point(9, 32);
+			this.cmbPosition.Name = "cmbPosition";
+			this.cmbPosition.Size = new System.Drawing.Size(264, 21);
+			this.cmbPosition.TabIndex = 1;
 			// 
 			// SettingsForm
 			// 
@@ -281,6 +318,8 @@
 			this.tabSettings.ResumeLayout(false);
 			this.grpLogin.ResumeLayout(false);
 			this.grpLogin.PerformLayout();
+			this.grpCharacter.ResumeLayout(false);
+			this.grpCharacter.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -311,5 +350,8 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.MaskedTextBox txtPassword;
 		private System.Windows.Forms.OpenFileDialog dlgOpen;
+		private System.Windows.Forms.GroupBox grpCharacter;
+		private System.Windows.Forms.ComboBox cmbPosition;
+		private System.Windows.Forms.Label label4;
 	}
 }

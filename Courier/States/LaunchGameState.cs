@@ -15,6 +15,7 @@ namespace Courier.States
 
 		public override void Enter()
 		{
+			pMachine.LogAndDisplay("LaunchGameState", "Enter");
 			if(pMachine.Eve.Launch(pMachine.Eve.PathToEve))
 			{
 				pMachine.HandleEvent(CourierEvents.EveLaunched);

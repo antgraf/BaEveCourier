@@ -6,14 +6,14 @@ using ExecutionActors;
 
 namespace Courier
 {
-	class CourierActor : Actor
+	class CourierActor : Actor, IMessageHandler
 	{
 		protected CourierPlugin pPlugin = null;
 
 		protected override void Init(object data)
 		{
 			pPlugin = (CourierPlugin)data;
-			StateMachine.Register(CourierStateMachine.Id, new CourierStateMachine(pLog));
+			StateMachine.Register(CourierStateMachine.Id, new CourierStateMachine(pLog, this));
 			pObserver.Notify(this, "Initialization", 100, "Eve Courier actor initialized");
 		}
 
@@ -24,9 +24,19 @@ namespace Courier
 			machine.Eve.PathToEve = (string)pPlugin.Settings[CourierSettings.Path];
 			machine.Eve.Login = (string)pPlugin.Settings[CourierSettings.Login];
 			machine.Eve.Password = (string)pPlugin.Settings[CourierSettings.Password];
+			machine.Eve.Position = (CharacterPosition)pPlugin.Settings[CourierSettings.Position];
 			// TODO: transfer other settings
 			machine.HandleEvent(CourierEvents.Start);
 			pObserver.Notify(this, "End", 100, "Eve Courier actor returned");
 		}
+
+		#region IMessageHandler Members
+
+		public void SendMessage(string stage, string msg)
+		{
+			pObserver.Notify(this, stage, 0, msg);
+		}
+
+		#endregion
 	}
 }

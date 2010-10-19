@@ -7,10 +7,18 @@ using WindowEntity;
 using System.Diagnostics;
 using Logger;
 using Courier.Exceptions;
+using System.Drawing;
 
 namespace Courier
 {
-	public class Eve
+	public enum CharacterPosition
+	{
+		Main = 0,
+		Left = 1,
+		Right = 2
+	}
+
+	public partial class Eve
 	{
 		private const int pCommonTimeout = 15 * 1000;	// milliseconds
 		private const int pMinWindowWidth = 1000;
@@ -18,52 +26,43 @@ namespace Courier
 		private const int pWindowWaitTime = 15;	// seconds
 		private const int pWindowWaitInterval = 5;	// seconds
 		private const int pWindowWaitAttempts = 5;
+		private const int pRandomWaitTime = (int)0.75 * 1000;
+		private const int pRandomWaitDelta = 35;
+
+		private const string pImageStatusOk = "Images/status_ok.png";
+		private const string pImageSkull = "Images/skull.png";
 
 		private Window pEveWindow = null;
 		private Timer pTimeOut = new Timer();
 		private bool pTimedOut = false;
 		private Process pEveProcess = null;
-		private FileLogger pLogger = null;
+		private IMessageHandler pMessager = null;
 		private string pPathToEve = null;
 		private string pLogin = null;
 		private string pPassword = null;
+		private CharacterPosition pPosition = CharacterPosition.Main;
 
-		public Eve(FileLogger logger)
+		public Eve(IMessageHandler messager)
 		{
-			pLogger = logger;
+			pMessager = messager;
 			pTimeOut.AutoReset = false;
 			pTimeOut.Interval = pCommonTimeout;
 			pTimeOut.Elapsed += new ElapsedEventHandler(pTimeOut_Elapsed);
 		}
 
-		public void Log(string msg)
+		public void Log(string stage, string msg)
 		{
-			if(pLogger != null)
+			if(pMessager != null)
 			{
-				pLogger.Log(msg);
+				pMessager.SendMessage(stage, msg);
 			}
-		}
-
-		private void StartTimer()
-		{
-			pTimedOut = false;
-			pTimeOut.Start();
-		}
-
-		private void StopTimer()
-		{
-			pTimeOut.Stop();
-		}
-
-		private void pTimeOut_Elapsed(object sender, ElapsedEventArgs e)
-		{
-			pTimedOut = true;
 		}
 
 		public void CleanUp()
 		{
 			if(pEveWindow != null)
 			{
+				Log("CleanUp", "Close window");
 				pEveWindow.Close();
 				pEveWindow = null;
 			}
@@ -71,82 +70,27 @@ namespace Courier
 			{
 				if(!pEveProcess.HasExited)
 				{
+					Log("CleanUp", "Kill process");
 					pEveProcess.Kill();
 				}
 				pEveProcess = null;
 			}
-		}
-
-		private void LaunchApplication(string pathToEve)
-		{
-			pEveProcess = WindowsMan.RunProcess(pathToEve);
-			if(pEveProcess == null)
-			{
-				throw new CannotLaunchProcessException(pathToEve);
-			}
-			pEveWindow = WindowsMan.WaitAndAttachTo(pEveProcessName, pWindowWaitTime, pWindowWaitInterval, pWindowWaitAttempts);
-			if(pEveWindow == null)
-			{
-				throw new CannotLaunchProcessException(pEveProcessName);
-			}
-		}
-
-		private void SkipSplashAndAttach()
-		{
-			int attempts = pWindowWaitAttempts;
-			if(pEveWindow.Width < pMinWindowWidth)
-			{
-				System.Threading.ManualResetEvent wait = new System.Threading.ManualResetEvent(false);
-				Timer timer = new Timer(pWindowWaitInterval * 1000);
-				timer.AutoReset = true;
-				timer.Elapsed += delegate(object sender, ElapsedEventArgs e)
-				{
-					if(attempts-- <= 0)
-					{
-						timer.Stop();
-						wait.Set();
-					}
-					pEveWindow = WindowsMan.UpdateWindow(pEveWindow);
-					if(pEveWindow != null && pEveWindow.Width > pMinWindowWidth)
-					{
-						timer.Stop();
-						wait.Set();
-					}
-				};
-				timer.Start();
-				wait.WaitOne();
-			}
-			if(pEveWindow == null || pEveWindow.Width < pMinWindowWidth)
-			{
-				throw new CannotLaunchProcessException(string.Format("Eve window not found. Attempts remain: {0}", attempts));
-			}
-		}
-
-		private bool CheckLoginScreen()
-		{
-			throw new NotImplementedException();
-		}
-
-		private void EraseLogin()
-		{
-			// POINT: login field
-			Coordinate login_pt = new Coordinate(
-				new StretchedPoint() { X = 0.451456310679612, Y = 0.896595208070618 });
-			pEveWindow.LeftClick(login_pt);
-			// TODO
-			throw new NotImplementedException();
+			Log("CleanUp", "Complete");
 		}
 
 		public bool Launch(string pathToEve)
 		{
 			try
 			{
+				Log("Launch", "LaunchApplication");
 				LaunchApplication(pathToEve);
+				Log("Launch", "SkipSplashAndAttach");
 				SkipSplashAndAttach();
+				Log("Launch", "Complete");
 			}
 			catch(Exception ex)
 			{
-				Log(ex.ToString());
+				Log("Launch", ex.ToString());
 				CleanUp();
 				return false;
 			}
@@ -155,30 +99,74 @@ namespace Courier
 
 		public bool DoLogin(string login, string password)
 		{
+			bool ok = false;
 			try
 			{
+				// wait for login screen loads
+				Log("DoLogin", "CheckLoginScreen");
 				if(!CheckLoginScreen())
 				{
-					throw new CannotFindLoginScreenException();
+					Log("DoLogin", "CheckLoginScreen again");
+					pEveWindow.Wait(pWindowWaitInterval * 1000);
+					if(!CheckLoginScreen())
+					{
+						Log("DoLogin", "Cannot find login screen");
+						throw new CannotFindLoginScreenException();
+					}
 				}
+				// enter login / pass
+				Log("DoLogin", "EraseLogin");
 				EraseLogin();
-				// TODO
-				throw new NotImplementedException();
+				Log("DoLogin", "EnterLoginPassword");
+				EnterLoginPassword(login, password);
+				// check login success
+				pEveWindow.Wait(pWindowWaitInterval * 1000);
+				Log("DoLogin", "CheckLoginError");
+				ok = CheckLoginError();
+				for(int i = 0; i < pWindowWaitAttempts && !ok; i++)
+				{
+					pEveWindow.Wait(pWindowWaitInterval * 1000);
+					Log("DoLogin", "CheckLoginError " + i.ToString());
+					ok = CheckLoginError();
+				}
 			}
 			catch(Exception ex)
 			{
-				Log(ex.ToString());
+				Log("DoLogin", ex.ToString());
 				CleanUp();
-				return false;
 			}
-			return true;
+			Log("DoLogin", "Complete");
+			return ok;
+		}
+
+		public bool SelectCharacter()
+		{
+			bool ok = false;
+			try
+			{
+				Log("SelectCharacter", "ClickCharacter");
+				ClickCharacter(pPosition);
+				Log("SelectCharacter", "EnterGame");
+				EnterGame();
+			}
+			catch(Exception ex)
+			{
+				Log("SelectCharacter", ex.ToString());
+				CleanUp();
+			}
+			Log("SelectCharacter", "Complete");
+			return ok;
 		}
 
 		public void Close()
 		{
-			bool makeCompilerHappy = pTimedOut;
-			// TODO
-			throw new NotImplementedException();
+			Log("Close", "Click \"cross\" button");
+			// POINT: close button
+			Coordinate close_pt = new Coordinate(
+				new StretchedPoint() { X = 0.329126213592233, Y = 0.66078184110971 });
+			pEveWindow.LeftClick(close_pt);	// click "cross" button
+			// TODO: any confirmations?
+			Log("Close", "Complete");
 		}
 
 		public Window EveWindow
@@ -203,6 +191,12 @@ namespace Courier
 		{
 			get { return pPassword; }
 			set { pPassword = value; }
+		}
+
+		public CharacterPosition Position
+		{
+			get { return pPosition; }
+			set { pPosition = value; }
 		}
 	}
 }

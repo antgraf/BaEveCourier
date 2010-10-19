@@ -12,9 +12,11 @@ namespace Courier
 		public const string Path = "Path";
 		public const string Login = "Login";
 		public const string Password = "Password";
+		public const string Position = "Position";
 
 		public const string DefaultPath = @"C:\Program Files\CCP\EVE\eve.exe";
 		public const string DefaultLogin = "";
 		public const string DefaultPassword = "";
+		public const CharacterPosition DefaultPosition = CharacterPosition.Main;
 	}
 }

@@ -16,6 +16,7 @@ namespace Courier.States
 
 		public override void Enter()
 		{
+			pMachine.LogAndDisplay("SleepState", "Enter");
 			pMachine.Eve.Close();
 		}
 	}
