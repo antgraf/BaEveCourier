@@ -18,7 +18,7 @@ namespace Courier.States
 			pMachine.LogAndDisplay("LoginState", "Enter");
 			if(pMachine.Eve.DoLogin(pMachine.Eve.Login, pMachine.Eve.Password))
 			{
-				pMachine.HandleEvent(CourierEvents.EveLaunched);
+				pMachine.HandleEvent(CourierEvents.LoggedIn);
 			}
 			else
 			{

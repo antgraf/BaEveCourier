@@ -8,6 +8,8 @@ using System.Diagnostics;
 using Logger;
 using Courier.Exceptions;
 using System.Drawing;
+using System.IO;
+using BACommon;
 
 namespace Courier
 {
@@ -26,8 +28,10 @@ namespace Courier
 		private const int pWindowWaitTime = 15;	// seconds
 		private const int pWindowWaitInterval = 5;	// seconds
 		private const int pWindowWaitAttempts = 5;
-		private const int pRandomWaitTime = (int)0.75 * 1000;
+		private const int pRandomWaitTime = (int)(0.75 * 1000);
 		private const int pRandomWaitDelta = 35;
+		private const string pDebugFolder = "Debug";
+		private const string pImageExtension = ".png";
 
 		private const string pImageStatusOk = "Images/status_ok.png";
 		private const string pImageSkull = "Images/skull.png";
@@ -55,6 +59,22 @@ namespace Courier
 			if(pMessager != null)
 			{
 				pMessager.SendMessage(stage, msg);
+			}
+		}
+
+		private void SaveDebugImage(Bitmap image)
+		{
+			if(Debug)
+			{
+				try
+				{
+					string filename = FileUtils.MakeValidFileName(DateTime.Now.ToString() + Guid.NewGuid()) + pImageExtension;
+					image.Save(FileUtils.CombineWinPath(pDebugFolder, filename));
+				}
+				catch(Exception ex)
+				{
+					Log("SaveDebugImage", ex.ToString());
+				}
 			}
 		}
 
@@ -197,6 +217,14 @@ namespace Courier
 		{
 			get { return pPosition; }
 			set { pPosition = value; }
+		}
+
+		public bool Debug
+		{
+			get
+			{
+				return Directory.Exists(pDebugFolder);
+			}
 		}
 	}
 }

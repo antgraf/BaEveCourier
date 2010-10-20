@@ -83,8 +83,10 @@ namespace Courier
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.614563106796116, Y = 0.904161412358134 });
 			Bitmap status_check = pEveWindow.Screenshot(tl_pt, br_pt);
+			SaveDebugImage(status_check);
 			Bitmap status_ok = new Bitmap(pImageStatusOk);
-			Coordinate result = pEveWindow.FindImageExactly(status_check, status_ok);	// check image
+			pEveWindow.AllowedColorDeviation = 6;	// sqrt(3^2 + 3^2 + 3^2) < 5.2
+			Coordinate result = pEveWindow.FindImageWithColorDeviation(status_check, status_ok);	// check image
 			return result != null;
 		}
 
@@ -100,7 +102,9 @@ namespace Courier
 				new StretchedPoint() { X = 0.451456310679612, Y = 0.896595208070618 });
 			pEveWindow.LeftClick(login_pt);	// go to login field
 			WaitRandom();
-			pEveWindow.KeySendAndWait("^a");	// select all
+			pEveWindow.CtrlKeyDown();
+			pEveWindow.KeySendAndWait("a");	// select all
+			pEveWindow.CtrlKeyUp();
 			pEveWindow.KeySendAndWait("{DEL}");	// delete
 		}
 
@@ -121,6 +125,7 @@ namespace Courier
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.355339805825243, Y = 0.692307692307692 });
 			Bitmap skull_check = pEveWindow.Screenshot(tl_pt, br_pt);
+			SaveDebugImage(skull_check);
 			Bitmap skull = new Bitmap(pImageSkull);
 			Coordinate result = pEveWindow.FindImageExactly(skull_check, skull);	// check image
 			return result != null;
