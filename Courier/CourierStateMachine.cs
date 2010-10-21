@@ -13,6 +13,7 @@ namespace Courier
 {
 	public enum CourierEvents
 	{
+		Idle,
 		Start,
 		End,
 		GoToFinalState,
