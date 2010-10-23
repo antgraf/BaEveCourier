@@ -25,6 +25,9 @@ namespace Courier
 			machine.Eve.Login = (string)pPlugin.Settings[CourierSettings.Login];
 			machine.Eve.Password = (string)pPlugin.Settings[CourierSettings.Password];
 			machine.Eve.Position = (CharacterPosition)pPlugin.Settings[CourierSettings.Position];
+			machine.Eve.Agents = (List<string>)pPlugin.Settings[CourierSettings.Agents];
+			machine.Eve.CurrentAgent = (string)pPlugin.Settings[CourierSettings.CurrentAgent];
+			machine.Eve.CircleAgents = (bool)pPlugin.Settings[CourierSettings.CircleAgents];
 			// TODO: transfer other settings
 			machine.HandleEvent(CourierEvents.Start);
 			pObserver.Notify(this, "End", 100, "Eve Courier actor returned");

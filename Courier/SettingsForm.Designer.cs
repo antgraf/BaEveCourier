@@ -39,6 +39,9 @@
 			this.statusBar = new System.Windows.Forms.StatusStrip();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabSettings = new System.Windows.Forms.TabPage();
+			this.grpCharacter = new System.Windows.Forms.GroupBox();
+			this.cmbPosition = new System.Windows.Forms.ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.grpLogin = new System.Windows.Forms.GroupBox();
 			this.txtPassword = new System.Windows.Forms.MaskedTextBox();
 			this.btnBrowse = new System.Windows.Forms.Button();
@@ -51,14 +54,23 @@
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnStart = new System.Windows.Forms.Button();
 			this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
-			this.grpCharacter = new System.Windows.Forms.GroupBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.cmbPosition = new System.Windows.Forms.ComboBox();
+			this.tabMissions = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.lstAgents = new System.Windows.Forms.ListBox();
+			this.txtAgent = new System.Windows.Forms.TextBox();
+			this.btnAdd = new System.Windows.Forms.Button();
+			this.btnRemove = new System.Windows.Forms.Button();
+			this.label6 = new System.Windows.Forms.Label();
+			this.txtCurrentAgent = new System.Windows.Forms.TextBox();
+			this.chkCircleAgents = new System.Windows.Forms.CheckBox();
 			this.menuMain.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabSettings.SuspendLayout();
-			this.grpLogin.SuspendLayout();
 			this.grpCharacter.SuspendLayout();
+			this.grpLogin.SuspendLayout();
+			this.tabMissions.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuMain
@@ -135,6 +147,7 @@
 			// tabControl
 			// 
 			this.tabControl.Controls.Add(this.tabSettings);
+			this.tabControl.Controls.Add(this.tabMissions);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tabControl.Location = new System.Drawing.Point(0, 24);
 			this.tabControl.Name = "tabControl";
@@ -153,6 +166,38 @@
 			this.tabSettings.TabIndex = 0;
 			this.tabSettings.Text = "Settings";
 			this.tabSettings.UseVisualStyleBackColor = true;
+			// 
+			// grpCharacter
+			// 
+			this.grpCharacter.Controls.Add(this.cmbPosition);
+			this.grpCharacter.Controls.Add(this.label4);
+			this.grpCharacter.Location = new System.Drawing.Point(8, 151);
+			this.grpCharacter.Name = "grpCharacter";
+			this.grpCharacter.Size = new System.Drawing.Size(279, 63);
+			this.grpCharacter.TabIndex = 1;
+			this.grpCharacter.TabStop = false;
+			this.grpCharacter.Text = "Character";
+			// 
+			// cmbPosition
+			// 
+			this.cmbPosition.FormattingEnabled = true;
+			this.cmbPosition.Items.AddRange(new object[] {
+            "Main",
+            "Left",
+            "Right"});
+			this.cmbPosition.Location = new System.Drawing.Point(9, 32);
+			this.cmbPosition.Name = "cmbPosition";
+			this.cmbPosition.Size = new System.Drawing.Size(264, 21);
+			this.cmbPosition.TabIndex = 1;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(6, 16);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(47, 13);
+			this.label4.TabIndex = 0;
+			this.label4.Text = "Position:";
 			// 
 			// grpLogin
 			// 
@@ -264,37 +309,102 @@
 			this.dlgOpen.FileName = "eve.exe";
 			this.dlgOpen.Filter = "Eve|eve.exe";
 			// 
-			// grpCharacter
+			// tabMissions
 			// 
-			this.grpCharacter.Controls.Add(this.cmbPosition);
-			this.grpCharacter.Controls.Add(this.label4);
-			this.grpCharacter.Location = new System.Drawing.Point(8, 151);
-			this.grpCharacter.Name = "grpCharacter";
-			this.grpCharacter.Size = new System.Drawing.Size(279, 100);
-			this.grpCharacter.TabIndex = 1;
-			this.grpCharacter.TabStop = false;
-			this.grpCharacter.Text = "Character";
+			this.tabMissions.Controls.Add(this.groupBox1);
+			this.tabMissions.Location = new System.Drawing.Point(4, 22);
+			this.tabMissions.Name = "tabMissions";
+			this.tabMissions.Size = new System.Drawing.Size(624, 341);
+			this.tabMissions.TabIndex = 1;
+			this.tabMissions.Text = "Missions";
+			this.tabMissions.UseVisualStyleBackColor = true;
 			// 
-			// label4
+			// groupBox1
 			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(6, 16);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(47, 13);
-			this.label4.TabIndex = 0;
-			this.label4.Text = "Position:";
+			this.groupBox1.Controls.Add(this.chkCircleAgents);
+			this.groupBox1.Controls.Add(this.txtCurrentAgent);
+			this.groupBox1.Controls.Add(this.label6);
+			this.groupBox1.Controls.Add(this.btnRemove);
+			this.groupBox1.Controls.Add(this.btnAdd);
+			this.groupBox1.Controls.Add(this.txtAgent);
+			this.groupBox1.Controls.Add(this.lstAgents);
+			this.groupBox1.Controls.Add(this.label5);
+			this.groupBox1.Location = new System.Drawing.Point(8, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(292, 222);
+			this.groupBox1.TabIndex = 0;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Agents";
 			// 
-			// cmbPosition
+			// label5
 			// 
-			this.cmbPosition.FormattingEnabled = true;
-			this.cmbPosition.Items.AddRange(new object[] {
-            "Main",
-            "Left",
-            "Right"});
-			this.cmbPosition.Location = new System.Drawing.Point(9, 32);
-			this.cmbPosition.Name = "cmbPosition";
-			this.cmbPosition.Size = new System.Drawing.Size(264, 21);
-			this.cmbPosition.TabIndex = 1;
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(6, 16);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(58, 13);
+			this.label5.TabIndex = 0;
+			this.label5.Text = "Agents list:";
+			// 
+			// lstAgents
+			// 
+			this.lstAgents.FormattingEnabled = true;
+			this.lstAgents.Location = new System.Drawing.Point(9, 32);
+			this.lstAgents.Name = "lstAgents";
+			this.lstAgents.Size = new System.Drawing.Size(277, 95);
+			this.lstAgents.TabIndex = 1;
+			// 
+			// txtAgent
+			// 
+			this.txtAgent.Location = new System.Drawing.Point(9, 133);
+			this.txtAgent.Name = "txtAgent";
+			this.txtAgent.Size = new System.Drawing.Size(183, 20);
+			this.txtAgent.TabIndex = 2;
+			// 
+			// btnAdd
+			// 
+			this.btnAdd.Location = new System.Drawing.Point(198, 133);
+			this.btnAdd.Name = "btnAdd";
+			this.btnAdd.Size = new System.Drawing.Size(41, 20);
+			this.btnAdd.TabIndex = 3;
+			this.btnAdd.Text = "+";
+			this.btnAdd.UseVisualStyleBackColor = true;
+			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+			// 
+			// btnRemove
+			// 
+			this.btnRemove.Location = new System.Drawing.Point(245, 133);
+			this.btnRemove.Name = "btnRemove";
+			this.btnRemove.Size = new System.Drawing.Size(41, 20);
+			this.btnRemove.TabIndex = 4;
+			this.btnRemove.Text = "-";
+			this.btnRemove.UseVisualStyleBackColor = true;
+			this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(6, 156);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(166, 13);
+			this.label6.TabIndex = 5;
+			this.label6.Text = "Currently accepted mission agent:";
+			// 
+			// txtCurrentAgent
+			// 
+			this.txtCurrentAgent.Location = new System.Drawing.Point(9, 172);
+			this.txtCurrentAgent.Name = "txtCurrentAgent";
+			this.txtCurrentAgent.Size = new System.Drawing.Size(183, 20);
+			this.txtCurrentAgent.TabIndex = 6;
+			// 
+			// chkCircleAgents
+			// 
+			this.chkCircleAgents.AutoSize = true;
+			this.chkCircleAgents.Location = new System.Drawing.Point(9, 198);
+			this.chkCircleAgents.Name = "chkCircleAgents";
+			this.chkCircleAgents.Size = new System.Drawing.Size(117, 17);
+			this.chkCircleAgents.TabIndex = 7;
+			this.chkCircleAgents.Text = "Circle event agents";
+			this.chkCircleAgents.UseVisualStyleBackColor = true;
 			// 
 			// SettingsForm
 			// 
@@ -316,10 +426,13 @@
 			this.menuMain.PerformLayout();
 			this.tabControl.ResumeLayout(false);
 			this.tabSettings.ResumeLayout(false);
-			this.grpLogin.ResumeLayout(false);
-			this.grpLogin.PerformLayout();
 			this.grpCharacter.ResumeLayout(false);
 			this.grpCharacter.PerformLayout();
+			this.grpLogin.ResumeLayout(false);
+			this.grpLogin.PerformLayout();
+			this.tabMissions.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -353,5 +466,15 @@
 		private System.Windows.Forms.GroupBox grpCharacter;
 		private System.Windows.Forms.ComboBox cmbPosition;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TabPage tabMissions;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Button btnRemove;
+		private System.Windows.Forms.Button btnAdd;
+		private System.Windows.Forms.TextBox txtAgent;
+		private System.Windows.Forms.ListBox lstAgents;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.TextBox txtCurrentAgent;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.CheckBox chkCircleAgents;
 	}
 }

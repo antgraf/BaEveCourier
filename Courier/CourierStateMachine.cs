@@ -22,7 +22,11 @@ namespace Courier
 		EveLaunched,
 		LoggedIn,
 		CharacterSelected,
-		Initialized
+		Initialized,
+		AutopilotStopped,
+		DestinationReached,
+		AgentReached,
+		GoToDestination
 	}
 
 	public class CourierStateMachine : StateMachine

@@ -9,6 +9,12 @@ namespace Courier.States
 	{
 		public DoCourierMissionsState()
 		{
+			pCurrentSubState = new GoToAgentState();
+		}
+
+		public override void Enter()
+		{
+			pMachine.LogAndDisplay("DoCourierMissionsState", "Enter");
 		}
 	}
 }

@@ -11,8 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A0452835-DB92-42C3-9141-CEEB759F9633}"
 	ProjectSection(SolutionItems) = preProject
+		Bin\Images\courier_mission.png = Bin\Images\courier_mission.png
+		Bin\Images\low_sec.png = Bin\Images\low_sec.png
+		Bin\Images\no_missions.png = Bin\Images\no_missions.png
+		Bin\Images\remote_mission.png = Bin\Images\remote_mission.png
 		Bin\Images\skull.png = Bin\Images\skull.png
 		Bin\Images\status_ok.png = Bin\Images\status_ok.png
+		Bin\Images\undock.png = Bin\Images\undock.png
 	EndProjectSection
 EndProject
 Global

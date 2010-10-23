@@ -85,9 +85,12 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="States\AutopilotState.cs" />
     <Compile Include="States\CharacterSelectState.cs" />
     <Compile Include="States\DoCourierMissionsState.cs" />
     <Compile Include="States\EveCourierState.cs" />
+    <Compile Include="States\GoToAgentState.cs" />
+    <Compile Include="States\GoToDestinationState.cs" />
     <Compile Include="States\IdleState.cs" />
     <Compile Include="States\InitializationState.cs" />
     <Compile Include="States\LaunchGameState.cs" />

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ExecutionActors;
+using BACommon;
 
 namespace Courier
 {
@@ -40,6 +41,9 @@ namespace Courier
 			pPlugin.Settings[CourierSettings.Login] = txtLogin.Text;
 			pPlugin.Settings[CourierSettings.Password] = txtPassword.Text;
 			pPlugin.Settings[CourierSettings.Position] = (CharacterPosition)cmbPosition.SelectedIndex;
+			pPlugin.Settings[CourierSettings.Agents] = new List<string>(lstAgents.Items.OfType<string>());
+			pPlugin.Settings[CourierSettings.CurrentAgent] = txtCurrentAgent.Text;
+			pPlugin.Settings[CourierSettings.CircleAgents] = chkCircleAgents.Checked;
 			pPlugin.SaveSettings();
 		}
 
@@ -54,6 +58,12 @@ namespace Courier
 				(string)pPlugin.Settings[CourierSettings.Password] : CourierSettings.DefaultPassword;
 			cmbPosition.SelectedIndex = pPlugin.Settings.ContainsKey(CourierSettings.Position) ?
 				(int)pPlugin.Settings[CourierSettings.Position] : (int)CourierSettings.DefaultPosition;
+			lstAgents.Items.AddRange(pPlugin.Settings.ContainsKey(CourierSettings.Agents) ?
+				((List<string>)pPlugin.Settings[CourierSettings.Agents]).ToArray() : CourierSettings.DefaultAgents);
+			txtCurrentAgent.Text = pPlugin.Settings.ContainsKey(CourierSettings.CurrentAgent) ?
+				(string)pPlugin.Settings[CourierSettings.CurrentAgent] : CourierSettings.DefaultCurrentAgent;
+			chkCircleAgents.Checked = pPlugin.Settings.ContainsKey(CourierSettings.CircleAgents) ?
+				(bool)pPlugin.Settings[CourierSettings.CircleAgents] : CourierSettings.DefaultCircleAgents;
 		}
 
 		private void Return(SettingsFormResult result)
@@ -110,6 +120,25 @@ namespace Courier
 		{
 			MessageBox.Show(this, "Eve Online Courier Missions Bot\r\n" + CourierSettings.Version,
 				"About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		private void btnAdd_Click(object sender, EventArgs e)
+		{
+			if(!StringUtils.IsEmpty(txtAgent.Text))
+			{
+				lstAgents.Items.Add(txtAgent.Text);
+			}
+		}
+
+		private void btnRemove_Click(object sender, EventArgs e)
+		{
+			if(lstAgents.SelectedIndices.Count > 0)
+			{
+				foreach(int index in lstAgents.SelectedIndices)
+				{
+					lstAgents.Items.RemoveAt(index);
+				}
+			}
 		}
 	}
 }

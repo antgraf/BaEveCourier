@@ -35,6 +35,11 @@ namespace Courier
 
 		private const string pImageStatusOk = "Images/status_ok.png";
 		private const string pImageSkull = "Images/skull.png";
+		private const string pImageCourierMission = "Images/courier_mission.png";
+		private const string pImageNoMissions = "Images/no_missions.png";
+		private const string pImageRemoteMission = "Images/remote_mission.png";
+		private const string pImageLowSecMission = "Images/low_sec.png";
+		private const string pImageUnDock = "Images/undock.png";
 
 		private Window pEveWindow = null;
 		private Timer pTimeOut = new Timer();
@@ -45,6 +50,9 @@ namespace Courier
 		private string pLogin = null;
 		private string pPassword = null;
 		private CharacterPosition pPosition = CharacterPosition.Main;
+		private List<string> pAgents = null;
+		private string pCurrentAgent = null;
+		private bool pCircleAgents = false;
 
 		public Eve(IMessageHandler messager)
 		{
@@ -178,6 +186,23 @@ namespace Courier
 			return ok;
 		}
 
+		public bool SetDestinationToAgent(string agent)
+		{
+			bool ok = false;
+			try
+			{
+				Log("SetDestinationToAgent", "OpenAgentWindow");
+				OpenAgentWindow(agent);
+			}
+			catch(Exception ex)
+			{
+				Log("SetDestinationToAgent", ex.ToString());
+				CleanUp();
+			}
+			Log("SetDestinationToAgent", "Complete");
+			return ok;
+		}
+
 		public void Close()
 		{
 			Log("Close", "Click \"cross\" button");
@@ -217,6 +242,24 @@ namespace Courier
 		{
 			get { return pPosition; }
 			set { pPosition = value; }
+		}
+
+		public List<string> Agents
+		{
+			get { return pAgents; }
+			set { pAgents = value; }
+		}
+
+		public string CurrentAgent
+		{
+			get { return pCurrentAgent; }
+			set { pCurrentAgent = value; }
+		}
+
+		public bool CircleAgents
+		{
+			get { return pCircleAgents; }
+			set { pCircleAgents = value; }
 		}
 
 		public bool Debug
