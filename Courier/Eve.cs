@@ -40,6 +40,8 @@ namespace Courier
 		private const string pImageRemoteMission = "Images/remote_mission.png";
 		private const string pImageLowSecMission = "Images/low_sec.png";
 		private const string pImageUnDock = "Images/undock.png";
+		private const string pImageSetDestination = "Images/set_destination.png";
+		private const string pImageDock = "Images/dock.png";
 
 		private Window pEveWindow = null;
 		private Timer pTimeOut = new Timer();
@@ -186,13 +188,40 @@ namespace Courier
 			return ok;
 		}
 
-		public bool SetDestinationToAgent(string agent)
+		public bool SetDestinationToAgent(string agent, bool openAgentWindow)
 		{
 			bool ok = false;
 			try
 			{
-				Log("SetDestinationToAgent", "OpenAgentWindow");
-				OpenAgentWindow(agent);
+				Log("SetDestinationToAgent", "CheckInDock");
+				bool in_dock = CheckInDock();
+				if(openAgentWindow)
+				{
+					Log("SetDestinationToAgent", "OpenAgentWindow");
+					OpenAgentWindow(agent);
+				}
+
+				Log("SetDestinationToAgent", "CheckAgentHasNoMissions");
+				if(CheckAgentHasNoMissions())
+				{
+					throw new AgentHasNoMissionsAvailableException();
+				}
+
+				Log("SetDestinationToAgent", "CheckAgentLocationDestinationMenuItem");
+				if(CheckAgentLocationDestinationMenuItem())
+				{
+					Log("SetDestinationToAgent", "SetAgentDestination");
+					SetAgentDestination();
+					ok = true;
+				}
+
+				Log("SetDestinationToAgent", "CheckAgentLocationDockMenuItem");
+				if(CheckAgentLocationDockMenuItem())
+				{
+					Log("SetDestinationToAgent", "DockToAgent");
+					DockToAgent();
+					ok = true;
+				}
 			}
 			catch(Exception ex)
 			{
@@ -201,6 +230,11 @@ namespace Courier
 			}
 			Log("SetDestinationToAgent", "Complete");
 			return ok;
+		}
+
+		public string GetAgent()
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Close()

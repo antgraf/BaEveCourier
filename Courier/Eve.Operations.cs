@@ -164,30 +164,9 @@ namespace Courier
 
 		private void OpenAgentWindow(string agent)
 		{
-			// POINT: people & places
-			Coordinate pp = new Coordinate(
-				new StretchedPoint() { X = 0.0203883495145631, Y = 0.240857503152585 });
-			pEveWindow.LeftClick(pp);
-			WaitRandom();
-			// POINT: search type selector
-			Coordinate searchtype = new Coordinate(
-				new StretchedPoint() { X = 0.406796116504854, Y = 0.32156368221942 });
-			pEveWindow.LeftClick(searchtype);
-			WaitRandom();
-			for(int i = 0; i < 11; i++)	// go to the top-most search type
-			{
-				pEveWindow.KeySend("{UP}");
-			}
-			for(int i = 0; i < 4; i++)	// go to the "Character (exact)" search
-			{
-				pEveWindow.KeySend("{DOWN}");
-			}
-			pEveWindow.KeySendAndWait("~");	// confirm search type
-			// POINT: search textbox
-			Coordinate search = new Coordinate(
-				new StretchedPoint() { X = 0.445631067961165, Y = 0.327868852459016 });
-			pEveWindow.LeftClick(search);
-			WaitRandom();
+			OpenPeopleAndPlaces();
+			SelectSearchType(4);	// character (exact)
+			EraseSearch();
 			pEveWindow.KeySendAndWait(agent);	// search for agent
 			pEveWindow.KeySendAndWait("~");
 			// POINT: agent in the list
@@ -202,8 +181,49 @@ namespace Courier
 			WaitRandom();
 		}
 
+		private void OpenPeopleAndPlaces()
+		{
+			// POINT: people & places
+			Coordinate pp = new Coordinate(
+				new StretchedPoint() { X = 0.0203883495145631, Y = 0.240857503152585 });
+			pEveWindow.LeftClick(pp);
+			WaitRandom();
+		}
+
+		private void SelectSearchType(int index)
+		{
+			// POINT: search type selector
+			Coordinate searchtype = new Coordinate(
+				new StretchedPoint() { X = 0.406796116504854, Y = 0.32156368221942 });
+			pEveWindow.LeftClick(searchtype);
+			WaitRandom();
+			for(int i = 0; i < 11; i++)	// go to the top-most search type
+			{
+				pEveWindow.KeySend("{UP}");
+			}
+			for(int i = 0; i < index; i++)	// go to search type
+			{
+				pEveWindow.KeySend("{DOWN}");
+			}
+			pEveWindow.KeySendAndWait("~");	// confirm search type
+		}
+
+		private void EraseSearch()
+		{
+			// POINT: search textbox
+			Coordinate search = new Coordinate(
+				new StretchedPoint() { X = 0.445631067961165, Y = 0.327868852459016 });
+			pEveWindow.LeftClick(search);
+			WaitRandom();
+			pEveWindow.CtrlKeyDown();
+			pEveWindow.KeySendAndWait("a");	// select all
+			pEveWindow.CtrlKeyUp();
+			pEveWindow.KeySendAndWait("{DEL}");	// delete
+		}
+
 		private bool CheckAgentProvideCourierMission()
 		{
+			ActivateAgentWindow();
 			// POINT: top-left corner to search courier mission image
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.236893203883495, Y = 0.776796973518285 });
@@ -217,6 +237,7 @@ namespace Courier
 
 		private bool CheckAgentHasNoMissions()
 		{
+			ActivateAgentWindow();
 			// POINT: top-left corner to search text
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.196116504854369, Y = 0.5359394703657 });
@@ -230,6 +251,7 @@ namespace Courier
 
 		private bool CheckRemoteAgentHasMission()
 		{
+			ActivateAgentWindow();
 			// POINT: top-left corner to search text
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.196116504854369, Y = 0.5359394703657 });
@@ -243,6 +265,7 @@ namespace Courier
 
 		private bool CheckLowSecMission()
 		{
+			ActivateAgentWindow();
 			// POINT: top-left corner to search text
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.32621359223301, Y = 0.450189155107188 });
@@ -293,6 +316,62 @@ namespace Courier
 			Coordinate button = new Coordinate(
 				new StretchedPoint() { X = 0.8, Y = 0.978562421185372 });
 			pEveWindow.LeftClick(button);
+			WaitRandom();
+		}
+
+		private void CallAgentLocationMenu()
+		{
+			ActivateAgentWindow();
+			// POINT: agent location hyper-link
+			Coordinate button = new Coordinate(
+				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
+			pEveWindow.RightClick(button);
+			WaitRandom();
+		}
+
+		private bool CheckAgentLocationDestinationMenuItem()
+		{
+			ActivateAgentWindow();
+			// POINT: top-left corner to search menu item
+			Coordinate tl_pt = new Coordinate(
+				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
+			// POINT: bottom-right corner to search menu item
+			Coordinate br_pt = new Coordinate(
+				new StretchedPoint() { X = 0.54368932038835, Y = 0.630517023959647 });
+			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
+			Bitmap dest = new Bitmap(pImageSetDestination);
+			return pEveWindow.FindImageExactly(screen, dest) != null;
+		}
+
+		private bool CheckAgentLocationDockMenuItem()
+		{
+			ActivateAgentWindow();
+			// POINT: top-left corner to search menu item
+			Coordinate tl_pt = new Coordinate(
+				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
+			// POINT: bottom-right corner to search menu item
+			Coordinate br_pt = new Coordinate(
+				new StretchedPoint() { X = 0.54368932038835, Y = 0.630517023959647 });
+			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
+			Bitmap dock = new Bitmap(pImageDock);
+			return pEveWindow.FindImageExactly(screen, dock) != null;
+		}
+
+		private void SetAgentDestination()
+		{
+			// POINT: set destination menu item
+			Coordinate set_dest = new Coordinate(
+				new StretchedPoint() { X = 0.397087378640777, Y = 0.477931904161412 });
+			pEveWindow.LeftClick(set_dest);
+			WaitRandom();
+		}
+
+		private void DockToAgent()
+		{
+			// POINT: dock menu item
+			Coordinate dock = new Coordinate(
+				new StretchedPoint() { X = 0.385436893203883, Y = 0.496847414880202 });
+			pEveWindow.LeftClick(dock);
 			WaitRandom();
 		}
 	}

@@ -23,10 +23,12 @@ namespace Courier
 		LoggedIn,
 		CharacterSelected,
 		Initialized,
+		Autopilot,
 		AutopilotStopped,
 		DestinationReached,
 		AgentReached,
-		GoToDestination
+		GoToDestination,
+		NextAgent
 	}
 
 	public class CourierStateMachine : StateMachine
