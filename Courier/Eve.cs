@@ -242,7 +242,7 @@ namespace Courier
 			Log("Close", "Click \"cross\" button");
 			// POINT: close button
 			Coordinate close_pt = new Coordinate(
-				new StretchedPoint() { X = 0.329126213592233, Y = 0.66078184110971 });
+				new StretchedPoint() { X = 0.988349514563107, Y = 0.0138713745271122 });
 			pEveWindow.LeftClick(close_pt);	// click "cross" button
 			// TODO: any confirmations?
 			Log("Close", "Complete");

@@ -99,6 +99,7 @@
     <Compile Include="States\SleepState.cs" />
     <Compile Include="States\WorkState.cs" />
     <Compile Include="Tests\CourierStateMachineTest.cs" />
+    <Compile Include="Tests\EveOperationsManualTest.cs" />
     <Compile Include="Transitions\IdleSleepTransition.cs" />
     <Compile Include="Transitions\IdleWorkTransition.cs" />
     <Compile Include="Transitions\InitializationDoCourierMissionsTransition.cs" />
