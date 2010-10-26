@@ -25,6 +25,7 @@ namespace Courier
 		private const int pCommonTimeout = 15 * 1000;	// milliseconds
 		private const int pMinWindowWidth = 1000;
 		private const string pEveProcessName = "ExeFile";
+		private const int pStandardWaitTime = (int)(1.5 * 1000);	// milliseconds
 		private const int pWindowWaitTime = 15;	// seconds
 		private const int pWindowWaitInterval = 5;	// seconds
 		private const int pWindowWaitAttempts = 5;
@@ -32,17 +33,19 @@ namespace Courier
 		private const int pRandomWaitDelta = 35;
 		private const string pDebugFolder = "Debug";
 		private const string pImageExtension = ".png";
+		private const double pStandardColorDeviation = 6 / Window.NormalizationCoefficientForColorDeviation;	// sqrt(3^2 + 3^2 + 3^2) < 5.2
 
-		private const string pImageStatusOk = "Images/status_ok.png";
-		private const string pImageSkull = "Images/skull.png";
-		private const string pImageCourierMission = "Images/courier_mission.png";
-		private const string pImageNoMissions = "Images/no_missions.png";
-		private const string pImageRemoteMission = "Images/remote_mission.png";
-		private const string pImageLowSecMission = "Images/low_sec.png";
-		private const string pImageUnDock = "Images/undock.png";
-		private const string pImageSetDestination = "Images/set_destination.png";
-		private const string pImageDock = "Images/dock.png";
+		private const string pImageStatusOk = @"Images\status_ok.png";
+		private const string pImageSkull = @"Images\skull.png";
+		private const string pImageCourierMission = @"Images\courier_mission.png";
+		private const string pImageNoMissions = @"Images\no_missions.png";
+		private const string pImageRemoteMission = @"Images\remote_mission.png";
+		private const string pImageLowSecMission = @"Images\low_sec.png";
+		private const string pImageUnDock = @"Images\undock.png";
+		private const string pImageSetDestination = @"Images\set_destination.png";
+		private const string pImageDock = @"Images\dock.png";
 
+		private string pLocalPath = null;
 		private Window pEveWindow = null;
 		private Timer pTimeOut = new Timer();
 		private bool pTimedOut = false;
@@ -64,12 +67,33 @@ namespace Courier
 			pTimeOut.Elapsed += new ElapsedEventHandler(pTimeOut_Elapsed);
 		}
 
+		private string Relative2AbsolutePath(string path)
+		{
+			if(StringUtils.IsEmpty(pLocalPath))
+			{
+				return FileUtils.Relative2AbsolutePath(path);
+			}
+			else
+			{
+				return FileUtils.CombineWinPath(pLocalPath, path);
+			}
+		}
+
 		public void Log(string stage, string msg)
 		{
 			if(pMessager != null)
 			{
 				pMessager.SendMessage(stage, msg);
 			}
+		}
+
+		private bool FindImage(Coordinate topLeft, Coordinate bottomRight, string imageName)
+		{
+			Bitmap screen = pEveWindow.Screenshot(topLeft, bottomRight);
+			SaveDebugImage(screen);
+			Bitmap fragment = new Bitmap(Relative2AbsolutePath(imageName));
+			pEveWindow.AllowedColorDeviation = pStandardColorDeviation;
+			return pEveWindow.FindImageWithColorDeviation(screen, fragment) != null;
 		}
 
 		private void SaveDebugImage(Bitmap image)
@@ -79,7 +103,7 @@ namespace Courier
 				try
 				{
 					string filename = FileUtils.MakeValidFileName(DateTime.Now.ToString() + Guid.NewGuid()) + pImageExtension;
-					image.Save(FileUtils.CombineWinPath(pDebugFolder, filename));
+					image.Save(Relative2AbsolutePath(FileUtils.CombineWinPath(pDebugFolder, filename)));
 				}
 				catch(Exception ex)
 				{
@@ -178,6 +202,7 @@ namespace Courier
 				ClickCharacter(pPosition);
 				Log("SelectCharacter", "EnterGame");
 				EnterGame();
+				ok = true;
 			}
 			catch(Exception ex)
 			{
@@ -207,6 +232,8 @@ namespace Courier
 					throw new AgentHasNoMissionsAvailableException();
 				}
 
+				CallAgentLocationMenu();
+				WaitRandom();
 				Log("SetDestinationToAgent", "CheckAgentLocationDestinationMenuItem");
 				if(CheckAgentLocationDestinationMenuItem())
 				{
@@ -245,7 +272,14 @@ namespace Courier
 				new StretchedPoint() { X = 0.988349514563107, Y = 0.0138713745271122 });
 			pEveWindow.LeftClick(close_pt);	// click "cross" button
 			// TODO: any confirmations?
+			pEveWindow.Wait(pStandardWaitTime);
 			Log("Close", "Complete");
+		}
+
+		public string LocalPath
+		{
+			get { return pLocalPath; }
+			set { pLocalPath = value; }
 		}
 
 		public Window EveWindow
@@ -300,7 +334,7 @@ namespace Courier
 		{
 			get
 			{
-				return Directory.Exists(pDebugFolder);
+				return Directory.Exists(Relative2AbsolutePath(pDebugFolder));
 			}
 		}
 	}

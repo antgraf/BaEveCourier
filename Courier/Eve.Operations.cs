@@ -9,6 +9,7 @@ using Logger;
 using Courier.Exceptions;
 using System.Drawing;
 using BACommon;
+using System.Reflection;
 
 namespace Courier
 {
@@ -83,12 +84,7 @@ namespace Courier
 			// POINT: bottom-right of "status ok"
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.614563106796116, Y = 0.904161412358134 });
-			Bitmap status_check = pEveWindow.Screenshot(tl_pt, br_pt);
-			SaveDebugImage(status_check);
-			Bitmap status_ok = new Bitmap(FileUtils.Relative2AbsolutePath(pImageStatusOk));
-			pEveWindow.AllowedColorDeviation = 6;	// sqrt(3^2 + 3^2 + 3^2) < 5.2
-			Coordinate result = pEveWindow.FindImageWithColorDeviation(status_check, status_ok);	// check image
-			return result != null;
+			return FindImage(tl_pt, br_pt, pImageStatusOk);
 		}
 
 		private void WaitRandom()
@@ -121,23 +117,19 @@ namespace Courier
 		{
 			// POINT: top-left of "skull"
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.329126213592233, Y = 0.66078184110971 });
+				new StretchedPoint() { X = 0.333009708737864, Y = 0.677175283732661 });
 			// POINT: bottom-right of "skull"
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.355339805825243, Y = 0.692307692307692 });
-			Bitmap skull_check = pEveWindow.Screenshot(tl_pt, br_pt);
-			SaveDebugImage(skull_check);
-			Bitmap skull = new Bitmap(FileUtils.Relative2AbsolutePath(pImageSkull));
-			Coordinate result = pEveWindow.FindImageExactly(skull_check, skull);	// check image
-			return result != null;
+				new StretchedPoint() { X = 0.350485436893204, Y = 0.702395964691047 });
+			return FindImage(tl_pt, br_pt, pImageSkull);
 		}
 
 		private void ClickCharacter(CharacterPosition position)
 		{
-			// POINT: top-left of "skull"
+			// POINT: left character
 			Coordinate left = new Coordinate(
 				new StretchedPoint() { X = 0.0970873786407767, Y = 0.650693568726356 });
-			// POINT: bottom-right of "skull"
+			// POINT: right character
 			Coordinate right = new Coordinate(
 				new StretchedPoint() { X = 0.239805825242718, Y = 0.650693568726356 });
 			switch(position)
@@ -145,11 +137,13 @@ namespace Courier
 				case CharacterPosition.Left:
 				{
 					pEveWindow.LeftClick(left);
+					pEveWindow.Wait(pStandardWaitTime);
 					break;
 				}
 				case CharacterPosition.Right:
 				{
 					pEveWindow.LeftClick(right);
+					pEveWindow.Wait(pStandardWaitTime);
 					break;
 				}
 			}
@@ -231,9 +225,7 @@ namespace Courier
 			// POINT: bottom-right corner to search courier mission image
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.348543689320388, Y = 0.85750315258512 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap courier = new Bitmap(FileUtils.Relative2AbsolutePath(pImageCourierMission));
-			return pEveWindow.FindImageExactly(screen, courier) != null;
+			return FindImage(tl_pt, br_pt, pImageCourierMission);
 		}
 
 		private bool CheckAgentHasNoMissions()
@@ -245,9 +237,7 @@ namespace Courier
 			// POINT: bottom-right corner to search text
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.277669902912621, Y = 0.558638083228247 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap no = new Bitmap(FileUtils.Relative2AbsolutePath(pImageNoMissions));
-			return pEveWindow.FindImageExactly(screen, no) != null;
+			return FindImage(tl_pt, br_pt, pImageNoMissions);
 		}
 
 		private bool CheckRemoteAgentHasMission()
@@ -259,9 +249,7 @@ namespace Courier
 			// POINT: bottom-right corner to search text
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.277669902912621, Y = 0.558638083228247 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap remote = new Bitmap(FileUtils.Relative2AbsolutePath(pImageRemoteMission));
-			return pEveWindow.FindImageExactly(screen, remote) != null;
+			return FindImage(tl_pt, br_pt, pImageRemoteMission);
 		}
 
 		private bool CheckLowSecMission()
@@ -273,9 +261,7 @@ namespace Courier
 			// POINT: bottom-right corner to search text
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.563106796116505, Y = 0.513240857503153 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap lowsec = new Bitmap(FileUtils.Relative2AbsolutePath(pImageLowSecMission));
-			return pEveWindow.FindImageExactly(screen, lowsec) != null;
+			return FindImage(tl_pt, br_pt, pImageLowSecMission);
 		}
 
 		private bool CheckInDock()
@@ -286,9 +272,7 @@ namespace Courier
 			// POINT: bottom-right corner to search undock button
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.0359223300970874, Y = 0.952080706179067 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap undock = new Bitmap(FileUtils.Relative2AbsolutePath(pImageUnDock));
-			return pEveWindow.FindImageExactly(screen, undock) != null;
+			return FindImage(tl_pt, br_pt, pImageUnDock);
 		}
 
 		private void ActivateAgentWindow()
@@ -332,30 +316,24 @@ namespace Courier
 
 		private bool CheckAgentLocationDestinationMenuItem()
 		{
-			ActivateAgentWindow();
 			// POINT: top-left corner to search menu item
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
 			// POINT: bottom-right corner to search menu item
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.54368932038835, Y = 0.630517023959647 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap dest = new Bitmap(FileUtils.Relative2AbsolutePath(pImageSetDestination));
-			return pEveWindow.FindImageExactly(screen, dest) != null;
+			return FindImage(tl_pt, br_pt, pImageSetDestination);
 		}
 
 		private bool CheckAgentLocationDockMenuItem()
 		{
-			ActivateAgentWindow();
 			// POINT: top-left corner to search menu item
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
 			// POINT: bottom-right corner to search menu item
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.54368932038835, Y = 0.630517023959647 });
-			Bitmap screen = pEveWindow.Screenshot(tl_pt, br_pt);
-			Bitmap dock = new Bitmap(FileUtils.Relative2AbsolutePath(pImageDock));
-			return pEveWindow.FindImageExactly(screen, dock) != null;
+			return FindImage(tl_pt, br_pt, pImageDock);
 		}
 
 		private void SetAgentDestination()
@@ -373,6 +351,15 @@ namespace Courier
 			Coordinate dock = new Coordinate(
 				new StretchedPoint() { X = 0.385436893203883, Y = 0.496847414880202 });
 			pEveWindow.LeftClick(dock);
+			WaitRandom();
+		}
+
+		private void UnDock()
+		{
+			// POINT: undock button
+			Coordinate undock = new Coordinate(
+				new StretchedPoint() { X = 0.0194174757281553, Y = 0.934426229508197 });
+			pEveWindow.LeftClick(undock);
 			WaitRandom();
 		}
 	}
