@@ -33,7 +33,9 @@ namespace Courier
 		private const int pRandomWaitDelta = 35;
 		private const string pDebugFolder = "Debug";
 		private const string pImageExtension = ".png";
-		private const double pStandardColorDeviation = 6 / Window.NormalizationCoefficientForColorDeviation;	// sqrt(3^2 + 3^2 + 3^2) < 5.2
+		private const double pStandardColorDeviation = 0.1;//6 / Window.NormalizationCoefficientForColorDeviation;	// sqrt(3^2 + 3^2 + 3^2) < 5.2
+		private const string pEveSettingsFolder = @"CCP\EVE\{0}\settings";
+		private const string pTranquilityServerSuffix = "_tranquility";
 
 		private const string pImageStatusOk = @"Images\status_ok.png";
 		private const string pImageSkull = @"Images\skull.png";
@@ -44,6 +46,11 @@ namespace Courier
 		private const string pImageUnDock = @"Images\undock.png";
 		private const string pImageSetDestination = @"Images\set_destination.png";
 		private const string pImageDock = @"Images\dock.png";
+
+		private const string pSettings1 = @"Data\core_char__.dat";
+		private const string pSettings2 = @"Data\core_public__.dat";
+		private const string pSettings3 = @"Data\core_user__.dat";
+		private const string pSettings4 = @"Data\prefs.ini";
 
 		private string pLocalPath = null;
 		private Window pEveWindow = null;
@@ -130,6 +137,35 @@ namespace Courier
 				pEveProcess = null;
 			}
 			Log("CleanUp", "Complete");
+		}
+
+		public bool ResetEveSettings(string pathToEve)
+		{
+			bool ok = false;
+			try
+			{
+				if(StringUtils.IsEmpty(pathToEve))
+				{
+					throw new ArgumentException("Path is empty.", "pathToEve");
+				}
+				Log("ResetEveSettings", "GetEveSettingsPath");
+				string settings = GetEveSettingsPath(pathToEve);
+				Log("ResetEveSettings", "ClearEveSettings");
+				if(ClearEveSettings(settings))
+				{
+					Log("ResetEveSettings", "CopyDefaultSettings");
+					CopyDefaultSettings(settings);
+					ok = true;
+				}
+				Log("ResetEveSettings", "Complete");
+			}
+			catch(Exception ex)
+			{
+				Log("ResetEveSettings", ex.ToString());
+				CleanUp();
+				return false;
+			}
+			return ok;
 		}
 
 		public bool Launch(string pathToEve)
@@ -262,6 +298,28 @@ namespace Courier
 		public string GetAgent()
 		{
 			throw new NotImplementedException();
+		}
+
+		public bool MakeBlackScreen()
+		{
+			bool ok = false;
+			try
+			{
+				Log("MakeBlackScreen", "OpenMap");
+				OpenMap();
+				Log("MakeBlackScreen", "MinimizeMapControl");
+				MinimizeMapControl();
+				Log("MakeBlackScreen", "MoveMapOut");
+				MoveMapOut();
+				ok = true;
+			}
+			catch(Exception ex)
+			{
+				Log("MakeBlackScreen", ex.ToString());
+				CleanUp();
+			}
+			Log("MakeBlackScreen", "Complete");
+			return ok;
 		}
 
 		public void Close()

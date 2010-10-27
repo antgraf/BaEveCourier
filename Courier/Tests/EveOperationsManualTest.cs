@@ -18,7 +18,8 @@ namespace Courier
 			private const string pEvePath = @"C:\Games\EveOnlineBot\eve.exe";
 			private const string pEveLogin = "user";
 			private const string pEvePassword = "******";
-			private const string pEveAgent = "Hakar Ogok";
+			//private const string pEveAgent = "Hakar Ogok";
+			private const string pEveAgent = "Eindolf Fer";
 			
 			#endregion
 
@@ -38,6 +39,13 @@ namespace Courier
 				{
 					throw new NullReferenceException("Cannot attach to Eve.");
 				}
+			}
+
+			[Test]
+			public void ResetEveSettings()
+			{
+				Init();
+				Assert.True(pEve.ResetEveSettings(pEvePath));
 			}
 
 			[Test]
@@ -158,6 +166,13 @@ namespace Courier
 				AttachToEve();
 				pEve.Close();
 				Assert.Null(WindowsMan.UpdateWindow(pEve.EveWindow));
+			}
+
+			[Test]
+			public void MakeBlackScreen()
+			{
+				AttachToEve();
+				Assert.True(pEve.MakeBlackScreen());
 			}
 		}
 	}

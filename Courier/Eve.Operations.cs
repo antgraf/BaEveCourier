@@ -10,6 +10,7 @@ using Courier.Exceptions;
 using System.Drawing;
 using BACommon;
 using System.Reflection;
+using System.IO;
 
 namespace Courier
 {
@@ -29,6 +30,48 @@ namespace Courier
 		private void pTimeOut_Elapsed(object sender, ElapsedEventArgs e)
 		{
 			pTimedOut = true;
+		}
+
+		private void WaitRandom()
+		{
+			pEveWindow.WaitRandom(pRandomWaitTime, pRandomWaitDelta);
+		}
+
+		private string GetEveSettingsPath(string pathToEve)
+		{
+			string server_suffix = pTranquilityServerSuffix;
+			string appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+			string profile = Path.GetDirectoryName(pathToEve)
+				.Replace(":", "")
+				.Replace(Path.DirectorySeparatorChar, '_')
+				.ToLower()
+				+ server_suffix;
+			return Path.Combine(appdata, string.Format(pEveSettingsFolder, profile));
+		}
+
+		private void CopyDefaultSettings(string pathToEveSettings)
+		{
+			File.Copy(Relative2AbsolutePath(pSettings1),
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings1)));
+			File.Copy(Relative2AbsolutePath(pSettings2),
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings2)));
+			File.Copy(Relative2AbsolutePath(pSettings3),
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings3)));
+			File.Copy(Relative2AbsolutePath(pSettings4),
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings4)));
+		}
+
+		private bool ClearEveSettings(string pathToEveSettings)
+		{
+			try
+			{
+				Directory.Delete(pathToEveSettings, true);
+			}
+			catch(Exception)
+			{
+				// ignore
+			}
+			return Directory.CreateDirectory(pathToEveSettings) != null;
 		}
 
 		private void LaunchApplication(string pathToEve)
@@ -87,11 +130,6 @@ namespace Courier
 			return FindImage(tl_pt, br_pt, pImageStatusOk);
 		}
 
-		private void WaitRandom()
-		{
-			pEveWindow.WaitRandom(pRandomWaitTime, pRandomWaitDelta);
-		}
-
 		private void EraseLogin()
 		{
 			// POINT: login field
@@ -117,10 +155,10 @@ namespace Courier
 		{
 			// POINT: top-left of "skull"
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.333009708737864, Y = 0.677175283732661 });
+				new StretchedPoint() { X = 0.313592233009709, Y = 0.64312736443884 });
 			// POINT: bottom-right of "skull"
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.350485436893204, Y = 0.702395964691047 });
+				new StretchedPoint() { X = 0.369902912621359, Y = 0.71500630517024 });
 			return FindImage(tl_pt, br_pt, pImageSkull);
 		}
 
@@ -359,6 +397,36 @@ namespace Courier
 			// POINT: undock button
 			Coordinate undock = new Coordinate(
 				new StretchedPoint() { X = 0.0194174757281553, Y = 0.934426229508197 });
+			pEveWindow.LeftClick(undock);
+			WaitRandom();
+		}
+
+		private void OpenMap()
+		{
+			pEveWindow.KeySend("{F10}");	// open map
+			WaitRandom();
+		}
+
+		private void MoveMapOut()
+		{
+			// POINT: drag from point
+			Coordinate from = new Coordinate(
+				new StretchedPoint() { X = 0.975728155339806, Y = 0.958385876418663 });
+			// POINT: drag to point
+			Coordinate to = new Coordinate(
+				new StretchedPoint() { X = 0.724271844660194, Y = 0.950819672131147 });
+			for(int i = 0; i < 4; i++)
+			{
+				pEveWindow.DragDropRight(from, to);	// drag map out
+				WaitRandom();
+			}
+		}
+
+		private void MinimizeMapControl()
+		{
+			// POINT: minimize map control button
+			Coordinate undock = new Coordinate(
+				new StretchedPoint() { X = 0.986407766990291, Y = 0.0416141235813367 });
 			pEveWindow.LeftClick(undock);
 			WaitRandom();
 		}
