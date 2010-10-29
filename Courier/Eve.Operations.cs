@@ -259,10 +259,10 @@ namespace Courier
 			ActivateAgentWindow();
 			// POINT: top-left corner to search courier mission image
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.236893203883495, Y = 0.776796973518285 });
+				new StretchedPoint() { X = 0.149514563106796, Y = 0.655737704918033 });
 			// POINT: bottom-right corner to search courier mission image
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.348543689320388, Y = 0.85750315258512 });
+				new StretchedPoint() { X = 0.248543689320388, Y = 0.723833543505675 });
 			return FindImage(tl_pt, br_pt, pImageCourierMission);
 		}
 
@@ -271,10 +271,10 @@ namespace Courier
 			ActivateAgentWindow();
 			// POINT: top-left corner to search text
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.196116504854369, Y = 0.5359394703657 });
+				new StretchedPoint() { X = 0.109708737864078, Y = 0.413619167717528 });
 			// POINT: bottom-right corner to search text
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.277669902912621, Y = 0.558638083228247 });
+				new StretchedPoint() { X = 0.221359223300971, Y = 0.475409836065574 });
 			return FindImage(tl_pt, br_pt, pImageNoMissions);
 		}
 
@@ -283,14 +283,14 @@ namespace Courier
 			ActivateAgentWindow();
 			// POINT: top-left corner to search text
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.196116504854369, Y = 0.5359394703657 });
+				new StretchedPoint() { X = 0.109708737864078, Y = 0.413619167717528 });
 			// POINT: bottom-right corner to search text
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.277669902912621, Y = 0.558638083228247 });
+				new StretchedPoint() { X = 0.221359223300971, Y = 0.475409836065574 });
 			return FindImage(tl_pt, br_pt, pImageRemoteMission);
 		}
 
-		private bool CheckLowSecMission()
+		private bool CheckLowSecMission()	// todo "mission" -> "courier" + correct points
 		{
 			ActivateAgentWindow();
 			// POINT: top-left corner to search text
@@ -317,7 +317,7 @@ namespace Courier
 		{
 			// POINT: agent window
 			Coordinate window = new Coordinate(
-				new StretchedPoint() { X = 0.200970873786408, Y = 0.32156368221942 });
+				new StretchedPoint() { X = 0.115533980582524, Y = 0.190416141235813 });
 			pEveWindow.LeftClick(window);
 			WaitRandom();
 		}
@@ -327,7 +327,7 @@ namespace Courier
 			ActivateAgentWindow();
 			// POINT: accept button
 			Coordinate button = new Coordinate(
-				new StretchedPoint() { X = 0.741747572815534, Y = 0.979823455233291 });
+				new StretchedPoint() { X = 0.655339805825243, Y = 0.849936948297604 });
 			pEveWindow.LeftClick(button);
 			WaitRandom();
 		}
@@ -337,7 +337,7 @@ namespace Courier
 			ActivateAgentWindow();
 			// POINT: decline button
 			Coordinate button = new Coordinate(
-				new StretchedPoint() { X = 0.8, Y = 0.978562421185372 });
+				new StretchedPoint() { X = 0.709708737864078, Y = 0.848675914249685 });
 			pEveWindow.LeftClick(button);
 			WaitRandom();
 		}
@@ -347,7 +347,7 @@ namespace Courier
 			ActivateAgentWindow();
 			// POINT: agent location hyper-link
 			Coordinate button = new Coordinate(
-				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
+				new StretchedPoint() { X = 0.266990291262136, Y = 0.320302648171501 });
 			pEveWindow.RightClick(button);
 			WaitRandom();
 		}
@@ -356,10 +356,10 @@ namespace Courier
 		{
 			// POINT: top-left corner to search menu item
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
+				new StretchedPoint() { X = 0.266990291262136, Y = 0.320302648171501 });
 			// POINT: bottom-right corner to search menu item
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.54368932038835, Y = 0.630517023959647 });
+				new StretchedPoint() { X = 0.448543689320388, Y = 0.539722572509458 });
 			return FindImage(tl_pt, br_pt, pImageSetDestination);
 		}
 
@@ -367,10 +367,10 @@ namespace Courier
 		{
 			// POINT: top-left corner to search menu item
 			Coordinate tl_pt = new Coordinate(
-				new StretchedPoint() { X = 0.35631067961165, Y = 0.447667087011349 });
+				new StretchedPoint() { X = 0.266990291262136, Y = 0.320302648171501 });
 			// POINT: bottom-right corner to search menu item
 			Coordinate br_pt = new Coordinate(
-				new StretchedPoint() { X = 0.54368932038835, Y = 0.630517023959647 });
+				new StretchedPoint() { X = 0.448543689320388, Y = 0.539722572509458 });
 			return FindImage(tl_pt, br_pt, pImageDock);
 		}
 
@@ -378,7 +378,7 @@ namespace Courier
 		{
 			// POINT: set destination menu item
 			Coordinate set_dest = new Coordinate(
-				new StretchedPoint() { X = 0.397087378640777, Y = 0.477931904161412 });
+				new StretchedPoint() { X = 0.297087378640777, Y = 0.353089533417402 });
 			pEveWindow.LeftClick(set_dest);
 			WaitRandom();
 		}
@@ -387,7 +387,7 @@ namespace Courier
 		{
 			// POINT: dock menu item
 			Coordinate dock = new Coordinate(
-				new StretchedPoint() { X = 0.385436893203883, Y = 0.496847414880202 });
+				new StretchedPoint() { X = 0.295145631067961, Y = 0.387137452711223 });
 			pEveWindow.LeftClick(dock);
 			WaitRandom();
 		}
@@ -428,6 +428,204 @@ namespace Courier
 			Coordinate undock = new Coordinate(
 				new StretchedPoint() { X = 0.986407766990291, Y = 0.0416141235813367 });
 			pEveWindow.LeftClick(undock);
+			WaitRandom();
+		}
+
+		private void OpenOptionsWindow()
+		{
+			pEveWindow.KeySendAndWait("{ESC}", pStandardWaitTime);
+		}
+
+		private void SetOptions()
+		{
+			// POINT: video checkboxes
+			Coordinate chkbox = null;
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.298865069356873 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.32156368221942 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.346784363177806 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.387378640776699, Y = 0.368221941992434 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.390920554854981 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.413619167717528 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.466582597730139 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.489281210592686 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.534678436317781 });
+			pEveWindow.LeftClick(chkbox);
+			// POINT: general settings tab
+			Coordinate general = new Coordinate(
+				new StretchedPoint() { X = 0.353398058252427, Y = 0.243379571248424 });
+			pEveWindow.LeftClick(general);
+			WaitRandom();
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.301387137452711 });
+			pEveWindow.LeftClick(chkbox);
+			chkbox = new Coordinate(
+				new StretchedPoint() { X = 0.388349514563107, Y = 0.32156368221942 });
+			pEveWindow.LeftClick(chkbox);
+			// POINT: theme selector
+			Coordinate theme = null;
+			// POINT: black theme
+			Coordinate black = null;
+			theme = new Coordinate(
+				new StretchedPoint() { X = 0.866990291262136, Y = 0.358133669609079 });
+			black = new Coordinate(
+				new StretchedPoint() { X = 0.779611650485437, Y = 0.413619167717528 });
+			pEveWindow.LeftClick(theme);
+			WaitRandom();
+			pEveWindow.LeftClick(black);
+			WaitRandom();
+			// POINT: color sliders
+			Coordinate color = null;
+			// POINT: color sliders dragging target point
+			Coordinate dragto = null;
+			color = new Coordinate(
+				new StretchedPoint() { X = 0.842718446601942, Y = 0.442622950819672 });
+			dragto = new Coordinate(
+				new StretchedPoint() { X = 0.885436893203884, Y = 0.443883984867591 });
+			pEveWindow.DragDrop(color, dragto);
+			color = new Coordinate(
+				new StretchedPoint() { X = 0.809708737864078, Y = 0.532156368221942 });
+			dragto = new Coordinate(
+				new StretchedPoint() { X = 0.733009708737864, Y = 0.532156368221942 });
+			pEveWindow.DragDrop(color, dragto);
+			color = new Coordinate(
+				new StretchedPoint() { X = 0.810679611650485, Y = 0.549810844892812 });
+			dragto = new Coordinate(
+				new StretchedPoint() { X = 0.736893203883495, Y = 0.551071878940731 });
+			pEveWindow.DragDrop(color, dragto);
+			color = new Coordinate(
+				new StretchedPoint() { X = 0.809708737864078, Y = 0.563682219419924 });
+			dragto = new Coordinate(
+				new StretchedPoint() { X = 0.735922330097087, Y = 0.567465321563682 });
+			pEveWindow.DragDrop(color, dragto);
+			color = new Coordinate(
+				new StretchedPoint() { X = 0.809708737864078, Y = 0.585119798234552 });
+			dragto = new Coordinate(
+				new StretchedPoint() { X = 0.885436893203884, Y = 0.585119798234552 });
+			pEveWindow.DragDrop(color, dragto);
+			theme = new Coordinate(
+				new StretchedPoint() { X = 0.867961165048544, Y = 0.640605296343001 });
+			black = new Coordinate(
+				new StretchedPoint() { X = 0.772815533980583, Y = 0.692307692307692 });
+			pEveWindow.LeftClick(theme);
+			WaitRandom();
+			pEveWindow.LeftClick(black);
+			WaitRandom();
+			theme = new Coordinate(
+				new StretchedPoint() { X = 0.867961165048544, Y = 0.673392181588903 });
+			black = new Coordinate(
+				new StretchedPoint() { X = 0.772815533980583, Y = 0.721311475409836 });
+			pEveWindow.LeftClick(theme);
+			WaitRandom();
+			pEveWindow.LeftClick(black);
+			WaitRandom();
+			// POINT: shortcuts settings tab
+			Coordinate shortcuts = new Coordinate(
+				new StretchedPoint() { X = 0.430097087378641, Y = 0.247162673392182 });
+			pEveWindow.LeftClick(shortcuts);
+			WaitRandom();
+			// POINT: shortcuts list
+			Coordinate list = new Coordinate(
+				new StretchedPoint() { X = 0.650485436893204, Y = 0.300126103404792 });
+			pEveWindow.LeftClick(list);
+			WaitRandom();
+			for(int i = 0; i < 32; i++)	// go to "open active ship's cargo" shortcut
+			{
+				pEveWindow.KeySend("{DOWN}");
+			}
+			WaitRandom();
+			// POINT: add shortcut button
+			Coordinate addbutton = new Coordinate(
+				new StretchedPoint() { X = 0.609708737864078, Y = 0.412358133669609 });
+			pEveWindow.LeftClick(addbutton);
+			WaitRandom();
+			// POINT: alt checkbox in shortcut window
+			Coordinate altbutton = new Coordinate(
+				new StretchedPoint() { X = 0.394174757281553, Y = 0.501891551071879 });
+			pEveWindow.LeftClick(altbutton);
+			WaitRandom();
+			// POINT: textbox in shortcut window
+			Coordinate textbox = new Coordinate(
+				new StretchedPoint() { X = 0.446601941747573, Y = 0.549810844892812 });
+			pEveWindow.LeftClick(textbox);
+			WaitRandom();
+			pEveWindow.KeySendAndWait("c", pStandardWaitTime);	// ctrl+alt+c for open cargo
+			// POINT: ok button shortcut window
+			Coordinate shortcutok = new Coordinate(
+				new StretchedPoint() { X = 0.448543689320388, Y = 0.601513240857503 });
+			pEveWindow.LeftClick(shortcutok);
+			WaitRandom();
+		}
+
+		private void ClickQuitGameButton(bool confirmation)
+		{
+			// POINT: quit button
+			Coordinate quit = new Coordinate(
+				new StretchedPoint() { X = 0.836893203883495, Y = 0.791929382093317 });
+			pEveWindow.LeftClick(quit);
+			WaitRandom();
+			if(confirmation)
+			{
+				// POINT: "do not..." checkbox
+				Coordinate donot = new Coordinate(
+					new StretchedPoint() { X = 0.349514563106796, Y = 0.597730138713745 });
+				pEveWindow.LeftClick(donot);
+				WaitRandom();
+				// POINT: yes button
+				Coordinate yes = new Coordinate(
+					new StretchedPoint() { X = 0.476699029126214, Y = 0.62547288776797 });
+				pEveWindow.LeftClick(yes);
+				WaitRandom();
+			}
+		}
+
+		private void MinimizeLeftPanel()
+		{
+			// POINT: minimize button
+			Coordinate minimize = new Coordinate(
+				new StretchedPoint() { X = 0.113592233009709, Y = 0.0479192938209332 });
+			pEveWindow.LeftClick(minimize);
+			WaitRandom();
+		}
+
+		private bool CheckAgentWarning()
+		{
+			// POINT: top-left corner to search warning text
+			Coordinate tl_pt = new Coordinate(
+				new StretchedPoint() { X = 0.346601941747573, Y = 0.469104665825977 });
+			// POINT: bottom-right corner to search warning text
+			Coordinate br_pt = new Coordinate(
+				new StretchedPoint() { X = 0.406796116504854, Y = 0.519546027742749 });
+			return FindImage(tl_pt, br_pt, pImageAgentWarning);
+		}
+
+		private void CloseAgentWarning()
+		{
+			// POINT: "do not..." checkbox
+			Coordinate donot = new Coordinate(
+				new StretchedPoint() { X = 0.349514563106796, Y = 0.600252206809584 });
+			pEveWindow.LeftClick(donot);
+			WaitRandom();
+			// POINT: ok button
+			Coordinate ok = new Coordinate(
+				new StretchedPoint() { X = 0.501941747572816, Y = 0.626733921815889 });
+			pEveWindow.LeftClick(ok);
 			WaitRandom();
 		}
 	}

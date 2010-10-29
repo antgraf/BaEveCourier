@@ -85,6 +85,13 @@ namespace Courier
 			}
 
 			[Test]
+			public void SetEveSettings()
+			{
+				AttachToEve();
+				Assert.True(pEve.SetEveSettings());
+			}
+
+			[Test]
 			public void CheckInDockTrue()
 			{
 				AttachToEve();
@@ -173,6 +180,29 @@ namespace Courier
 			{
 				AttachToEve();
 				Assert.True(pEve.MakeBlackScreen());
+			}
+
+			[Test]
+			public void CheckAgentWarningTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckAgentWarning());
+			}
+
+			[Test]
+			public void CheckAgentWarningFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckAgentWarning());
+			}
+
+			[Test]
+			public void CloseAgentWarning()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckAgentWarning());
+				pEve.CloseAgentWarning();
+				Assert.False(pEve.CheckAgentWarning());
 			}
 		}
 	}

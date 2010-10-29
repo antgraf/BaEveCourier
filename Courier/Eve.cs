@@ -46,6 +46,7 @@ namespace Courier
 		private const string pImageUnDock = @"Images\undock.png";
 		private const string pImageSetDestination = @"Images\set_destination.png";
 		private const string pImageDock = @"Images\dock.png";
+		private const string pImageAgentWarning = @"Images\agent_warning.png";
 
 		private const string pSettings1 = @"Data\core_char__.dat";
 		private const string pSettings2 = @"Data\core_public__.dat";
@@ -163,8 +164,31 @@ namespace Courier
 			{
 				Log("ResetEveSettings", ex.ToString());
 				CleanUp();
-				return false;
 			}
+			return ok;
+		}
+
+		public bool SetEveSettings()
+		{
+			bool ok = false;
+			try
+			{
+				Log("SetEveSettings", "MinimizeLeftPanel");
+				MinimizeLeftPanel();
+				Log("SetEveSettings", "OpenOptionsWindow");
+				OpenOptionsWindow();
+				Log("SetEveSettings", "SetOptions");
+				SetOptions();
+				Log("SetEveSettings", "ClickQuitGameButton");
+				ClickQuitGameButton(true);
+				Log("SetEveSettings", "Complete");
+				ok = true;
+			}
+			catch(Exception ex)
+			{
+				Log("SetEveSettings", ex.ToString());
+			}
+			CleanUp();
 			return ok;
 		}
 
