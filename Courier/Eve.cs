@@ -26,6 +26,7 @@ namespace Courier
 		private const int pMinWindowWidth = 1000;
 		private const string pEveProcessName = "ExeFile";
 		private const int pStandardWaitTime = (int)(1.5 * 1000);	// milliseconds
+		private const int pLoadWaitTime = (int)(3.5 * 1000);	// milliseconds
 		private const int pWindowWaitTime = 15;	// seconds
 		private const int pWindowWaitInterval = 5;	// seconds
 		private const int pWindowWaitAttempts = 5;
@@ -41,6 +42,7 @@ namespace Courier
 		private const string pImageSkull = @"Images\skull.png";
 		private const string pImageCourierMission = @"Images\courier_mission.png";
 		private const string pImageNoMissions = @"Images\no_missions.png";
+		private const string pImageNoMissions2 = @"Images\no_missions2.png";
 		private const string pImageRemoteMission = @"Images\remote_mission.png";
 		private const string pImageLowSecMission = @"Images\low_sec.png";
 		private const string pImageUnDock = @"Images\undock.png";
@@ -292,6 +294,7 @@ namespace Courier
 					throw new AgentHasNoMissionsAvailableException();
 				}
 
+				Log("SetDestinationToAgent", "CallAgentLocationMenu");
 				CallAgentLocationMenu();
 				WaitRandom();
 				Log("SetDestinationToAgent", "CheckAgentLocationDestinationMenuItem");
@@ -319,6 +322,32 @@ namespace Courier
 			return ok;
 		}
 
+		public bool CheckIfAtAgentsStation(string agent)
+		{
+			bool ok = false;
+			try
+			{
+				Log("CheckIfAtAgentsStation", "CheckInDock");
+				bool in_dock = CheckInDock();
+				if(in_dock)
+				{
+					Log("CheckIfAtAgentsStation", "OpenAgentWindow");
+					OpenAgentWindow(agent);
+					Log("CheckIfAtAgentsStation", "CallAgentLocationMenu");
+					CallAgentLocationMenu();
+					Log("CheckIfAtAgentsStation", "CheckAgentLocationDestinationMenuItem");
+					ok = !CheckAgentLocationDestinationMenuItem();
+				}
+			}
+			catch(Exception ex)
+			{
+				Log("CheckIfAtAgentsStation", ex.ToString());
+				CleanUp();
+			}
+			Log("CheckIfAtAgentsStation", "Complete");
+			return ok;
+		}
+
 		public string GetAgent()
 		{
 			throw new NotImplementedException();
@@ -343,6 +372,36 @@ namespace Courier
 				CleanUp();
 			}
 			Log("MakeBlackScreen", "Complete");
+			return ok;
+		}
+
+		public bool GetCourierMission()
+		{
+			bool ok = false;
+			try
+			{
+				Log("GetCourierMission", "SetCourierMissionDestination");
+				SetCourierMissionDestination();
+				Log("GetCourierMission", "AcceptMission");
+				AcceptMission();
+				Log("GetCourierMission", "OpenStationWarehouse");
+				OpenStationWarehouse();
+				Log("GetCourierMission", "OpenCargo");
+				OpenCargo();
+				Log("GetCourierMission", "ActivateWarehouseWindow");
+				ActivateWarehouseWindow();
+				Log("GetCourierMission", "SelectAllInWarehouse");
+				SelectAllInWarehouse();
+				Log("GetCourierMission", "MoveFromWarehouseToCargo");
+				MoveFromWarehouseToCargo();
+				ok = true;
+			}
+			catch(Exception ex)
+			{
+				Log("GetCourierMission", ex.ToString());
+				CleanUp();
+			}
+			Log("GetCourierMission", "Complete");
 			return ok;
 		}
 

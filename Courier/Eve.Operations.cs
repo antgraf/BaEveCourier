@@ -212,6 +212,7 @@ namespace Courier
 				new StretchedPoint() { X = 0.524271844660194, Y = 0.559899117276166 });
 			pEveWindow.LeftClick(menu_pt);
 			WaitRandom();
+			pEveWindow.Wait(pLoadWaitTime);
 		}
 
 		private void OpenPeopleAndPlaces()
@@ -275,7 +276,7 @@ namespace Courier
 			// POINT: bottom-right corner to search text
 			Coordinate br_pt = new Coordinate(
 				new StretchedPoint() { X = 0.221359223300971, Y = 0.475409836065574 });
-			return FindImage(tl_pt, br_pt, pImageNoMissions);
+			return FindImage(tl_pt, br_pt, pImageNoMissions) || FindImage(tl_pt, br_pt, pImageNoMissions2);
 		}
 
 		private bool CheckRemoteAgentHasMission()
@@ -405,6 +406,7 @@ namespace Courier
 		{
 			pEveWindow.KeySend("{F10}");	// open map
 			WaitRandom();
+			pEveWindow.Wait(pLoadWaitTime);
 		}
 
 		private void MoveMapOut()
@@ -425,9 +427,9 @@ namespace Courier
 		private void MinimizeMapControl()
 		{
 			// POINT: minimize map control button
-			Coordinate undock = new Coordinate(
-				new StretchedPoint() { X = 0.986407766990291, Y = 0.0416141235813367 });
-			pEveWindow.LeftClick(undock);
+			Coordinate minimize = new Coordinate(
+				new StretchedPoint() { X = 0.986407766990291, Y = 0.0390920554854981 });
+			pEveWindow.LeftClick(minimize);
 			WaitRandom();
 		}
 
@@ -467,6 +469,7 @@ namespace Courier
 			chkbox = new Coordinate(
 				new StretchedPoint() { X = 0.388349514563107, Y = 0.534678436317781 });
 			pEveWindow.LeftClick(chkbox);
+			WaitRandom();
 			// POINT: general settings tab
 			Coordinate general = new Coordinate(
 				new StretchedPoint() { X = 0.353398058252427, Y = 0.243379571248424 });
@@ -626,6 +629,83 @@ namespace Courier
 			Coordinate ok = new Coordinate(
 				new StretchedPoint() { X = 0.501941747572816, Y = 0.626733921815889 });
 			pEveWindow.LeftClick(ok);
+			WaitRandom();
+		}
+
+		private void SetCourierMissionDestination()
+		{
+			ActivateAgentWindow();
+			// POINT: destination hyperlink
+			Coordinate destination = new Coordinate(
+				new StretchedPoint() { X = 0.713592233009709, Y = 0.369482976040353 });
+			pEveWindow.RightClick(destination);
+			WaitRandom();
+			// POINT: "set destination" menu item
+			Coordinate menu = new Coordinate(
+				new StretchedPoint() { X = 0.737864077669903, Y = 0.382093316519546 });
+			pEveWindow.LeftClick(menu);
+			WaitRandom();
+		}
+
+		private void OpenStationWarehouse()
+		{
+			// POINT: items button
+			Coordinate items = new Coordinate(
+				new StretchedPoint() { X = 0.0223300970873786, Y = 0.851197982345523 });
+			pEveWindow.LeftClick(items);
+			WaitRandom();
+			pEveWindow.Wait(pLoadWaitTime);
+		}
+
+		private void OpenCargo()
+		{
+			pEveWindow.KeySendAndWait("^%c");	// custom shortcut for open cargo
+			pEveWindow.Wait(pLoadWaitTime);
+		}
+
+		private void ActivateWarehouseWindow()
+		{
+			// POINT: warehouse window
+			Coordinate warehouse = new Coordinate(
+				new StretchedPoint() { X = 0.401941747572816, Y = 0.450189155107188 });
+			pEveWindow.LeftClick(warehouse);
+			WaitRandom();
+		}
+
+		private void SelectAllInWarehouse()
+		{
+			// POINT: warehouse window client area
+			Coordinate warehouse = new Coordinate(
+				new StretchedPoint() { X = 0.40873786407767, Y = 0.538461538461538 });
+			pEveWindow.LeftClick(warehouse);
+			WaitRandom();
+			pEveWindow.KeySendAndWait("^a");	// select all
+		}
+
+		private void MoveFromWarehouseToCargo()
+		{
+			// POINT: warehouse window client area
+			Coordinate warehouse = new Coordinate(
+				new StretchedPoint() { X = 0.40873786407767, Y = 0.538461538461538 });
+			// POINT: cargo window
+			Coordinate cargo = new Coordinate(
+				new StretchedPoint() { X = 0.632038834951456, Y = 0.692307692307692 });
+			pEveWindow.DragDrop(warehouse, cargo);
+			WaitRandom();
+			pEveWindow.Wait(pLoadWaitTime);
+		}
+
+		private void CloseWarehouseAndCargo()
+		{
+			// POINT: warehouse window
+			Coordinate warehouse = new Coordinate(
+				new StretchedPoint() { X = 0.623300970873786, Y = 0.453972257250946 });
+			pEveWindow.LeftClick(warehouse);
+			WaitRandom();
+			// POINT: cargo window
+			Coordinate cargo = new Coordinate(
+				new StretchedPoint() { X = 0.633980582524272, Y = 0.470365699873897 });
+			pEveWindow.LeftClick(cargo);
 			WaitRandom();
 		}
 	}

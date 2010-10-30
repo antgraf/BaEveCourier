@@ -18,8 +18,8 @@ namespace Courier
 			private const string pEvePath = @"C:\Games\EveOnlineBot\eve.exe";
 			private const string pEveLogin = "user";
 			private const string pEvePassword = "******";
-			//private const string pEveAgent = "Hakar Ogok";
-			private const string pEveAgent = "Eindolf Fer";
+			private const string pEveAgent = "Hakar Ogok";
+			//private const string pEveAgent = "Eindolf Fer";
 			
 			#endregion
 
@@ -203,6 +203,41 @@ namespace Courier
 				Assert.True(pEve.CheckAgentWarning());
 				pEve.CloseAgentWarning();
 				Assert.False(pEve.CheckAgentWarning());
+			}
+
+			[Test]
+			public void CheckIfAtAgentsStationTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckIfAtAgentsStation(pEveAgent));
+			}
+
+			[Test]
+			public void CheckIfAtAgentsStationFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckIfAtAgentsStation(pEveAgent));
+			}
+
+			[Test]
+			public void CheckAgentProvideCourierMissionTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckAgentProvideCourierMission());
+			}
+
+			[Test]
+			public void CheckAgentProvideCourierMissionFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckAgentProvideCourierMission());
+			}
+
+			[Test]
+			public void GetCourierMission()
+			{
+				AttachToEve();
+				Assert.True(pEve.GetCourierMission());
 			}
 		}
 	}

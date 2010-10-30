@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A04528
 		Bin\Images\dock.png = Bin\Images\dock.png
 		Bin\Images\low_sec.png = Bin\Images\low_sec.png
 		Bin\Images\no_missions.png = Bin\Images\no_missions.png
+		Bin\Images\no_missions2.png = Bin\Images\no_missions2.png
 		Bin\Images\remote_mission.png = Bin\Images\remote_mission.png
 		Bin\Images\set_destination.png = Bin\Images\set_destination.png
 		Bin\Images\skull.png = Bin\Images\skull.png
