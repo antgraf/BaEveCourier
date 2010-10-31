@@ -77,6 +77,7 @@
     <Compile Include="Eve.Operations.cs" />
     <Compile Include="Exceptions\AgentHasNoMissionsAvailableException.cs" />
     <Compile Include="Exceptions\CannotFindLoginScreenException.cs" />
+    <Compile Include="Exceptions\CannotFindWarehouseException.cs" />
     <Compile Include="Exceptions\CannotLaunchProcessException.cs" />
     <Compile Include="IMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

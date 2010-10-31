@@ -131,7 +131,7 @@ namespace Courier
 			{
 				AttachToEve();
 				pEve.CallAgentLocationMenu();
-				Assert.True(pEve.CheckAgentLocationDestinationMenuItem());
+				Assert.True(pEve.CheckAndGoAgentLocationDestinationMenuItem());
 				pEve.SetAgentDestination();
 			}
 
@@ -140,7 +140,7 @@ namespace Courier
 			{
 				AttachToEve();
 				pEve.CallAgentLocationMenu();
-				Assert.False(pEve.CheckAgentLocationDestinationMenuItem());
+				Assert.False(pEve.CheckAndGoAgentLocationDestinationMenuItem());
 			}
 
 			[Test]
@@ -148,7 +148,7 @@ namespace Courier
 			{
 				AttachToEve();
 				pEve.CallAgentLocationMenu();
-				Assert.True(pEve.CheckAgentLocationDockMenuItem());
+				Assert.True(pEve.CheckAndGoAgentLocationDockMenuItem());
 				pEve.DockToAgent();
 			}
 
@@ -157,7 +157,7 @@ namespace Courier
 			{
 				AttachToEve();
 				pEve.CallAgentLocationMenu();
-				Assert.False(pEve.CheckAgentLocationDockMenuItem());
+				Assert.False(pEve.CheckAndGoAgentLocationDockMenuItem());
 			}
 
 			[Test]
@@ -183,26 +183,18 @@ namespace Courier
 			}
 
 			[Test]
-			public void CheckAgentWarningTrue()
+			public void CheckAndCloseAgentWarningTrue()
 			{
 				AttachToEve();
-				Assert.True(pEve.CheckAgentWarning());
+				Assert.True(pEve.CheckAndCloseAgentWarning());
+				Assert.False(pEve.CheckAndCloseAgentWarning());
 			}
 
 			[Test]
-			public void CheckAgentWarningFalse()
+			public void CheckAndCloseAgentWarningFalse()
 			{
 				AttachToEve();
-				Assert.False(pEve.CheckAgentWarning());
-			}
-
-			[Test]
-			public void CloseAgentWarning()
-			{
-				AttachToEve();
-				Assert.True(pEve.CheckAgentWarning());
-				pEve.CloseAgentWarning();
-				Assert.False(pEve.CheckAgentWarning());
+				Assert.False(pEve.CheckAndCloseAgentWarning());
 			}
 
 			[Test]
@@ -238,6 +230,130 @@ namespace Courier
 			{
 				AttachToEve();
 				Assert.True(pEve.GetCourierMission());
+			}
+
+			[Test]
+			public void CheckRemoteAgentHasMissionTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckRemoteAgentHasMission());
+			}
+
+			[Test]
+			public void CheckRemoteAgentHasMissionFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckRemoteAgentHasMission());
+			}
+
+			[Test]
+			public void CheckAndCloseWrongLocationWarningTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckAndCloseWrongLocationWarning());
+				Assert.False(pEve.CheckAndCloseWrongLocationWarning());
+			}
+
+			[Test]
+			public void CheckAndCloseWrongLocationWarningFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckAndCloseWrongLocationWarning());
+			}
+
+			[Test]
+			public void CheckAndCloseShutdownWarningTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckAndCloseShutdownWarning());
+				Assert.False(pEve.CheckAndCloseShutdownWarning());
+			}
+
+			[Test]
+			public void CheckAndCloseShutdownWarningFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckAndCloseShutdownWarning());
+			}
+
+			[Test]
+			public void CheckWarpButtonActiveTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckWarpButtonActive());
+			}
+
+			[Test]
+			public void CheckWarpButtonActiveFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckWarpButtonActive());
+			}
+
+			[Test]
+			public void CheckActivateButtonActiveTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckActivateButtonActive());
+			}
+
+			[Test]
+			public void CheckActivateButtonActiveFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckActivateButtonActive());
+			}
+
+			[Test]
+			public void CheckAndSelectDestinationGateTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.CheckAndSelectDestinationGate());
+			}
+
+			[Test]
+			public void CheckAndSelectDestinationGateFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.CheckAndSelectDestinationGate());
+			}
+
+			[Test]
+			public void LoadAllToCargo()
+			{
+				AttachToEve();
+				pEve.OpenCargo();
+				Assert.True(pEve.ActivateWarehouseWindow());
+				pEve.SelectAllInWarehouse();
+				pEve.MoveFromWarehouseToCargo();
+			}
+
+			[Test]
+			public void CloseAgentWindow()
+			{
+				AttachToEve();
+				pEve.CloseAgentWindow();
+			}
+
+			[Test]
+			public void Align()
+			{
+				AttachToEve();
+				pEve.Align();
+			}
+
+			[Test]
+			public void Warp()
+			{
+				AttachToEve();
+				pEve.Warp();
+			}
+
+			[Test]
+			public void Activate()
+			{
+				AttachToEve();
+				pEve.Activate();
 			}
 		}
 	}

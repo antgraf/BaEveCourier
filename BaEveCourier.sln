@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A0452835-DB92-42C3-9141-CEEB759F9633}"
 	ProjectSection(SolutionItems) = preProject
+		Bin\Images\activate_button_active.png = Bin\Images\activate_button_active.png
 		Bin\Images\agent_warning.png = Bin\Images\agent_warning.png
 		Bin\Images\courier_mission.png = Bin\Images\courier_mission.png
 		Bin\Images\dock.png = Bin\Images\dock.png
@@ -18,10 +19,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A04528
 		Bin\Images\no_missions.png = Bin\Images\no_missions.png
 		Bin\Images\no_missions2.png = Bin\Images\no_missions2.png
 		Bin\Images\remote_mission.png = Bin\Images\remote_mission.png
+		Bin\Images\selected_gate.png = Bin\Images\selected_gate.png
 		Bin\Images\set_destination.png = Bin\Images\set_destination.png
+		Bin\Images\shutdown.png = Bin\Images\shutdown.png
 		Bin\Images\skull.png = Bin\Images\skull.png
 		Bin\Images\status_ok.png = Bin\Images\status_ok.png
 		Bin\Images\undock.png = Bin\Images\undock.png
+		Bin\Images\unselected_gate.png = Bin\Images\unselected_gate.png
+		Bin\Images\warehouse.png = Bin\Images\warehouse.png
+		Bin\Images\warp_button_active.png = Bin\Images\warp_button_active.png
+		Bin\Images\wrong_location.png = Bin\Images\wrong_location.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3DBC93F6-EA98-4646-8C2E-56CC51A0DD27}"

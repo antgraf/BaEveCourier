@@ -49,6 +49,13 @@ namespace Courier
 		private const string pImageSetDestination = @"Images\set_destination.png";
 		private const string pImageDock = @"Images\dock.png";
 		private const string pImageAgentWarning = @"Images\agent_warning.png";
+		private const string pImageWrongLocationWarning = @"Images\wrong_location.png";
+		private const string pImageShutdownWarning = @"Images\shutdown.png";
+		private const string pImageSelectedGate = @"Images\selected_gate.png";
+		private const string pImageUnSelectedGate = @"Images\unselected_gate.png";
+		private const string pImageActiveWarpButton = @"Images\warp_button_active.png";
+		private const string pImageActiveActivateButton = @"Images\activate_button_active.png";
+		private const string pImageWarehouseTab = @"Images\warehouse.png";
 
 		private const string pSettings1 = @"Data\core_char__.dat";
 		private const string pSettings2 = @"Data\core_public__.dat";
@@ -99,11 +106,23 @@ namespace Courier
 
 		private bool FindImage(Coordinate topLeft, Coordinate bottomRight, string imageName)
 		{
+			return FindImageCoordinate(topLeft, bottomRight, imageName) != null;
+		}
+
+		private Coordinate FindImageCoordinate(Coordinate topLeft, Coordinate bottomRight, string imageName)
+		{
 			Bitmap screen = pEveWindow.Screenshot(topLeft, bottomRight);
 			SaveDebugImage(screen);
 			Bitmap fragment = new Bitmap(Relative2AbsolutePath(imageName));
 			pEveWindow.AllowedColorDeviation = pStandardColorDeviation;
-			return pEveWindow.FindImageWithColorDeviation(screen, fragment) != null;
+			Coordinate found = pEveWindow.FindImageWithColorDeviation(screen, fragment);
+			if(found == null)
+			{
+				return null;
+			}
+			WindowEntity.Point rel1 = topLeft.ToRelative(pEveWindow);
+			WindowEntity.Point rel2 = found.ToRelative(pEveWindow);
+			return new Coordinate(CoordinateType.Relative, new WindowEntity.Point() { X = rel1.X + rel2.X, Y = rel1.Y + rel2.Y });
 		}
 
 		private void SaveDebugImage(Bitmap image)
@@ -298,7 +317,7 @@ namespace Courier
 				CallAgentLocationMenu();
 				WaitRandom();
 				Log("SetDestinationToAgent", "CheckAgentLocationDestinationMenuItem");
-				if(CheckAgentLocationDestinationMenuItem())
+				if(CheckAndGoAgentLocationDestinationMenuItem())
 				{
 					Log("SetDestinationToAgent", "SetAgentDestination");
 					SetAgentDestination();
@@ -306,7 +325,7 @@ namespace Courier
 				}
 
 				Log("SetDestinationToAgent", "CheckAgentLocationDockMenuItem");
-				if(CheckAgentLocationDockMenuItem())
+				if(CheckAndGoAgentLocationDockMenuItem())
 				{
 					Log("SetDestinationToAgent", "DockToAgent");
 					DockToAgent();
@@ -336,7 +355,7 @@ namespace Courier
 					Log("CheckIfAtAgentsStation", "CallAgentLocationMenu");
 					CallAgentLocationMenu();
 					Log("CheckIfAtAgentsStation", "CheckAgentLocationDestinationMenuItem");
-					ok = !CheckAgentLocationDestinationMenuItem();
+					ok = !CheckAndGoAgentLocationDestinationMenuItem();
 				}
 			}
 			catch(Exception ex)
@@ -384,12 +403,13 @@ namespace Courier
 				SetCourierMissionDestination();
 				Log("GetCourierMission", "AcceptMission");
 				AcceptMission();
-				Log("GetCourierMission", "OpenStationWarehouse");
-				OpenStationWarehouse();
 				Log("GetCourierMission", "OpenCargo");
 				OpenCargo();
 				Log("GetCourierMission", "ActivateWarehouseWindow");
-				ActivateWarehouseWindow();
+				if(!ActivateWarehouseWindow())
+				{
+					throw new CannotFindWarehouseException();
+				}
 				Log("GetCourierMission", "SelectAllInWarehouse");
 				SelectAllInWarehouse();
 				Log("GetCourierMission", "MoveFromWarehouseToCargo");
