@@ -213,6 +213,8 @@ namespace Courier
 			pEveWindow.LeftClick(menu_pt);
 			WaitRandom();
 			pEveWindow.Wait(pLoadWaitTime);
+			CheckAndCloseAgentWarning();
+			WaitRandom();
 		}
 
 		private void OpenPeopleAndPlaces()
@@ -402,7 +404,7 @@ namespace Courier
 			WaitRandom();
 		}
 
-		private void OpenMap()
+		private void ToggleMap()
 		{
 			pEveWindow.KeySend("{F10}");	// open map
 			WaitRandom();
@@ -413,10 +415,10 @@ namespace Courier
 		{
 			// POINT: drag from point
 			Coordinate from = new Coordinate(
-				new StretchedPoint() { X = 0.975728155339806, Y = 0.958385876418663 });
+				new StretchedPoint() { X = 0.975728155339806, Y = 0.978385876418663 });
 			// POINT: drag to point
 			Coordinate to = new Coordinate(
-				new StretchedPoint() { X = 0.724271844660194, Y = 0.950819672131147 });
+				new StretchedPoint() { X = 0.754271844660194, Y = 0.980819672131147 });
 			for(int i = 0; i < 4; i++)
 			{
 				pEveWindow.DragDropRight(from, to);	// drag map out
@@ -431,7 +433,7 @@ namespace Courier
 				new StretchedPoint() { X = 0.986407766990291, Y = 0.0390920554854981 });
 			pEveWindow.LeftClick(minimize);
 			WaitRandom();
-			pEveWindow.LeftClick(minimize);	// workaround of some eve problem with minimizing this window
+			pEveWindow.LeftClick(minimize);	// workaround of some eve problem with window control buttons
 			WaitRandom();
 		}
 
@@ -456,7 +458,7 @@ namespace Courier
 					new StretchedPoint() { X = 0.5, Y = 0.626733921815889 });
 				pEveWindow.LeftClick(ok);
 				WaitRandom();
-				pEveWindow.Wait(pStandardWaitTime);
+				pEveWindow.Wait(pLoadWaitTime);
 			}
 			return found;
 		}
@@ -705,6 +707,7 @@ namespace Courier
 
 		private bool ActivateWarehouseWindow()
 		{
+			ActivateStationView();
 			// POINT: top-left corner to search for warehouse tab
 			Coordinate tl_pt = new Coordinate(
 				new StretchedPoint() { X = 0.725242718446602, Y = 0.489281210592686 });
@@ -751,7 +754,7 @@ namespace Courier
 		{
 			// POINT: overview
 			Coordinate overview = new Coordinate(
-				new StretchedPoint() { X = 0.754368932038835, Y = 0.0580075662042875 });
+				new StretchedPoint() { X = 0.939805825242719, Y = 0.168978562421185 });
 			pEveWindow.LeftClick(overview);
 			WaitRandom();
 		}
@@ -836,6 +839,79 @@ namespace Courier
 			// POINT: close button
 			Coordinate button = new Coordinate(
 				new StretchedPoint() { X = 0.898058252427185, Y = 0.194199243379571 });
+			pEveWindow.LeftClick(button);
+			WaitRandom();
+		}
+
+		private void ClosePeopleAndPlaces()
+		{
+			OpenPeopleAndPlaces();
+			// POINT: close button
+			Coordinate button = new Coordinate(
+				new StretchedPoint() { X = 0.731067961165049, Y = 0.269861286254729 });
+			pEveWindow.LeftClick(button);
+			WaitRandom();
+			pEveWindow.LeftClick(button);	// workaround of some eve problem with window control buttons
+			WaitRandom();
+		}
+
+		private void ActivateStationView()
+		{
+			// POINT: station view
+			Coordinate station = new Coordinate(
+				new StretchedPoint() { X = 0.753398058252427, Y = 0.0378310214375788 });
+			pEveWindow.LeftClick(station);
+			WaitRandom();
+		}
+
+		private bool IsWarping()
+		{
+			// POINT: top-left corner to search for warping text
+			Coordinate tl_pt = new Coordinate(
+				new StretchedPoint() { X = 0.475728155339806, Y = 0.92433795712484 });
+			// POINT: bottom-right corner to search for warping text
+			Coordinate br_pt = new Coordinate(
+				new StretchedPoint() { X = 0.511941747572816, Y = 0.944514501891551 });
+			return FindImage(tl_pt, br_pt, pImageWarpGrey) || FindImage(tl_pt, br_pt, pImageWarpBlue);
+		}
+
+		private void UnPinOverview()
+		{
+			// POINT: action panel pin button
+			Coordinate button1 = new Coordinate(
+				new StretchedPoint() { X = 0.954368932038835, Y = 0.0592686002522068 });
+			pEveWindow.SetCursorPosition(button1);
+			WaitRandom();
+			pEveWindow.LeftClick(button1);
+			// POINT: overview pin button
+			Coordinate button2 = new Coordinate(
+				new StretchedPoint() { X = 0.956310679611651, Y = 0.176544766708701 });
+			pEveWindow.SetCursorPosition(button2);
+			WaitRandom();
+			pEveWindow.LeftClick(button2);
+		}
+
+		private void DockAtCourierMissionDestination()
+		{
+			ActivateAgentWindow();
+			// POINT: destination hyperlink
+			Coordinate destination = new Coordinate(
+				new StretchedPoint() { X = 0.713592233009709, Y = 0.370744010088272 });
+			pEveWindow.RightClick(destination);
+			WaitRandom();
+			// POINT: dock menu item
+			Coordinate dock = new Coordinate(
+				new StretchedPoint() { X = 0.73495145631068, Y = 0.440100882723834 });
+			pEveWindow.LeftClick(dock);
+			WaitRandom();
+		}
+
+		private void CompleteMission()
+		{
+			ActivateAgentWindow();
+			// POINT: complete button
+			Coordinate button = new Coordinate(
+				new StretchedPoint() { X = 0.595145631067961, Y = 0.848675914249685 });
 			pEveWindow.LeftClick(button);
 			WaitRandom();
 		}

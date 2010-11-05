@@ -27,7 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A04528
 		Bin\Images\undock.png = Bin\Images\undock.png
 		Bin\Images\unselected_gate.png = Bin\Images\unselected_gate.png
 		Bin\Images\warehouse.png = Bin\Images\warehouse.png
+		Bin\Images\warp_blue.png = Bin\Images\warp_blue.png
 		Bin\Images\warp_button_active.png = Bin\Images\warp_button_active.png
+		Bin\Images\warp_grey.png = Bin\Images\warp_grey.png
 		Bin\Images\wrong_location.png = Bin\Images\wrong_location.png
 	EndProjectSection
 EndProject

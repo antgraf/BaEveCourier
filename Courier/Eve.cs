@@ -56,6 +56,8 @@ namespace Courier
 		private const string pImageActiveWarpButton = @"Images\warp_button_active.png";
 		private const string pImageActiveActivateButton = @"Images\activate_button_active.png";
 		private const string pImageWarehouseTab = @"Images\warehouse.png";
+		private const string pImageWarpGrey = @"Images\warp_grey.png";
+		private const string pImageWarpBlue = @"Images\warp_blue.png";
 
 		private const string pSettings1 = @"Data\core_char__.dat";
 		private const string pSettings2 = @"Data\core_public__.dat";
@@ -194,8 +196,12 @@ namespace Courier
 			bool ok = false;
 			try
 			{
+				Log("SetEveSettings", "CheckAndCloseWrongLocationWarning");
+				CheckAndCloseWrongLocationWarning();
 				Log("SetEveSettings", "MinimizeLeftPanel");
 				MinimizeLeftPanel();
+				Log("SetEveSettings", "UnPinOverview");
+				UnPinOverview();
 				Log("SetEveSettings", "OpenOptionsWindow");
 				OpenOptionsWindow();
 				Log("SetEveSettings", "SetOptions");
@@ -378,7 +384,7 @@ namespace Courier
 			try
 			{
 				Log("MakeBlackScreen", "OpenMap");
-				OpenMap();
+				ToggleMap();
 				Log("MakeBlackScreen", "MinimizeMapControl");
 				MinimizeMapControl();
 				Log("MakeBlackScreen", "MoveMapOut");

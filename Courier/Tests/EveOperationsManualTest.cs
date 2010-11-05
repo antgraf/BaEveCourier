@@ -336,6 +336,13 @@ namespace Courier
 			}
 
 			[Test]
+			public void ClosePeopleAndPlaces()
+			{
+				AttachToEve();
+				pEve.ClosePeopleAndPlaces();
+			}
+
+			[Test]
 			public void Align()
 			{
 				AttachToEve();
@@ -354,6 +361,41 @@ namespace Courier
 			{
 				AttachToEve();
 				pEve.Activate();
+			}
+
+			[Test]
+			public void ActivateStationView()
+			{
+				AttachToEve();
+				pEve.ActivateStationView();
+			}
+
+			[Test]
+			public void IsWarpingTrue()
+			{
+				AttachToEve();
+				Assert.True(pEve.IsWarping());
+			}
+
+			[Test]
+			public void IsWarpingFalse()
+			{
+				AttachToEve();
+				Assert.False(pEve.IsWarping());
+			}
+
+			[Test]
+			public void DockAtCourierMissionDestination()
+			{
+				AttachToEve();
+				pEve.DockAtCourierMissionDestination();
+			}
+
+			[Test]
+			public void CompleteMission()
+			{
+				AttachToEve();
+				pEve.CompleteMission();
 			}
 		}
 	}
