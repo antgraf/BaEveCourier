@@ -2,6 +2,7 @@
   <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
     <assembly path="Bin\Courier.bap" />
+    <assembly path="Bin\EveOperations.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

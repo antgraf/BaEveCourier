@@ -16,7 +16,7 @@ namespace Courier.States
 		public override void Enter()
 		{
 			pMachine.LogAndDisplay("LoginState", "Enter");
-			if(pMachine.Eve.DoLogin(pMachine.Eve.Login, pMachine.Eve.Password))
+			if(pMachine.Eve.DoLogin((string)pMachine.Settings[CourierSettings.Login], (string)pMachine.Settings[CourierSettings.Password]))
 			{
 				pMachine.HandleEvent(CourierEvents.LoggedIn);
 			}

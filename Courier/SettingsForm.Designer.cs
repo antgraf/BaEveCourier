@@ -50,20 +50,18 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.tabMissions = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.chkCircleAgents = new System.Windows.Forms.CheckBox();
+			this.btnRemove = new System.Windows.Forms.Button();
+			this.btnAdd = new System.Windows.Forms.Button();
+			this.txtAgent = new System.Windows.Forms.TextBox();
+			this.lstAgents = new System.Windows.Forms.ListBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.btnSetup = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnStart = new System.Windows.Forms.Button();
 			this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
-			this.tabMissions = new System.Windows.Forms.TabPage();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.label5 = new System.Windows.Forms.Label();
-			this.lstAgents = new System.Windows.Forms.ListBox();
-			this.txtAgent = new System.Windows.Forms.TextBox();
-			this.btnAdd = new System.Windows.Forms.Button();
-			this.btnRemove = new System.Windows.Forms.Button();
-			this.label6 = new System.Windows.Forms.Label();
-			this.txtCurrentAgent = new System.Windows.Forms.TextBox();
-			this.chkCircleAgents = new System.Windows.Forms.CheckBox();
 			this.menuMain.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabSettings.SuspendLayout();
@@ -274,6 +272,85 @@
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Path to eve.exe:";
 			// 
+			// tabMissions
+			// 
+			this.tabMissions.Controls.Add(this.groupBox1);
+			this.tabMissions.Location = new System.Drawing.Point(4, 22);
+			this.tabMissions.Name = "tabMissions";
+			this.tabMissions.Size = new System.Drawing.Size(624, 341);
+			this.tabMissions.TabIndex = 1;
+			this.tabMissions.Text = "Missions";
+			this.tabMissions.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.chkCircleAgents);
+			this.groupBox1.Controls.Add(this.btnRemove);
+			this.groupBox1.Controls.Add(this.btnAdd);
+			this.groupBox1.Controls.Add(this.txtAgent);
+			this.groupBox1.Controls.Add(this.lstAgents);
+			this.groupBox1.Controls.Add(this.label5);
+			this.groupBox1.Location = new System.Drawing.Point(8, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(292, 183);
+			this.groupBox1.TabIndex = 0;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Agents";
+			// 
+			// chkCircleAgents
+			// 
+			this.chkCircleAgents.AutoSize = true;
+			this.chkCircleAgents.Location = new System.Drawing.Point(9, 159);
+			this.chkCircleAgents.Name = "chkCircleAgents";
+			this.chkCircleAgents.Size = new System.Drawing.Size(117, 17);
+			this.chkCircleAgents.TabIndex = 7;
+			this.chkCircleAgents.Text = "Circle event agents";
+			this.chkCircleAgents.UseVisualStyleBackColor = true;
+			// 
+			// btnRemove
+			// 
+			this.btnRemove.Location = new System.Drawing.Point(245, 133);
+			this.btnRemove.Name = "btnRemove";
+			this.btnRemove.Size = new System.Drawing.Size(41, 20);
+			this.btnRemove.TabIndex = 4;
+			this.btnRemove.Text = "-";
+			this.btnRemove.UseVisualStyleBackColor = true;
+			this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+			// 
+			// btnAdd
+			// 
+			this.btnAdd.Location = new System.Drawing.Point(198, 133);
+			this.btnAdd.Name = "btnAdd";
+			this.btnAdd.Size = new System.Drawing.Size(41, 20);
+			this.btnAdd.TabIndex = 3;
+			this.btnAdd.Text = "+";
+			this.btnAdd.UseVisualStyleBackColor = true;
+			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+			// 
+			// txtAgent
+			// 
+			this.txtAgent.Location = new System.Drawing.Point(9, 133);
+			this.txtAgent.Name = "txtAgent";
+			this.txtAgent.Size = new System.Drawing.Size(183, 20);
+			this.txtAgent.TabIndex = 2;
+			// 
+			// lstAgents
+			// 
+			this.lstAgents.FormattingEnabled = true;
+			this.lstAgents.Location = new System.Drawing.Point(9, 32);
+			this.lstAgents.Name = "lstAgents";
+			this.lstAgents.Size = new System.Drawing.Size(277, 95);
+			this.lstAgents.TabIndex = 1;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(6, 16);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(58, 13);
+			this.label5.TabIndex = 0;
+			this.label5.Text = "Agents list:";
+			// 
 			// btnSetup
 			// 
 			this.btnSetup.Location = new System.Drawing.Point(12, 397);
@@ -308,103 +385,6 @@
 			// 
 			this.dlgOpen.FileName = "eve.exe";
 			this.dlgOpen.Filter = "Eve|eve.exe";
-			// 
-			// tabMissions
-			// 
-			this.tabMissions.Controls.Add(this.groupBox1);
-			this.tabMissions.Location = new System.Drawing.Point(4, 22);
-			this.tabMissions.Name = "tabMissions";
-			this.tabMissions.Size = new System.Drawing.Size(624, 341);
-			this.tabMissions.TabIndex = 1;
-			this.tabMissions.Text = "Missions";
-			this.tabMissions.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.chkCircleAgents);
-			this.groupBox1.Controls.Add(this.txtCurrentAgent);
-			this.groupBox1.Controls.Add(this.label6);
-			this.groupBox1.Controls.Add(this.btnRemove);
-			this.groupBox1.Controls.Add(this.btnAdd);
-			this.groupBox1.Controls.Add(this.txtAgent);
-			this.groupBox1.Controls.Add(this.lstAgents);
-			this.groupBox1.Controls.Add(this.label5);
-			this.groupBox1.Location = new System.Drawing.Point(8, 3);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(292, 222);
-			this.groupBox1.TabIndex = 0;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Agents";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 16);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(58, 13);
-			this.label5.TabIndex = 0;
-			this.label5.Text = "Agents list:";
-			// 
-			// lstAgents
-			// 
-			this.lstAgents.FormattingEnabled = true;
-			this.lstAgents.Location = new System.Drawing.Point(9, 32);
-			this.lstAgents.Name = "lstAgents";
-			this.lstAgents.Size = new System.Drawing.Size(277, 95);
-			this.lstAgents.TabIndex = 1;
-			// 
-			// txtAgent
-			// 
-			this.txtAgent.Location = new System.Drawing.Point(9, 133);
-			this.txtAgent.Name = "txtAgent";
-			this.txtAgent.Size = new System.Drawing.Size(183, 20);
-			this.txtAgent.TabIndex = 2;
-			// 
-			// btnAdd
-			// 
-			this.btnAdd.Location = new System.Drawing.Point(198, 133);
-			this.btnAdd.Name = "btnAdd";
-			this.btnAdd.Size = new System.Drawing.Size(41, 20);
-			this.btnAdd.TabIndex = 3;
-			this.btnAdd.Text = "+";
-			this.btnAdd.UseVisualStyleBackColor = true;
-			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-			// 
-			// btnRemove
-			// 
-			this.btnRemove.Location = new System.Drawing.Point(245, 133);
-			this.btnRemove.Name = "btnRemove";
-			this.btnRemove.Size = new System.Drawing.Size(41, 20);
-			this.btnRemove.TabIndex = 4;
-			this.btnRemove.Text = "-";
-			this.btnRemove.UseVisualStyleBackColor = true;
-			this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 156);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(166, 13);
-			this.label6.TabIndex = 5;
-			this.label6.Text = "Currently accepted mission agent:";
-			// 
-			// txtCurrentAgent
-			// 
-			this.txtCurrentAgent.Location = new System.Drawing.Point(9, 172);
-			this.txtCurrentAgent.Name = "txtCurrentAgent";
-			this.txtCurrentAgent.Size = new System.Drawing.Size(183, 20);
-			this.txtCurrentAgent.TabIndex = 6;
-			// 
-			// chkCircleAgents
-			// 
-			this.chkCircleAgents.AutoSize = true;
-			this.chkCircleAgents.Location = new System.Drawing.Point(9, 198);
-			this.chkCircleAgents.Name = "chkCircleAgents";
-			this.chkCircleAgents.Size = new System.Drawing.Size(117, 17);
-			this.chkCircleAgents.TabIndex = 7;
-			this.chkCircleAgents.Text = "Circle event agents";
-			this.chkCircleAgents.UseVisualStyleBackColor = true;
 			// 
 			// SettingsForm
 			// 
@@ -473,8 +453,6 @@
 		private System.Windows.Forms.TextBox txtAgent;
 		private System.Windows.Forms.ListBox lstAgents;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox txtCurrentAgent;
-		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.CheckBox chkCircleAgents;
 	}
 }

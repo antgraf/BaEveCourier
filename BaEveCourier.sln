@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3DBC93F6-E
 		Bin\Data\prefs.ini = Bin\Data\prefs.ini
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveOperations", "EveOperations\EveOperations.csproj", "{23802602-A60B-42DC-ABBF-426BE4DF0055}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{28920F16-6811-4DE9-86DC-23521F1DEC2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28920F16-6811-4DE9-86DC-23521F1DEC2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28920F16-6811-4DE9-86DC-23521F1DEC2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23802602-A60B-42DC-ABBF-426BE4DF0055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23802602-A60B-42DC-ABBF-426BE4DF0055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23802602-A60B-42DC-ABBF-426BE4DF0055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23802602-A60B-42DC-ABBF-426BE4DF0055}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

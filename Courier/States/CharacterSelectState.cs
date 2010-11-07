@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EveOperations;
 
 namespace Courier.States
 {
@@ -15,7 +16,7 @@ namespace Courier.States
 		public override void Enter()
 		{
 			pMachine.LogAndDisplay("CharacterSelectState", "Enter");
-			if(pMachine.Eve.SelectCharacter())
+			if(pMachine.Eve.SelectCharacter((CharacterPosition)pMachine.Settings[CourierSettings.Position]))
 			{
 				pMachine.HandleEvent(CourierEvents.CharacterSelected);
 				pMachine.Eve.EveWindow.Wait(pCharacterSelectWaitTime);

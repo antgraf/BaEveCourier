@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Courier
+namespace EveOperations.Exceptions
 {
-	public interface IMessageHandler
+	public class CannotFindWarehouseException : ApplicationException
 	{
-		void SendMessage(string stage, string msg);
 	}
 }

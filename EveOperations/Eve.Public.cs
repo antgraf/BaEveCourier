@@ -6,12 +6,12 @@ using System.Timers;
 using WindowEntity;
 using System.Diagnostics;
 using Logger;
-using Courier.Exceptions;
 using System.Drawing;
 using System.IO;
 using BACommon;
+using EveOperations.Exceptions;
 
-namespace Courier
+namespace EveOperations
 {
 	public enum CharacterPosition
 	{
@@ -70,13 +70,6 @@ namespace Courier
 		private bool pTimedOut = false;
 		private Process pEveProcess = null;
 		private IMessageHandler pMessager = null;
-		private string pPathToEve = null;
-		private string pLogin = null;
-		private string pPassword = null;
-		private CharacterPosition pPosition = CharacterPosition.Main;
-		private List<string> pAgents = null;
-		private string pCurrentAgent = null;
-		private bool pCircleAgents = false;
 
 		public Eve(IMessageHandler messager)
 		{
@@ -280,13 +273,13 @@ namespace Courier
 			return ok;
 		}
 
-		public bool SelectCharacter()
+		public bool SelectCharacter(CharacterPosition position)
 		{
 			bool ok = false;
 			try
 			{
 				Log("SelectCharacter", "ClickCharacter");
-				ClickCharacter(pPosition);
+				ClickCharacter(position);
 				Log("SelectCharacter", "EnterGame");
 				EnterGame();
 				ok = true;
@@ -453,48 +446,6 @@ namespace Courier
 		{
 			get { return pEveWindow; }
 			set { pEveWindow = value; }
-		}
-
-		public string PathToEve
-		{
-			get { return pPathToEve; }
-			set { pPathToEve = value; }
-		}
-
-		public string Login
-		{
-			get { return pLogin; }
-			set { pLogin = value; }
-		}
-
-		public string Password
-		{
-			get { return pPassword; }
-			set { pPassword = value; }
-		}
-
-		public CharacterPosition Position
-		{
-			get { return pPosition; }
-			set { pPosition = value; }
-		}
-
-		public List<string> Agents
-		{
-			get { return pAgents; }
-			set { pAgents = value; }
-		}
-
-		public string CurrentAgent
-		{
-			get { return pCurrentAgent; }
-			set { pCurrentAgent = value; }
-		}
-
-		public bool CircleAgents
-		{
-			get { return pCircleAgents; }
-			set { pCircleAgents = value; }
 		}
 
 		public bool Debug

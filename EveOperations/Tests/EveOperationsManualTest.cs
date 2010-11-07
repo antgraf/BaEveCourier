@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using WindowEntity;
 
-namespace Courier
+namespace EveOperations
 {
 	public partial class Eve
 	{
@@ -42,6 +42,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void ResetEveSettings()
 			{
 				Init();
@@ -49,6 +50,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void Launch()
 			{
 				Init();
@@ -56,6 +58,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckLoginScreen()
 			{
 				AttachToEve();
@@ -63,6 +66,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void DoLogin()
 			{
 				AttachToEve();
@@ -70,6 +74,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckLoginError()
 			{
 				AttachToEve();
@@ -77,14 +82,16 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void SelectCharacter()
 			{
 				AttachToEve();
-				//pEve.Position = CharacterPosition.Left;
-				Assert.True(pEve.SelectCharacter());
+				CharacterPosition position = CharacterPosition.Main;
+				Assert.True(pEve.SelectCharacter(position));
 			}
 
 			[Test]
+			[Category("Setup")]
 			public void SetEveSettings()
 			{
 				AttachToEve();
@@ -92,6 +99,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckInDockTrue()
 			{
 				AttachToEve();
@@ -99,6 +107,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckInDockFalse()
 			{
 				AttachToEve();
@@ -106,6 +115,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void OpenAgentWindow()
 			{
 				AttachToEve();
@@ -113,6 +123,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentHasNoMissionsTrue()
 			{
 				AttachToEve();
@@ -120,6 +131,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentHasNoMissionsFalse()
 			{
 				AttachToEve();
@@ -127,6 +139,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentLocationDestinationMenuItemTrue()
 			{
 				AttachToEve();
@@ -136,6 +149,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentLocationDestinationMenuItemFalse()
 			{
 				AttachToEve();
@@ -144,6 +158,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentLocationDockMenuItemTrue()
 			{
 				AttachToEve();
@@ -153,6 +168,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentLocationDockMenuItemFalse()
 			{
 				AttachToEve();
@@ -161,6 +177,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void UnDock()
 			{
 				AttachToEve();
@@ -168,6 +185,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void Close()
 			{
 				AttachToEve();
@@ -176,6 +194,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void MakeBlackScreen()
 			{
 				AttachToEve();
@@ -183,6 +202,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAndCloseAgentWarningTrue()
 			{
 				AttachToEve();
@@ -191,6 +211,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAndCloseAgentWarningFalse()
 			{
 				AttachToEve();
@@ -198,6 +219,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckIfAtAgentsStationTrue()
 			{
 				AttachToEve();
@@ -205,6 +227,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckIfAtAgentsStationFalse()
 			{
 				AttachToEve();
@@ -212,6 +235,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentProvideCourierMissionTrue()
 			{
 				AttachToEve();
@@ -219,6 +243,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckAgentProvideCourierMissionFalse()
 			{
 				AttachToEve();
@@ -226,6 +251,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void GetCourierMission()
 			{
 				AttachToEve();
@@ -233,6 +259,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckRemoteAgentHasMissionTrue()
 			{
 				AttachToEve();
@@ -240,6 +267,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CheckRemoteAgentHasMissionFalse()
 			{
 				AttachToEve();
@@ -247,6 +275,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckAndCloseWrongLocationWarningTrue()
 			{
 				AttachToEve();
@@ -255,6 +284,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckAndCloseWrongLocationWarningFalse()
 			{
 				AttachToEve();
@@ -262,6 +292,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckAndCloseShutdownWarningTrue()
 			{
 				AttachToEve();
@@ -270,6 +301,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void CheckAndCloseShutdownWarningFalse()
 			{
 				AttachToEve();
@@ -277,6 +309,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void CheckWarpButtonActiveTrue()
 			{
 				AttachToEve();
@@ -284,6 +317,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void CheckWarpButtonActiveFalse()
 			{
 				AttachToEve();
@@ -291,6 +325,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void CheckActivateButtonActiveTrue()
 			{
 				AttachToEve();
@@ -298,6 +333,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void CheckActivateButtonActiveFalse()
 			{
 				AttachToEve();
@@ -305,6 +341,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void CheckAndSelectDestinationGateTrue()
 			{
 				AttachToEve();
@@ -312,6 +349,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void CheckAndSelectDestinationGateFalse()
 			{
 				AttachToEve();
@@ -319,6 +357,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void LoadAllToCargo()
 			{
 				AttachToEve();
@@ -329,6 +368,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CloseAgentWindow()
 			{
 				AttachToEve();
@@ -336,6 +376,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void ClosePeopleAndPlaces()
 			{
 				AttachToEve();
@@ -343,6 +384,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void Align()
 			{
 				AttachToEve();
@@ -350,6 +392,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void Warp()
 			{
 				AttachToEve();
@@ -357,6 +400,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void Activate()
 			{
 				AttachToEve();
@@ -364,6 +408,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Common")]
 			public void ActivateStationView()
 			{
 				AttachToEve();
@@ -371,6 +416,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void IsWarpingTrue()
 			{
 				AttachToEve();
@@ -378,6 +424,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Navigation")]
 			public void IsWarpingFalse()
 			{
 				AttachToEve();
@@ -385,6 +432,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void DockAtCourierMissionDestination()
 			{
 				AttachToEve();
@@ -392,6 +440,7 @@ namespace Courier
 			}
 
 			[Test]
+			[Category("Agent")]
 			public void CompleteMission()
 			{
 				AttachToEve();
