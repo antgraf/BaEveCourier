@@ -27,6 +27,8 @@ namespace EveOperations
 		private const string pEveProcessName = "ExeFile";
 		private const int pStandardWaitTime = (int)(1.5 * 1000);	// milliseconds
 		private const int pLoadWaitTime = (int)(3.5 * 1000);	// milliseconds
+		private const int pGateWaitTime = (int)(0.5 * 1000);	// milliseconds
+		private const int pWarpWaitTime = (int)(2.5 * 1000);	// milliseconds
 		private const int pWindowWaitTime = 15;	// seconds
 		private const int pWindowWaitInterval = 5;	// seconds
 		private const int pWindowWaitAttempts = 5;
@@ -422,6 +424,57 @@ namespace EveOperations
 			}
 			Log("GetCourierMission", "Complete");
 			return ok;
+		}
+
+		public void WaitWhileWarping()
+		{
+			Log("WaitWhileWarping", "IsWarping");
+			while(IsWarping())
+			{
+				pEveWindow.Wait(pWarpWaitTime);
+			}
+			Log("WaitWhileWarping", "CheckActivateButtonActive & CheckInDock");
+			if(CheckActivateButtonActive() || CheckInDock())
+			{
+				Log("WaitWhileWarping", "Warp stop evidence found");
+			}
+			else
+			{
+				pEveWindow.Wait(pLoadWaitTime);
+				Log("WaitWhileWarping", "IsWarping");
+				while(IsWarping())
+				{
+					pEveWindow.Wait(pWarpWaitTime);
+				}
+			}
+			Log("WaitWhileWarping", "Complete");
+		}
+
+		public bool WarpThroughActiveGate()
+		{
+			bool found = false;
+			Log("WarpToActiveGate", "CheckAndSelectDestinationGate");
+			if(CheckAndSelectDestinationGate())
+			{
+				found = true;
+				Log("WarpToActiveGate", "CheckWarpButtonActive");
+				while(!CheckWarpButtonActive())
+				{
+					pEveWindow.Wait(pGateWaitTime);
+				}
+				Log("WarpToActiveGate", "CheckActivateButtonActive");
+				while(!CheckActivateButtonActive())
+				{
+					pEveWindow.Wait(pGateWaitTime);
+				}
+				Log("WarpToActiveGate", "Activate");
+				Activate();
+				WaitRandom();
+				Activate();	// clicky-click to go thru gate asap
+				pEveWindow.Wait(pLoadWaitTime);
+			}
+			Log("WarpToActiveGate", "Complete");
+			return found;
 		}
 
 		public void Close()

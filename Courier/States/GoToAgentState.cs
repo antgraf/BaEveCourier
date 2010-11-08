@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BACommon;
 using EveOperations.Exceptions;
+using Courier.Transitions;
 
 namespace Courier.States
 {
@@ -11,6 +12,7 @@ namespace Courier.States
 	{
 		public GoToAgentState()
 		{
+			pTransitions.Add(new GoToAgentGoToDestinationTransition());
 		}
 
 		public override void Enter()
@@ -23,33 +25,43 @@ namespace Courier.States
 			}
 			else
 			{
-					string agent = pMachine.Agent;
-					if(string.IsNullOrEmpty(agent))
+				string agent = pMachine.Agent;
+				if(string.IsNullOrEmpty(agent))
+				{
+					pMachine.SleepUntil = pMachine.NextAgentAvailableTime;
+					pMachine.LogAndDisplay("GoToAgentState", "No active agents. Sleeping until " + pMachine.SleepUntil.ToString());
+					pMachine.HandleEvent(CourierEvents.Sleep);
+				}
+				else
+				{
+					pMachine.LogAndDisplay("GoToAgentState", "CheckIfAtAgentsStation");
+					if(pMachine.Eve.CheckIfAtAgentsStation(agent))
 					{
-						pMachine.SleepUntil = pMachine.NextAgentAvailableTime;
-						pMachine.LogAndDisplay("GoToAgentState", "No active agents. Sleeping until " + pMachine.SleepUntil.ToString());
-						pMachine.HandleEvent(CourierEvents.Sleep);
+						pMachine.HandleEvent(CourierEvents.AgentReached);
 					}
 					else
 					{
-						if(pMachine.Eve.CheckIfAtAgentsStation(agent))
+						try
 						{
-							pMachine.HandleEvent(CourierEvents.AgentReached);
-						}
-						else
-						{
-							try
+							pMachine.LogAndDisplay("GoToAgentState", "SetDestinationToAgent");
+							if(pMachine.Eve.SetDestinationToAgent(pMachine.Eve.GetAgent(), true))
 							{
-								pMachine.Eve.SetDestinationToAgent(pMachine.Eve.GetAgent(), true);
+								pCurrentSubState = new AutopilotState();
 								pMachine.HandleEvent(CourierEvents.Autopilot);
 							}
-							catch(AgentHasNoMissionsAvailableException)
+							else
 							{
-								pMachine.LogAndDisplay("GoToAgentState", "Agent has no missions available");
+								pMachine.LogAndDisplay("GoToAgentState", "Cannot reach agent. Trying another one.");
 								pMachine.HandleEvent(CourierEvents.NextAgent);
 							}
 						}
+						catch(AgentHasNoMissionsAvailableException)
+						{
+							pMachine.LogAndDisplay("GoToAgentState", "Agent has no missions available");
+							pMachine.HandleEvent(CourierEvents.NextAgent);
+						}
 					}
+				}
 			}
 		}
 	}

@@ -22,7 +22,6 @@ namespace Courier
 		{
 			pObserver.Notify(this, "Start", 100, "Eve Courier actor started");
 			CourierStateMachine machine = (CourierStateMachine)StateMachine.GetInstance(CourierStateMachine.Id);
-			// TODO: transfer other settings
 			machine.HandleEvent(CourierEvents.Start);
 			pObserver.Notify(this, "End", 100, "Eve Courier actor returned");
 		}

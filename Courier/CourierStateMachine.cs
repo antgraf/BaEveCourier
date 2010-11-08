@@ -29,12 +29,13 @@ namespace Courier
 		DestinationReached,
 		AgentReached,
 		GoToDestination,
+		RepeatAgent,
 		NextAgent
 	}
 
 	public class CourierStateMachine : StateMachine
 	{
-		private const int pHeartBeatInterval = 5000;
+		private const int pHeartBeatInterval = (int)(2 * 1000);	// milliseconds
 		private const string pLogFormat = "[{0}] {1}";
 
 		public const string Id = "antgraf.Eve.Courier";
