@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ExecutionActors;
+﻿using ExecutionActors;
 using EveOperations;
 
 namespace Courier
 {
 	class CourierActor : Actor, IMessageHandler, ISettingsProvider
 	{
+// ReSharper disable InconsistentNaming
 		protected CourierPlugin pPlugin = null;
+// ReSharper restore InconsistentNaming
 
 		protected override void Init(object data)
 		{

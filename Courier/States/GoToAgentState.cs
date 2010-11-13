@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BACommon;
-using EveOperations.Exceptions;
+﻿using EveOperations.Exceptions;
 using Courier.Transitions;
 
 namespace Courier.States
@@ -29,7 +24,7 @@ namespace Courier.States
 				if(string.IsNullOrEmpty(agent))
 				{
 					pMachine.SleepUntil = pMachine.NextAgentAvailableTime;
-					pMachine.LogAndDisplay("GoToAgentState", "No active agents. Sleeping until " + pMachine.SleepUntil.ToString());
+					pMachine.LogAndDisplay("GoToAgentState", "No active agents. Sleeping until " + pMachine.SleepUntil);
 					pMachine.HandleEvent(CourierEvents.Sleep);
 				}
 				else

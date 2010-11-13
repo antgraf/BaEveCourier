@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Courier.Transitions;
+﻿using Courier.Transitions;
 
 namespace Courier.States
 {
@@ -16,14 +12,10 @@ namespace Courier.States
 		public override void Enter()
 		{
 			pMachine.LogAndDisplay("LoginState", "Enter");
-			if(pMachine.Eve.DoLogin((string)pMachine.Settings[CourierSettings.Login], (string)pMachine.Settings[CourierSettings.Password]))
-			{
-				pMachine.HandleEvent(CourierEvents.LoggedIn);
-			}
-			else
-			{
-				pMachine.HandleEvent(CourierEvents.End);
-			}
+			pMachine.HandleEvent(pMachine.Eve.DoLogin((string) pMachine.Settings[CourierSettings.Login],
+			                                          (string) pMachine.Settings[CourierSettings.Password])
+			                     	? CourierEvents.LoggedIn
+			                     	: CourierEvents.End);
 		}
 	}
 }

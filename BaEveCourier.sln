@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier", "Courier\Courier.csproj", "{28920F16-6811-4DE9-86DC-23521F1DEC2F}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD7F447E-11AC-454D-9EC6-61EC2505FA79}"
 	ProjectSection(SolutionItems) = preProject
 		README = README
-		Bin\Images\status_ok.png = Bin\Images\status_ok.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A0452835-DB92-42C3-9141-CEEB759F9633}"
@@ -40,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3DBC93F6-E
 		Bin\Data\core_user__.dat = Bin\Data\core_user__.dat
 		Bin\Data\prefs.ini = Bin\Data\prefs.ini
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier", "Courier\Courier.csproj", "{28920F16-6811-4DE9-86DC-23521F1DEC2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveOperations", "EveOperations\EveOperations.csproj", "{23802602-A60B-42DC-ABBF-426BE4DF0055}"
 EndProject

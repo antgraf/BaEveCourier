@@ -2,8 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 using ExecutionActors;
 using Courier.States;
@@ -35,17 +33,16 @@ namespace Courier
 
 	public class CourierStateMachine : StateMachine
 	{
-		private const int pHeartBeatInterval = (int)(2 * 1000);	// milliseconds
+		private const int pHeartBeatInterval = (int)(2.0 * 1000);	// milliseconds
 		private const string pLogFormat = "[{0}] {1}";
 
 		public const string Id = "antgraf.Eve.Courier";
 
-		private Timer pHeartBeat = new Timer(pHeartBeatInterval);
-		private FileLogger pLogger = null;
-		private IMessageHandler pMessager = null;
-		private ISettingsProvider pSettings = null;
-		private Eve pEve = null;
-		private DateTime? pSleepUntil = null;
+		private readonly Timer pHeartBeat = new Timer(pHeartBeatInterval);
+		private readonly FileLogger pLogger = null;
+		private readonly IMessageHandler pMessager = null;
+		private readonly ISettingsProvider pSettings = null;
+		private readonly Eve pEve = null;
 
 		public CourierStateMachine()
 			: this(null, null, null)
@@ -58,12 +55,13 @@ namespace Courier
 		public CourierStateMachine(EveCourierState initialState, FileLogger logger, IMessageHandler messager, ISettingsProvider settings)
 			: base(initialState)
 		{
+			SleepUntil = null;
 			pLogger = logger;
 			pMessager = messager;
 			pSettings = settings;
 			pEve = new Eve(pMessager);
 			pHeartBeat.AutoReset = true;
-			pHeartBeat.Elapsed += new ElapsedEventHandler(pHeartBeat_Elapsed);
+			pHeartBeat.Elapsed += PHeartBeatElapsed;
 #if !TurnOffHeartBeat
 			pHeartBeat.Start();
 #endif
@@ -74,7 +72,7 @@ namespace Courier
 			return (EveCourierState)base.HandleEvent((int)eventId);
 		}
 
-		public void pHeartBeat_Elapsed(object sender, ElapsedEventArgs e)
+		public void PHeartBeatElapsed(object sender, ElapsedEventArgs e)
 		{
 			HandleEvent(CourierEvents.HeartBeat);
 		}
@@ -105,8 +103,8 @@ namespace Courier
 		{
 			get
 			{
-				string agent = (string)this.Settings[CourierSettings.LastAgent];
-				List<string> agents = (List<string>)this.Settings[CourierSettings.Agents];
+				string agent = (string)Settings[CourierSettings.LastAgent];
+				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
 				if(string.IsNullOrEmpty(agent) && agents.Count > 0)
 				{
 					agent = agents[0];
@@ -114,13 +112,13 @@ namespace Courier
 				if(!string.IsNullOrEmpty(agent))
 				{
 					DateTime t;
-					Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)this.Settings[CourierSettings.AgentTimers];
+					Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)Settings[CourierSettings.AgentTimers];
 					if(timers.TryGetValue(agent, out t))
 					{
 						if(t < DateTime.Now)
 						{
 							timers.Remove(agent);
-							this.pSettings.SaveSettings();
+							pSettings.SaveSettings();
 						}
 						else
 						{
@@ -138,17 +136,17 @@ namespace Courier
 			{
 				string first = null;
 				string next = null;
-				bool current_found = false;
-				List<string> agents = (List<string>)this.Settings[CourierSettings.Agents];
-				string lastagent = (string)this.Settings[CourierSettings.LastAgent];
-				Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)this.Settings[CourierSettings.AgentTimers];
+				bool currentFound = false;
+				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
+				string lastagent = (string)Settings[CourierSettings.LastAgent];
+				Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)Settings[CourierSettings.AgentTimers];
 				foreach(string agent in agents)
 				{
 					bool ok = false;
 					DateTime t;
-					if(!current_found && agent == lastagent)
+					if(!currentFound && agent == lastagent)
 					{
-						current_found = true;
+						currentFound = true;
 						continue;
 					}
 					if(timers.TryGetValue(agent, out t))
@@ -156,7 +154,7 @@ namespace Courier
 						if(t < DateTime.Now)
 						{
 							timers.Remove(agent);
-							this.pSettings.SaveSettings();
+							pSettings.SaveSettings();
 							ok = true;
 						}
 					}
@@ -164,21 +162,18 @@ namespace Courier
 					{
 						ok = true;
 					}
-					if(ok)
+					if (!ok) continue;
+					if(currentFound)
 					{
-						if(current_found)
-						{
-							next = agent;
-							break;
-						}
-						if(first == null)
-						{
-							first = agent;
-						}
+						next = agent;
+						break;
+					}
+					if(first == null)
+					{
+						first = agent;
 					}
 				}
-				if(next == null) next = first;
-				return next;
+				return next ?? first;
 			}
 		}
 
@@ -187,14 +182,13 @@ namespace Courier
 			get
 			{
 				DateTime result = DateTime.MaxValue;
-				DateTime t;
-				List<string> agents = (List<string>)this.Settings[CourierSettings.Agents];
-				Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)this.Settings[CourierSettings.AgentTimers];
+				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
+				Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)Settings[CourierSettings.AgentTimers];
 				foreach(string agent in agents)
 				{
+					DateTime t;
 					if(!timers.TryGetValue(agent, out t))
 					{
-						t = DateTime.MinValue;
 						break;
 					}
 					if(t < result)
@@ -219,10 +213,6 @@ namespace Courier
 			}
 		}
 
-		public DateTime? SleepUntil
-		{
-			get { return pSleepUntil; }
-			set { pSleepUntil = value; }
-		}
+		public DateTime? SleepUntil { get; set; }
 	}
 }

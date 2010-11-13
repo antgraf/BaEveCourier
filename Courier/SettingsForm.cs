@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using ExecutionActors;
 using BACommon;
@@ -22,7 +18,7 @@ namespace Courier
 
 	public partial class SettingsForm : Form
 	{
-		private PluginBase pPlugin = null;
+		private readonly PluginBase pPlugin = null;
 		private SettingsFormResult pResult = SettingsFormResult.None;
 
 		public SettingsFormResult Result
@@ -91,7 +87,7 @@ namespace Courier
 			Close();
 		}
 
-		private void btnBrowse_Click(object sender, EventArgs e)
+		private void BtnBrowseClick(object sender, EventArgs e)
 		{
 			dlgOpen.FileName = txtPath.Text;
 			if(dlgOpen.ShowDialog(this) == DialogResult.OK)
@@ -100,50 +96,50 @@ namespace Courier
 			}
 		}
 
-		private void SettingsForm_Load(object sender, EventArgs e)
+		private void SettingsFormLoad(object sender, EventArgs e)
 		{
 			LoadSettings();
 		}
 
-		private void btnSetup_Click(object sender, EventArgs e)
+		private void BtnSetupClick(object sender, EventArgs e)
 		{
 			Return(SettingsFormResult.Setup);
 		}
 
-		private void btnSave_Click(object sender, EventArgs e)
+		private void BtnSaveClick(object sender, EventArgs e)
 		{
 			SaveSettings();
 		}
 
-		private void btnStart_Click(object sender, EventArgs e)
+		private void BtnStartClick(object sender, EventArgs e)
 		{
 			SaveSettings();
 			Return(SettingsFormResult.Run);
 		}
 
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ExitToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			Return(SettingsFormResult.Close);
 		}
 
-		private void setupToolStripMenuItem_Click(object sender, EventArgs e)
+		private void SetupToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			SaveSettings();
 			Return(SettingsFormResult.Setup);
 		}
 
-		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+		private void SaveToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			SaveSettings();
 		}
 
-		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		private void AboutToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			MessageBox.Show(this, "Eve Online Courier Missions Bot\r\n" + CourierSettings.Version,
 				"About", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
-		private void btnAdd_Click(object sender, EventArgs e)
+		private void BtnAddClick(object sender, EventArgs e)
 		{
 			if(!StringUtils.IsEmpty(txtAgent.Text))
 			{
@@ -151,7 +147,7 @@ namespace Courier
 			}
 		}
 
-		private void btnRemove_Click(object sender, EventArgs e)
+		private void BtnRemoveClick(object sender, EventArgs e)
 		{
 			if(lstAgents.SelectedIndices.Count > 0)
 			{

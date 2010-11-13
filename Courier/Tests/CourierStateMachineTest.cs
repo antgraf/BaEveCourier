@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Courier.States;
 using ExecutionActors;
 using System.Threading;
@@ -12,11 +8,12 @@ namespace Courier.Tests
 	[TestFixture]
 	public class CourierStateMachineTest
 	{
-		private void WaitForEvent()
+		private static void WaitForEvent()
 		{
-			int heartBeatInterval = 5000 + 1;
+			const int heartBeatInterval = 5000 + 1;
 			Thread.Sleep(heartBeatInterval);
 		}
+
 		[Test]
 		public void HighLevelStatesTest()
 		{

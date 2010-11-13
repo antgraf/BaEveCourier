@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ExecutionActors;
+﻿using ExecutionActors;
 
 namespace Courier.States
 {
@@ -13,7 +9,9 @@ namespace Courier.States
 			pStateMachineId = CourierStateMachine.Id;
 		}
 
+// ReSharper disable InconsistentNaming
 		protected static CourierStateMachine pMachine
+// ReSharper restore InconsistentNaming
 		{
 			get
 			{

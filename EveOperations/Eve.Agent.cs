@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
-using WindowEntity;
-using System.Diagnostics;
-using Logger;
-using System.Drawing;
-using BACommon;
-using System.Reflection;
-using System.IO;
+﻿using WindowEntity;
 
 namespace EveOperations
 {
@@ -23,14 +12,14 @@ namespace EveOperations
 			pEveWindow.KeySendAndWait(agent);	// search for agent
 			pEveWindow.KeySendAndWait("~");
 			// POINT: agent in the list
-			Coordinate agent_pt = new Coordinate(
+			Coordinate agentPt = new Coordinate(
 				new StretchedPoint() { X = 0.48252427184466, Y = 0.530895334174023 });
-			pEveWindow.RightClick(agent_pt);	// open menu
+			pEveWindow.RightClick(agentPt);	// open menu
 			WaitRandom();
 			// POINT: "start conversation" menu
-			Coordinate menu_pt = new Coordinate(
+			Coordinate menuPt = new Coordinate(
 				new StretchedPoint() { X = 0.524271844660194, Y = 0.559899117276166 });
-			pEveWindow.LeftClick(menu_pt);
+			pEveWindow.LeftClick(menuPt);
 			WaitRandom();
 			pEveWindow.Wait(pLoadWaitTime);
 			CheckAndCloseAgentWarning();
@@ -41,48 +30,48 @@ namespace EveOperations
 		{
 			ActivateAgentWindow();
 			// POINT: top-left corner to search courier mission image
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.149514563106796, Y = 0.655737704918033 });
 			// POINT: bottom-right corner to search courier mission image
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.248543689320388, Y = 0.723833543505675 });
-			return FindImage(tl_pt, br_pt, pImageCourierMission);
+			return FindImage(tlPt, brPt, pImageCourierMission);
 		}
 
 		private bool CheckAgentHasNoMissions()
 		{
 			ActivateAgentWindow();
 			// POINT: top-left corner to search text
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.107766990291262, Y = 0.406052963430013 });
 			// POINT: bottom-right corner to search text
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.262135922330097, Y = 0.480453972257251 });
-			return FindImage(tl_pt, br_pt, pImageNoMissions) || FindImage(tl_pt, br_pt, pImageNoMissions2);
+			return FindImage(tlPt, brPt, pImageNoMissions) || FindImage(tlPt, brPt, pImageNoMissions2);
 		}
 
 		private bool CheckRemoteAgentHasMission()
 		{
 			ActivateAgentWindow();
 			// POINT: top-left corner to search text
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.107766990291262, Y = 0.406052963430013 });
 			// POINT: bottom-right corner to search text
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.262135922330097, Y = 0.480453972257251 });
-			return FindImage(tl_pt, br_pt, pImageRemoteMission);
+			return FindImage(tlPt, brPt, pImageRemoteMission);
 		}
 
 		private bool CheckLowSecMission()	// todo "mission" -> "courier" + correct points
 		{
 			ActivateAgentWindow();
 			// POINT: top-left corner to search text
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.32621359223301, Y = 0.450189155107188 });
 			// POINT: bottom-right corner to search text
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.563106796116505, Y = 0.513240857503153 });
-			return FindImage(tl_pt, br_pt, pImageLowSecMission);
+			return FindImage(tlPt, brPt, pImageLowSecMission);
 		}
 
 		private void ActivateAgentWindow()
@@ -127,31 +116,31 @@ namespace EveOperations
 		private bool CheckAndGoAgentLocationDestinationMenuItem()
 		{
 			// POINT: top-left corner to search menu item
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.266990291262136, Y = 0.320302648171501 });
 			// POINT: bottom-right corner to search menu item
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.448543689320388, Y = 0.539722572509458 });
-			return FindImage(tl_pt, br_pt, pImageSetDestination);
+			return FindImage(tlPt, brPt, pImageSetDestination);
 		}
 
 		private bool CheckAndGoAgentLocationDockMenuItem()
 		{
 			// POINT: top-left corner to search menu item
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.266990291262136, Y = 0.320302648171501 });
 			// POINT: bottom-right corner to search menu item
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.448543689320388, Y = 0.539722572509458 });
-			return FindImage(tl_pt, br_pt, pImageDock);
+			return FindImage(tlPt, brPt, pImageDock);
 		}
 
 		private void SetAgentDestination()
 		{
 			// POINT: set destination menu item
-			Coordinate set_dest = new Coordinate(
+			Coordinate setDest = new Coordinate(
 				new StretchedPoint() { X = 0.297087378640777, Y = 0.353089533417402 });
-			pEveWindow.LeftClick(set_dest);
+			pEveWindow.LeftClick(setDest);
 			WaitRandom();
 		}
 
@@ -167,12 +156,12 @@ namespace EveOperations
 		private bool CheckAndCloseAgentWarning()
 		{
 			// POINT: top-left corner to search warning text
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.346601941747573, Y = 0.469104665825977 });
 			// POINT: bottom-right corner to search warning text
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.406796116504854, Y = 0.519546027742749 });
-			bool found = FindImage(tl_pt, br_pt, pImageAgentWarning);
+			bool found = FindImage(tlPt, brPt, pImageAgentWarning);
 			if(found)
 			{
 				// POINT: "do not..." checkbox

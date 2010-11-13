@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
-using WindowEntity;
-using System.Diagnostics;
-using Logger;
-using System.Drawing;
-using BACommon;
-using System.Reflection;
-using System.IO;
+﻿using WindowEntity;
 
 namespace EveOperations
 {
@@ -18,8 +7,7 @@ namespace EveOperations
 		private void SetOptions()
 		{
 			// POINT: video checkboxes
-			Coordinate chkbox = null;
-			chkbox = new Coordinate(
+			Coordinate chkbox = new Coordinate(
 				new StretchedPoint() { X = 0.388349514563107, Y = 0.298865069356873 });
 			pEveWindow.LeftClick(chkbox);
 			chkbox = new Coordinate(
@@ -62,24 +50,20 @@ namespace EveOperations
 				new StretchedPoint() { X = 0.388349514563107, Y = 0.398486759142497 });
 			pEveWindow.LeftClick(chkbox);
 			// POINT: theme selector
-			Coordinate theme = null;
-			// POINT: black theme
-			Coordinate black = null;
-			theme = new Coordinate(
+			Coordinate theme = new Coordinate(
 				new StretchedPoint() { X = 0.866990291262136, Y = 0.358133669609079 });
-			black = new Coordinate(
+			// POINT: black theme
+			Coordinate black = new Coordinate(
 				new StretchedPoint() { X = 0.779611650485437, Y = 0.413619167717528 });
 			pEveWindow.LeftClick(theme);
 			WaitRandom();
 			pEveWindow.LeftClick(black);
 			WaitRandom();
 			// POINT: color sliders
-			Coordinate color = null;
-			// POINT: color sliders dragging target point
-			Coordinate dragto = null;
-			color = new Coordinate(
+			Coordinate color = new Coordinate(
 				new StretchedPoint() { X = 0.842718446601942, Y = 0.442622950819672 });
-			dragto = new Coordinate(
+			// POINT: color sliders dragging target point
+			Coordinate dragto = new Coordinate(
 				new StretchedPoint() { X = 0.885436893203884, Y = 0.443883984867591 });
 			pEveWindow.DragDrop(color, dragto);
 			color = new Coordinate(

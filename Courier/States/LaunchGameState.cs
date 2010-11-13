@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Courier.Transitions;
+﻿using Courier.Transitions;
 
 namespace Courier.States
 {
@@ -16,14 +12,9 @@ namespace Courier.States
 		public override void Enter()
 		{
 			pMachine.LogAndDisplay("LaunchGameState", "Enter");
-			if(pMachine.Eve.Launch((string)pMachine.Settings[CourierSettings.Path]))
-			{
-				pMachine.HandleEvent(CourierEvents.EveLaunched);
-			}
-			else
-			{
-				pMachine.HandleEvent(CourierEvents.End);
-			}
+			pMachine.HandleEvent(pMachine.Eve.Launch((string) pMachine.Settings[CourierSettings.Path])
+			                     	? CourierEvents.EveLaunched
+			                     	: CourierEvents.End);
 		}
 	}
 }

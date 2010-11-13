@@ -95,7 +95,7 @@
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
 			this.exitToolStripMenuItem.Text = "E&xit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
 			// 
 			// settingsToolStripMenuItem
 			// 
@@ -111,14 +111,14 @@
 			this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
 			this.setupToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
 			this.setupToolStripMenuItem.Text = "Set&up";
-			this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
+			this.setupToolStripMenuItem.Click += new System.EventHandler(this.SetupToolStripMenuItemClick);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
 			this.saveToolStripMenuItem.Text = "Sa&ve";
-			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -133,7 +133,7 @@
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
 			// 
 			// statusBar
 			// 
@@ -229,7 +229,7 @@
 			this.btnBrowse.TabIndex = 4;
 			this.btnBrowse.Text = "...";
 			this.btnBrowse.UseVisualStyleBackColor = true;
-			this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+			this.btnBrowse.Click += new System.EventHandler(this.BtnBrowseClick);
 			// 
 			// txtLogin
 			// 
@@ -315,7 +315,7 @@
 			this.btnRemove.TabIndex = 4;
 			this.btnRemove.Text = "-";
 			this.btnRemove.UseVisualStyleBackColor = true;
-			this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+			this.btnRemove.Click += new System.EventHandler(this.BtnRemoveClick);
 			// 
 			// btnAdd
 			// 
@@ -325,7 +325,7 @@
 			this.btnAdd.TabIndex = 3;
 			this.btnAdd.Text = "+";
 			this.btnAdd.UseVisualStyleBackColor = true;
-			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+			this.btnAdd.Click += new System.EventHandler(this.BtnAddClick);
 			// 
 			// txtAgent
 			// 
@@ -359,7 +359,7 @@
 			this.btnSetup.TabIndex = 3;
 			this.btnSetup.Text = "Setup";
 			this.btnSetup.UseVisualStyleBackColor = true;
-			this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
+			this.btnSetup.Click += new System.EventHandler(this.BtnSetupClick);
 			// 
 			// btnSave
 			// 
@@ -369,7 +369,7 @@
 			this.btnSave.TabIndex = 4;
 			this.btnSave.Text = "Save";
 			this.btnSave.UseVisualStyleBackColor = true;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
 			// 
 			// btnStart
 			// 
@@ -379,7 +379,7 @@
 			this.btnStart.TabIndex = 6;
 			this.btnStart.Text = "Start";
 			this.btnStart.UseVisualStyleBackColor = true;
-			this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+			this.btnStart.Click += new System.EventHandler(this.BtnStartClick);
 			// 
 			// dlgOpen
 			// 
@@ -401,7 +401,7 @@
 			this.MainMenuStrip = this.menuMain;
 			this.Name = "SettingsForm";
 			this.Text = "Eve Online Courier Missions Bot [BA]";
-			this.Load += new System.EventHandler(this.SettingsForm_Load);
+			this.Load += new System.EventHandler(this.SettingsFormLoad);
 			this.menuMain.ResumeLayout(false);
 			this.menuMain.PerformLayout();
 			this.tabControl.ResumeLayout(false);

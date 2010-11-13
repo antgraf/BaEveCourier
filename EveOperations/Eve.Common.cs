@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 using WindowEntity;
-using System.Diagnostics;
-using Logger;
-using System.Drawing;
-using BACommon;
-using System.Reflection;
 using System.IO;
 using EveOperations.Exceptions;
 
@@ -27,7 +19,7 @@ namespace EveOperations
 			pTimeOut.Stop();
 		}
 
-		private void pTimeOut_Elapsed(object sender, ElapsedEventArgs e)
+		private void PTimeOutElapsed(object sender, ElapsedEventArgs e)
 		{
 			pTimedOut = true;
 		}
@@ -37,20 +29,27 @@ namespace EveOperations
 			pEveWindow.WaitRandom(pRandomWaitTime, pRandomWaitDelta);
 		}
 
-		private string GetEveSettingsPath(string pathToEve)
+		private static string GetEveSettingsPath(string pathToEve)
 		{
-			string server_suffix = pTranquilityServerSuffix;
+			const string serverSuffix = pTranquilityServerSuffix;
 			string appdata = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+			if(pathToEve == null)
+			{
+				return null;
+			}
+// ReSharper disable PossibleNullReferenceException
 			string profile = Path.GetDirectoryName(pathToEve)
-				.Replace(":", "")
-				.Replace(Path.DirectorySeparatorChar, '_')
-				.ToLower()
-				+ server_suffix;
+// ReSharper restore PossibleNullReferenceException
+			                 	.Replace(":", "")
+			                 	.Replace(Path.DirectorySeparatorChar, '_')
+			                 	.ToLower()
+			                 + serverSuffix;
 			return Path.Combine(appdata, string.Format(pEveSettingsFolder, profile));
 		}
 
 		private void CopyDefaultSettings(string pathToEveSettings)
 		{
+// ReSharper disable AssignNullToNotNullAttribute
 			File.Copy(Relative2AbsolutePath(pSettings1),
 				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings1)));
 			File.Copy(Relative2AbsolutePath(pSettings2),
@@ -59,19 +58,22 @@ namespace EveOperations
 				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings3)));
 			File.Copy(Relative2AbsolutePath(pSettings4),
 				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings4)));
+// ReSharper restore AssignNullToNotNullAttribute
 		}
 
-		private bool ClearEveSettings(string pathToEveSettings)
+		private static bool ClearEveSettings(string pathToEveSettings)
 		{
 			try
 			{
 				Directory.Delete(pathToEveSettings, true);
 			}
-			catch(Exception)
+// ReSharper disable EmptyGeneralCatchClause
+			catch
+// ReSharper restore EmptyGeneralCatchClause
 			{
 				// ignore
 			}
-			return Directory.CreateDirectory(pathToEveSettings) != null;
+			return true;
 		}
 
 		private void LaunchApplication(string pathToEve)
@@ -94,9 +96,8 @@ namespace EveOperations
 			if(pEveWindow.Width < pMinWindowWidth)	// splash screen
 			{
 				System.Threading.ManualResetEvent wait = new System.Threading.ManualResetEvent(false);
-				Timer timer = new Timer(pWindowWaitInterval * 1000);
-				timer.AutoReset = true;
-				timer.Elapsed += delegate(object sender, ElapsedEventArgs e)
+				Timer timer = new Timer(pWindowWaitInterval * 1000) {AutoReset = true};
+				timer.Elapsed += delegate
 				{
 					if(attempts-- <= 0)
 					{
@@ -122,20 +123,20 @@ namespace EveOperations
 		private bool CheckLoginScreen()
 		{
 			// POINT: top-left of "status ok"
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.562135922330097, Y = 0.891551071878941 });
 			// POINT: bottom-right of "status ok"
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.614563106796116, Y = 0.904161412358134 });
-			return FindImage(tl_pt, br_pt, pImageStatusOk);
+			return FindImage(tlPt, brPt, pImageStatusOk);
 		}
 
 		private void EraseLogin()
 		{
 			// POINT: login field
-			Coordinate login_pt = new Coordinate(
+			Coordinate loginPt = new Coordinate(
 				new StretchedPoint() { X = 0.451456310679612, Y = 0.896595208070618 });
-			pEveWindow.LeftClick(login_pt);	// go to login field
+			pEveWindow.LeftClick(loginPt);	// go to login field
 			WaitRandom();
 			pEveWindow.CtrlKeyDown();
 			pEveWindow.KeySendAndWait("a");	// select all
@@ -154,12 +155,12 @@ namespace EveOperations
 		private bool CheckLoginError()
 		{
 			// POINT: top-left of "skull"
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.313592233009709, Y = 0.64312736443884 });
 			// POINT: bottom-right of "skull"
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.369902912621359, Y = 0.71500630517024 });
-			return FindImage(tl_pt, br_pt, pImageSkull);
+			return FindImage(tlPt, brPt, pImageSkull);
 		}
 
 		private void ClickCharacter(CharacterPosition position)
@@ -276,12 +277,12 @@ namespace EveOperations
 		private bool CheckAndCloseWrongLocationWarning()
 		{
 			// POINT: top-left corner to search for waring
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.395145631067961, Y = 0.398486759142497 });
 			// POINT: bottom-right corner to search for waring
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.43495145631068, Y = 0.433795712484237 });
-			bool found = FindImage(tl_pt, br_pt, pImageWrongLocationWarning);
+			bool found = FindImage(tlPt, brPt, pImageWrongLocationWarning);
 			if(found)
 			{
 				// POINT: ok button
@@ -328,12 +329,12 @@ namespace EveOperations
 		private bool CheckAndCloseShutdownWarning()
 		{
 			// POINT: top-left corner to search warning text
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.394174757281553, Y = 0.395964691046658 });
 			// POINT: bottom-right corner to search warning text
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.44368932038835, Y = 0.437578814627995 });
-			bool found = FindImage(tl_pt, br_pt, pImageShutdownWarning);
+			bool found = FindImage(tlPt, brPt, pImageShutdownWarning);
 			if(found)
 			{
 				// POINT: ok button
@@ -359,12 +360,12 @@ namespace EveOperations
 		{
 			ActivateStationView();
 			// POINT: top-left corner to search for warehouse tab
-			Coordinate tl_pt = new Coordinate(
+			Coordinate tlPt = new Coordinate(
 				new StretchedPoint() { X = 0.725242718446602, Y = 0.489281210592686 });
 			// POINT: bottom-right corner to search for warehouse tab
-			Coordinate br_pt = new Coordinate(
+			Coordinate brPt = new Coordinate(
 				new StretchedPoint() { X = 0.996116504854369, Y = 0.561160151324086 });
-			Coordinate warehouse = FindImageCoordinate(tl_pt, br_pt, pImageWarehouseTab);
+			Coordinate warehouse = FindImageCoordinate(tlPt, brPt, pImageWarehouseTab);
 			if(warehouse != null)
 			{
 				pEveWindow.LeftClick(warehouse);

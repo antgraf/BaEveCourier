@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ExecutionActors;
-using System.Windows.Forms;
 
 namespace Courier
 {
@@ -20,13 +16,13 @@ namespace Courier
 		{
 			SettingsForm form = new SettingsForm(this);
 			form.ShowDialog();
-			if(form.Result == SettingsFormResult.Run)
+			switch(form.Result)
 			{
-				Run();
-			}
-			else if(form.Result == SettingsFormResult.Setup)
-			{
-				throw new NotImplementedException();
+				case SettingsFormResult.Run:
+					Run();
+					break;
+				case SettingsFormResult.Setup:
+					throw new NotImplementedException();
 			}
 		}
 	}

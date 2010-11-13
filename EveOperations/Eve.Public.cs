@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 using WindowEntity;
 using System.Diagnostics;
-using Logger;
 using System.Drawing;
 using System.IO;
 using BACommon;
@@ -68,29 +64,22 @@ namespace EveOperations
 
 		private string pLocalPath = null;
 		private Window pEveWindow = null;
-		private Timer pTimeOut = new Timer();
+		private readonly Timer pTimeOut = new Timer();
 		private bool pTimedOut = false;
 		private Process pEveProcess = null;
-		private IMessageHandler pMessager = null;
+		private readonly IMessageHandler pMessager = null;
 
 		public Eve(IMessageHandler messager)
 		{
 			pMessager = messager;
 			pTimeOut.AutoReset = false;
 			pTimeOut.Interval = pCommonTimeout;
-			pTimeOut.Elapsed += new ElapsedEventHandler(pTimeOut_Elapsed);
+			pTimeOut.Elapsed += PTimeOutElapsed;
 		}
 
 		private string Relative2AbsolutePath(string path)
 		{
-			if(StringUtils.IsEmpty(pLocalPath))
-			{
-				return FileUtils.Relative2AbsolutePath(path);
-			}
-			else
-			{
-				return FileUtils.CombineWinPath(pLocalPath, path);
-			}
+			return StringUtils.IsEmpty(pLocalPath) ? FileUtils.Relative2AbsolutePath(path) : FileUtils.CombineWinPath(pLocalPath, path);
 		}
 
 		public void Log(string stage, string msg)
@@ -262,7 +251,7 @@ namespace EveOperations
 				for(int i = 0; i < pWindowWaitAttempts && !ok; i++)
 				{
 					pEveWindow.Wait(pWindowWaitInterval * 1000);
-					Log("DoLogin", "CheckLoginError " + i.ToString());
+					Log("DoLogin", "CheckLoginError " + i);
 					ok = CheckLoginError();
 				}
 			}
@@ -301,7 +290,6 @@ namespace EveOperations
 			try
 			{
 				Log("SetDestinationToAgent", "CheckInDock");
-				bool in_dock = CheckInDock();
 				if(openAgentWindow)
 				{
 					Log("SetDestinationToAgent", "OpenAgentWindow");
@@ -348,8 +336,8 @@ namespace EveOperations
 			try
 			{
 				Log("CheckIfAtAgentsStation", "CheckInDock");
-				bool in_dock = CheckInDock();
-				if(in_dock)
+				bool inDock = CheckInDock();
+				if(inDock)
 				{
 					Log("CheckIfAtAgentsStation", "OpenAgentWindow");
 					OpenAgentWindow(agent);
@@ -481,9 +469,9 @@ namespace EveOperations
 		{
 			Log("Close", "Click \"cross\" button");
 			// POINT: close button
-			Coordinate close_pt = new Coordinate(
+			Coordinate closePt = new Coordinate(
 				new StretchedPoint() { X = 0.988349514563107, Y = 0.0138713745271122 });
-			pEveWindow.LeftClick(close_pt);	// click "cross" button
+			pEveWindow.LeftClick(closePt);	// click "cross" button
 			// TODO: any confirmations?
 			pEveWindow.Wait(pStandardWaitTime);
 			Log("Close", "Complete");

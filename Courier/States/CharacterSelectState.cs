@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EveOperations;
+﻿using EveOperations;
 
 namespace Courier.States
 {
 	public class CharacterSelectState : EveCourierState
 	{
 		private const int pCharacterSelectWaitTime = 15 * 1000;
-
-		public CharacterSelectState()
-		{}
 
 		public override void Enter()
 		{

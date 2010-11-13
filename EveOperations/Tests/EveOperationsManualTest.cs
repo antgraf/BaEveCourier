@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using WindowEntity;
 
+// ReSharper disable CheckNamespace
 namespace EveOperations
+// ReSharper restore CheckNamespace
 {
 	public partial class Eve
 	{
@@ -23,7 +22,7 @@ namespace EveOperations
 			
 			#endregion
 
-			private Eve pEve = new Eve(null);
+			private readonly Eve pEve = new Eve(null);
 
 			private void Init()
 			{
@@ -34,7 +33,7 @@ namespace EveOperations
 			{
 				Init();
 				WindowsMan.ResetWindows();
-				pEve.EveWindow = WindowsMan.AttachTo(Eve.pEveProcessName);
+				pEve.EveWindow = WindowsMan.AttachTo(pEveProcessName);
 				if(pEve.EveWindow == null || pEve.EveWindow.Width < pMinWindowWidth)
 				{
 					throw new NullReferenceException("Cannot attach to Eve.");
@@ -86,7 +85,7 @@ namespace EveOperations
 			public void SelectCharacter()
 			{
 				AttachToEve();
-				CharacterPosition position = CharacterPosition.Main;
+				const CharacterPosition position = CharacterPosition.Main;
 				Assert.True(pEve.SelectCharacter(position));
 			}
 
