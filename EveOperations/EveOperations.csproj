@@ -93,6 +93,7 @@
     <Compile Include="Exceptions\CannotFindLoginScreenException.cs" />
     <Compile Include="Exceptions\CannotFindWarehouseException.cs" />
     <Compile Include="Exceptions\CannotLaunchProcessException.cs" />
+    <Compile Include="Exceptions\IncorrectStateException.cs" />
     <Compile Include="IMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\EveOperationsManualTest.cs" />

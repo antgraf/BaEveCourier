@@ -6,16 +6,22 @@ namespace Courier.States
 	{
 		public LoginState()
 		{
-			pTransitions.Add(new LoginSelectCharacterTransition());
+			pTransitions.Add(new LoginCharacterSelectTransition());
 		}
 
 		public override void Enter()
 		{
 			pMachine.LogAndDisplay("LoginState", "Enter");
-			pMachine.HandleEvent(pMachine.Eve.DoLogin((string) pMachine.Settings[CourierSettings.Login],
-			                                          (string) pMachine.Settings[CourierSettings.Password])
-			                     	? CourierEvents.LoggedIn
-			                     	: CourierEvents.End);
+			if(pMachine.Eve.DoLogin((string)pMachine.Settings[CourierSettings.Login],
+				(string)pMachine.Settings[CourierSettings.Password]))
+			{
+				SendEvent(CourierEvents.LoggedIn);
+			}
+			else
+			{
+				pMachine.LogAndDisplay("LaunchGameState", "Cannot login.");
+				SendEvent(CourierEvents.End);
+			}
 		}
 	}
 }

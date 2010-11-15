@@ -11,13 +11,14 @@ namespace Courier.States
 			pMachine.LogAndDisplay("CharacterSelectState", "Enter");
 			if(pMachine.Eve.SelectCharacter((CharacterPosition)pMachine.Settings[CourierSettings.Position]))
 			{
-				pMachine.HandleEvent(CourierEvents.CharacterSelected);
+				SendEvent(CourierEvents.CharacterSelected);
 				pMachine.Eve.EveWindow.Wait(pCharacterSelectWaitTime);
-				pMachine.HandleEvent(CourierEvents.Initialized);
+				SendEvent(CourierEvents.Initialized);
 			}
 			else
 			{
-				pMachine.HandleEvent(CourierEvents.End);
+				pMachine.LogAndDisplay("CharacterSelectState", "Cannot select character.");
+				SendEvent(CourierEvents.End);
 			}
 		}
 	}

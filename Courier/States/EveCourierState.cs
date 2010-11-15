@@ -9,6 +9,11 @@ namespace Courier.States
 			pStateMachineId = CourierStateMachine.Id;
 		}
 
+		protected void SendEvent(CourierEvents eventId)
+		{
+			SendEvent((int)eventId);
+		}
+
 // ReSharper disable InconsistentNaming
 		protected static CourierStateMachine pMachine
 // ReSharper restore InconsistentNaming

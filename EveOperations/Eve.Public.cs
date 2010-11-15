@@ -129,10 +129,20 @@ namespace EveOperations
 
 		public void CleanUp()
 		{
+			pEveWindow = WindowsMan.UpdateWindow(pEveWindow);
 			if(pEveWindow != null)
 			{
 				Log("CleanUp", "Close window");
-				pEveWindow.Close();
+				try
+				{
+					pEveWindow.Close();
+				}
+// ReSharper disable EmptyGeneralCatchClause
+				catch
+// ReSharper restore EmptyGeneralCatchClause
+				{
+					// ignore
+				}
 				pEveWindow = null;
 			}
 			if(pEveProcess != null)
@@ -468,12 +478,16 @@ namespace EveOperations
 		public void Close()
 		{
 			Log("Close", "Click \"cross\" button");
-			// POINT: close button
-			Coordinate closePt = new Coordinate(
-				new StretchedPoint() { X = 0.988349514563107, Y = 0.0138713745271122 });
-			pEveWindow.LeftClick(closePt);	// click "cross" button
-			// TODO: any confirmations?
-			pEveWindow.Wait(pStandardWaitTime);
+			pEveWindow = WindowsMan.UpdateWindow(pEveWindow);
+			if(pEveWindow != null)
+			{
+				// POINT: close button
+				Coordinate closePt = new Coordinate(
+					new StretchedPoint() {X = 0.988349514563107, Y = 0.0138713745271122});
+				pEveWindow.LeftClick(closePt); // click "cross" button
+				// TODO: any confirmations?
+				pEveWindow.Wait(pStandardWaitTime);
+			}
 			Log("Close", "Complete");
 		}
 

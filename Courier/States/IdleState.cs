@@ -14,7 +14,12 @@ namespace Courier.States
 		{
 			pMachine.LogAndDisplay("IdleState", "Enter");
 			pMachine.Eve.Close();
-			pMachine.HandleEvent(CourierEvents.Idle);
+			SendEvent(CourierEvents.Idle);
+		}
+
+		public void Setup()
+		{
+			pArgumentToNextState = true;
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Courier.Transitions
 	{
 		public override bool CheckConstraints(IdleState currentState, int eventId)
 		{
-			return eventId == (int)CourierEvents.Start;
+			return eventId == (int)CourierEvents.Start || eventId == (int)CourierEvents.Setup;
 		}
 	}
 }

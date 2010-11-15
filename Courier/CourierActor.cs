@@ -9,6 +9,11 @@ namespace Courier
 		protected CourierPlugin pPlugin = null;
 // ReSharper restore InconsistentNaming
 
+		public CourierActor()
+		{
+			Setup = false;
+		}
+
 		protected override void Init(object data)
 		{
 			pPlugin = (CourierPlugin)data;
@@ -20,8 +25,19 @@ namespace Courier
 		{
 			pObserver.Notify(this, "Start", 100, "Eve Courier actor started");
 			CourierStateMachine machine = (CourierStateMachine)StateMachine.GetInstance(CourierStateMachine.Id);
-			machine.HandleEvent(CourierEvents.Start);
-			pObserver.Notify(this, "End", 100, "Eve Courier actor returned");
+			if(Setup)
+			{
+				pObserver.Notify(this, "Start", 100, "Setup started");
+				machine.Setup();
+				pObserver.Notify(this, "End", 100, "Setup completed");
+			}
+			else
+			{
+				pObserver.Notify(this, "Start", 100, "Execution started");
+				machine.Start();
+				pObserver.Notify(this, "End", 100, "Eve Courier actor started");
+			}
+			pObserver.Notify(this, "End", 100, "Execution completed");
 		}
 
 		#region IMessageHandler Members
@@ -46,5 +62,7 @@ namespace Courier
 		}
 
 		#endregion
+
+		public bool Setup { get; set; }
 	}
 }

@@ -4,7 +4,7 @@
 	{
 		public DoCourierMissionsState()
 		{
-			pCurrentSubState = new GoToAgentState();
+			pCurrentSubState = new InitializationState(false);
 		}
 
 		public override void Enter()

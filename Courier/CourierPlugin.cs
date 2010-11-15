@@ -1,5 +1,6 @@
-﻿using System;
-using ExecutionActors;
+﻿using ExecutionActors;
+using System.Collections.Generic;
+using System;
 
 namespace Courier
 {
@@ -14,16 +15,40 @@ namespace Courier
 
 		public override void ShowUI()
 		{
-			SettingsForm form = new SettingsForm(this);
-			form.ShowDialog();
-			switch(form.Result)
+			try
 			{
-				case SettingsFormResult.Run:
-					Run();
-					break;
-				case SettingsFormResult.Setup:
-					throw new NotImplementedException();
+				SettingsForm form = new SettingsForm(this);
+				form.ShowDialog();
+				switch (form.Result)
+				{
+					case SettingsFormResult.Run:
+						{
+							((CourierActor) pActor).Setup = false;
+							Run();
+							break;
+						}
+					case SettingsFormResult.Setup:
+						{
+							((CourierActor) pActor).Setup = true;
+							Run();
+							break;
+						}
+				}
 			}
+			catch(Exception e)
+			{
+				Notify(pActor, "Error: " + e);
+			}
+		}
+
+		public override void SaveSettings(System.Type[] types = null)
+		{
+			base.SaveSettings(new[] { typeof(Dictionary<string, DateTime>) });
+		}
+
+		public override void LoadSettings(System.Type[] types = null)
+		{
+			base.LoadSettings(new[] { typeof(Dictionary<string, DateTime>) });
 		}
 	}
 }

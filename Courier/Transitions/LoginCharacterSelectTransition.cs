@@ -3,7 +3,7 @@ using Courier.States;
 
 namespace Courier.Transitions
 {
-	class LoginSelectCharacterTransition : Transition<LoginState, CharacterSelectState>
+	class LoginCharacterSelectTransition : Transition<LoginState, CharacterSelectState>
 	{
 		public override bool CheckConstraints(LoginState currentState, int eventId)
 		{

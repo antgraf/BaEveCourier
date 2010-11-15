@@ -50,14 +50,15 @@ namespace EveOperations
 		private void CopyDefaultSettings(string pathToEveSettings)
 		{
 // ReSharper disable AssignNullToNotNullAttribute
+			Directory.CreateDirectory(pathToEveSettings);
 			File.Copy(Relative2AbsolutePath(pSettings1),
-				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings1)));
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings1)), true);
 			File.Copy(Relative2AbsolutePath(pSettings2),
-				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings2)));
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings2)), true);
 			File.Copy(Relative2AbsolutePath(pSettings3),
-				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings3)));
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings3)), true);
 			File.Copy(Relative2AbsolutePath(pSettings4),
-				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings4)));
+				Path.Combine(pathToEveSettings, Path.GetFileName(pSettings4)), true);
 // ReSharper restore AssignNullToNotNullAttribute
 		}
 

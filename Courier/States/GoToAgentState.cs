@@ -16,7 +16,7 @@ namespace Courier.States
 			if(!string.IsNullOrEmpty((string)pMachine.Settings[CourierSettings.CurrentAgent])
 				&& (bool)pMachine.Settings[CourierSettings.CurrentCargo])
 			{
-				pMachine.HandleEvent(CourierEvents.GoToDestination);
+				SendEvent(CourierEvents.GoToDestination);
 			}
 			else
 			{
@@ -25,14 +25,14 @@ namespace Courier.States
 				{
 					pMachine.SleepUntil = pMachine.NextAgentAvailableTime;
 					pMachine.LogAndDisplay("GoToAgentState", "No active agents. Sleeping until " + pMachine.SleepUntil);
-					pMachine.HandleEvent(CourierEvents.Sleep);
+					SendEvent(CourierEvents.Sleep);
 				}
 				else
 				{
 					pMachine.LogAndDisplay("GoToAgentState", "CheckIfAtAgentsStation");
 					if(pMachine.Eve.CheckIfAtAgentsStation(agent))
 					{
-						pMachine.HandleEvent(CourierEvents.AgentReached);
+						SendEvent(CourierEvents.AgentReached);
 					}
 					else
 					{
@@ -42,18 +42,18 @@ namespace Courier.States
 							if(pMachine.Eve.SetDestinationToAgent(pMachine.Eve.GetAgent(), true))
 							{
 								pCurrentSubState = new AutopilotState();
-								pMachine.HandleEvent(CourierEvents.Autopilot);
+								SendEvent(CourierEvents.Autopilot);
 							}
 							else
 							{
 								pMachine.LogAndDisplay("GoToAgentState", "Cannot reach agent. Trying another one.");
-								pMachine.HandleEvent(CourierEvents.NextAgent);
+								SendEvent(CourierEvents.NextAgent);
 							}
 						}
 						catch(AgentHasNoMissionsAvailableException)
 						{
 							pMachine.LogAndDisplay("GoToAgentState", "Agent has no missions available");
-							pMachine.HandleEvent(CourierEvents.NextAgent);
+							SendEvent(CourierEvents.NextAgent);
 						}
 					}
 				}

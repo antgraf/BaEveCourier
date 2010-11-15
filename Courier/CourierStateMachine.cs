@@ -7,12 +7,14 @@ using ExecutionActors;
 using Courier.States;
 using Logger;
 using EveOperations;
+using EveOperations.Exceptions;
 
 namespace Courier
 {
 	public enum CourierEvents
 	{
 		Idle,
+		Setup,
 		Start,
 		End,
 		GoToFinalState,
@@ -28,7 +30,8 @@ namespace Courier
 		AgentReached,
 		GoToDestination,
 		RepeatAgent,
-		NextAgent
+		NextAgent,
+		GotMission
 	}
 
 	public class CourierStateMachine : StateMachine
@@ -55,6 +58,7 @@ namespace Courier
 		public CourierStateMachine(EveCourierState initialState, FileLogger logger, IMessageHandler messager, ISettingsProvider settings)
 			: base(initialState)
 		{
+			pStateMachineId = Id;
 			SleepUntil = null;
 			pLogger = logger;
 			pMessager = messager;
@@ -74,7 +78,7 @@ namespace Courier
 
 		public void PHeartBeatElapsed(object sender, ElapsedEventArgs e)
 		{
-			HandleEvent(CourierEvents.HeartBeat);
+			SendEvent((int)CourierEvents.HeartBeat);
 		}
 
 		public void LogAndDisplay(string stage, string msg)
@@ -92,6 +96,30 @@ namespace Courier
 			{
 				pLogger.Log(msg);
 			}
+		}
+
+		public void Start()
+		{
+#if !TurnOffHeartBeat
+			pHeartBeat.Start();
+#endif
+			SendEvent((int)CourierEvents.Start);
+		}
+
+		public void Setup()
+		{
+			IdleState idle = pCurrentSubState as IdleState;
+			if(idle == null)
+			{
+				throw new IncorrectStateException("Setup must be called while actor is idle.");
+			}
+			LogAndDisplay("Setup", "Reset Eve Online settings.");
+			pEve.ResetEveSettings((string)Settings[CourierSettings.Path]);
+			idle.Setup();
+#if !TurnOffHeartBeat
+			pHeartBeat.Start();
+#endif
+			SendEvent((int)CourierEvents.Setup);
 		}
 
 		public void Stop()

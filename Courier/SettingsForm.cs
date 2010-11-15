@@ -103,6 +103,7 @@ namespace Courier
 
 		private void BtnSetupClick(object sender, EventArgs e)
 		{
+			SaveSettings();
 			Return(SettingsFormResult.Setup);
 		}
 

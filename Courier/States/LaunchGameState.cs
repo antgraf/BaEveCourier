@@ -6,15 +6,21 @@ namespace Courier.States
 	{
 		public LaunchGameState()
 		{
-			pTransitions.Add(new LaunchLoginTransition());
+			pTransitions.Add(new LaunchGameLoginTransition());
 		}
 
 		public override void Enter()
 		{
 			pMachine.LogAndDisplay("LaunchGameState", "Enter");
-			pMachine.HandleEvent(pMachine.Eve.Launch((string) pMachine.Settings[CourierSettings.Path])
-			                     	? CourierEvents.EveLaunched
-			                     	: CourierEvents.End);
+			if(pMachine.Eve.Launch((string)pMachine.Settings[CourierSettings.Path]))
+			{
+				SendEvent(CourierEvents.EveLaunched);
+			}
+			else
+			{
+				pMachine.LogAndDisplay("LaunchGameState", "Cannot launch game.");
+				SendEvent(CourierEvents.End);
+			}
 		}
 	}
 }

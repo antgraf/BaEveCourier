@@ -8,7 +8,19 @@ namespace Courier.States
 		{
 			pTransitions.Add(new WorkIdleTransition());
 			pTransitions.Add(new WorkSleepTransition());
-			pCurrentSubState = new InitializationState();
+		}
+
+		public override void Init(object arg)
+		{
+			if(arg is bool ? (bool)arg : false)
+			{
+				pCurrentSubState = new DoSetupState();
+			}
+			else
+			{
+				pCurrentSubState = new DoCourierMissionsState();
+			}
+			base.Init(arg);
 		}
 	}
 }

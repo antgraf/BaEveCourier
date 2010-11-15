@@ -13,7 +13,7 @@
 			pMachine.Eve.WaitWhileWarping();
 			if(pMachine.Eve.CheckIfAtAgentsStation(pMachine.Agent))
 			{
-				pMachine.HandleEvent(CourierEvents.AgentReached);
+				SendEvent(CourierEvents.AgentReached);
 			}
 			else
 			{
@@ -27,7 +27,7 @@
 				}
 				if(!gatefound)
 				{
-					pMachine.HandleEvent(CourierEvents.AutopilotStopped);
+					SendEvent(CourierEvents.AutopilotStopped);
 				}
 			}
 		}

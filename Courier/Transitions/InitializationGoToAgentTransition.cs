@@ -3,7 +3,7 @@ using Courier.States;
 
 namespace Courier.Transitions
 {
-	public class InitializationDoCourierMissionsTransition : Transition<InitializationState, DoCourierMissionsState>
+	public class InitializationGoToAgentTransition : Transition<InitializationState, GoToAgentState>
 	{
 		public override bool CheckConstraints(InitializationState currentState, int eventId)
 		{

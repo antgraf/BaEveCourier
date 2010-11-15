@@ -3,7 +3,7 @@ using Courier.States;
 
 namespace Courier.Transitions
 {
-	class LaunchLoginTransition : Transition<LaunchGameState, LoginState>
+	class LaunchGameLoginTransition : Transition<LaunchGameState, LoginState>
 	{
 		public override bool CheckConstraints(LaunchGameState currentState, int eventId)
 		{
