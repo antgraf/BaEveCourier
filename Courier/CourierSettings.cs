@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using EveOperations;
+using ExecutionActors;
 
 namespace Courier
 {
+	public class AgentTimers : XmlSerializableDictionary<string, DateTime>
+	{}
+
 	public static class CourierSettings
 	{
 		public const string Version = "1.0.0";
@@ -22,12 +25,12 @@ namespace Courier
 		public const string DefaultPath = @"C:\Program Files\CCP\EVE\eve.exe";
 		public const string DefaultLogin = "";
 		public const string DefaultPassword = "";
-		public static string[] DefaultAgents = new string[0];
+		public static readonly string[] DefaultAgents = new string[0];
 		public const string DefaultLastAgent = "";
 		public const string DefaultCurrentAgent = "";
 		public const bool DefaultCurrentCargo = false;
 		public const bool DefaultCircleAgents = false;
 		public const CharacterPosition DefaultPosition = CharacterPosition.Main;
-		public static Dictionary<string, DateTime> DefaultAgentTimers = new Dictionary<string, DateTime>();
+		public static readonly AgentTimers DefaultAgentTimers = new AgentTimers();
 	}
 }

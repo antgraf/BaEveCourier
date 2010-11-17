@@ -1,5 +1,4 @@
 ﻿using ExecutionActors;
-using System.Collections.Generic;
 using System;
 
 namespace Courier
@@ -39,16 +38,6 @@ namespace Courier
 			{
 				Notify(pActor, "Error: " + e);
 			}
-		}
-
-		public override void SaveSettings(System.Type[] types = null)
-		{
-			base.SaveSettings(new[] { typeof(Dictionary<string, DateTime>) });
-		}
-
-		public override void LoadSettings(System.Type[] types = null)
-		{
-			base.LoadSettings(new[] { typeof(Dictionary<string, DateTime>) });
 		}
 	}
 }

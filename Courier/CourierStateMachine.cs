@@ -140,7 +140,7 @@ namespace Courier
 				if(!string.IsNullOrEmpty(agent))
 				{
 					DateTime t;
-					Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)Settings[CourierSettings.AgentTimers];
+					AgentTimers timers = (AgentTimers)Settings[CourierSettings.AgentTimers];
 					if(timers.TryGetValue(agent, out t))
 					{
 						if(t < DateTime.Now)
@@ -167,7 +167,7 @@ namespace Courier
 				bool currentFound = false;
 				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
 				string lastagent = (string)Settings[CourierSettings.LastAgent];
-				Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)Settings[CourierSettings.AgentTimers];
+				AgentTimers timers = (AgentTimers)Settings[CourierSettings.AgentTimers];
 				foreach(string agent in agents)
 				{
 					bool ok = false;
@@ -211,7 +211,7 @@ namespace Courier
 			{
 				DateTime result = DateTime.MaxValue;
 				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
-				Dictionary<string, DateTime> timers = (Dictionary<string, DateTime>)Settings[CourierSettings.AgentTimers];
+				AgentTimers timers = (AgentTimers)Settings[CourierSettings.AgentTimers];
 				foreach(string agent in agents)
 				{
 					DateTime t;
