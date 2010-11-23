@@ -54,31 +54,45 @@ namespace Courier
 
 		private void SaveSettings()
 		{
-			pPlugin.Settings[CourierSettings.Path] = txtPath.Text;
-			pPlugin.Settings[CourierSettings.Login] = txtLogin.Text;
-			pPlugin.Settings[CourierSettings.Password] = txtPassword.Text;
-			pPlugin.Settings[CourierSettings.Position] = (CharacterPosition)cmbPosition.SelectedIndex;
-			pPlugin.Settings[CourierSettings.Agents] = new List<string>(lstAgents.Items.OfType<string>());
-			pPlugin.Settings[CourierSettings.CircleAgents] = chkCircleAgents.Checked;
-			pPlugin.SaveSettings();
+			try
+			{
+				pPlugin.Settings[CourierSettings.Path] = txtPath.Text;
+				pPlugin.Settings[CourierSettings.Login] = txtLogin.Text;
+				pPlugin.Settings[CourierSettings.Password] = txtPassword.Text;
+				pPlugin.Settings[CourierSettings.Position] = (CharacterPosition)cmbPosition.SelectedIndex;
+				pPlugin.Settings[CourierSettings.Agents] = new StringsList(lstAgents.Items.OfType<string>());
+				pPlugin.Settings[CourierSettings.CircleAgents] = chkCircleAgents.Checked;
+				pPlugin.SaveSettings();
+			}
+			catch(Exception e)
+			{
+				MessageBox.Show(this, "Cannot save settings\r\n" + e);
+			}
 		}
 
 		private void LoadSettings()
 		{
-			pPlugin.LoadSettings();
-			SetDefaultSettings();
-			txtPath.Text = pPlugin.Settings.ContainsKey(CourierSettings.Path) ?
-				(string)pPlugin.Settings[CourierSettings.Path] : CourierSettings.DefaultPath;
-			txtLogin.Text = pPlugin.Settings.ContainsKey(CourierSettings.Login) ?
-				(string)pPlugin.Settings[CourierSettings.Login] : CourierSettings.DefaultLogin;
-			txtPassword.Text = pPlugin.Settings.ContainsKey(CourierSettings.Password) ?
-				(string)pPlugin.Settings[CourierSettings.Password] : CourierSettings.DefaultPassword;
-			cmbPosition.SelectedIndex = pPlugin.Settings.ContainsKey(CourierSettings.Position) ?
-				(int)pPlugin.Settings[CourierSettings.Position] : (int)CourierSettings.DefaultPosition;
-			lstAgents.Items.AddRange(pPlugin.Settings.ContainsKey(CourierSettings.Agents) ?
-				((List<string>)pPlugin.Settings[CourierSettings.Agents]).ToArray() : CourierSettings.DefaultAgents);
-			chkCircleAgents.Checked = pPlugin.Settings.ContainsKey(CourierSettings.CircleAgents) ?
-				(bool)pPlugin.Settings[CourierSettings.CircleAgents] : CourierSettings.DefaultCircleAgents;
+			try
+			{
+				pPlugin.LoadSettings();
+				SetDefaultSettings();
+				txtPath.Text = pPlugin.Settings.ContainsKey(CourierSettings.Path) ?
+					(string)pPlugin.Settings[CourierSettings.Path] : CourierSettings.DefaultPath;
+				txtLogin.Text = pPlugin.Settings.ContainsKey(CourierSettings.Login) ?
+					(string)pPlugin.Settings[CourierSettings.Login] : CourierSettings.DefaultLogin;
+				txtPassword.Text = pPlugin.Settings.ContainsKey(CourierSettings.Password) ?
+					(string)pPlugin.Settings[CourierSettings.Password] : CourierSettings.DefaultPassword;
+				cmbPosition.SelectedIndex = pPlugin.Settings.ContainsKey(CourierSettings.Position) ?
+					(int)pPlugin.Settings[CourierSettings.Position] : (int)CourierSettings.DefaultPosition;
+				lstAgents.Items.AddRange(pPlugin.Settings.ContainsKey(CourierSettings.Agents) ?
+					((List<string>)pPlugin.Settings[CourierSettings.Agents]).ToArray() : CourierSettings.DefaultAgents);
+				chkCircleAgents.Checked = pPlugin.Settings.ContainsKey(CourierSettings.CircleAgents) ?
+					(bool)pPlugin.Settings[CourierSettings.CircleAgents] : CourierSettings.DefaultCircleAgents;
+			}
+			catch(Exception e)
+			{
+				MessageBox.Show(this, "Cannot load settings\r\n" + e);
+			}
 		}
 
 		private void Return(SettingsFormResult result)

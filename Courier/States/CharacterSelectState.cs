@@ -18,7 +18,7 @@ namespace Courier.States
 			else
 			{
 				pMachine.LogAndDisplay("CharacterSelectState", "Cannot select character.");
-				SendEvent(CourierEvents.End);
+				SendEvent(CourierEvents.FatalError);
 			}
 		}
 	}

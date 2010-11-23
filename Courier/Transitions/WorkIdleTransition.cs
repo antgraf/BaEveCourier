@@ -7,7 +7,8 @@ namespace Courier.Transitions
 	{
 		public override bool CheckConstraints(WorkState currentState, int eventId)
 		{
-			return eventId == (int)CourierEvents.End;
+			return eventId == (int)CourierEvents.End || eventId == (int)CourierEvents.Error ||
+				eventId == (int)CourierEvents.FatalError || eventId == (int)CourierEvents.RescueLogoff;
 		}
 	}
 }

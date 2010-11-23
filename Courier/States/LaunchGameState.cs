@@ -19,7 +19,7 @@ namespace Courier.States
 			else
 			{
 				pMachine.LogAndDisplay("LaunchGameState", "Cannot launch game.");
-				SendEvent(CourierEvents.End);
+				SendEvent(CourierEvents.FatalError);
 			}
 		}
 	}

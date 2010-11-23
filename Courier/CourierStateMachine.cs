@@ -13,6 +13,9 @@ namespace Courier
 {
 	public enum CourierEvents
 	{
+		FatalError,
+		Error,
+		RescueLogoff,
 		Idle,
 		Setup,
 		Start,
@@ -100,6 +103,7 @@ namespace Courier
 
 		public void Start()
 		{
+			LogAndDisplay("Start", "");
 #if !TurnOffHeartBeat
 			pHeartBeat.Start();
 #endif
@@ -108,6 +112,7 @@ namespace Courier
 
 		public void Setup()
 		{
+			LogAndDisplay("Setup", "");
 			IdleState idle = pCurrentSubState as IdleState;
 			if(idle == null)
 			{
@@ -124,7 +129,14 @@ namespace Courier
 
 		public void Stop()
 		{
+			LogAndDisplay("Pause", "");
 			pHeartBeat.Stop();
+		}
+
+		public void GoToFinalState()
+		{
+			LogAndDisplay("Execution", "Preparing for logoff");
+			SendEvent((int)CourierEvents.GoToFinalState);
 		}
 
 		public string Agent
@@ -140,7 +152,7 @@ namespace Courier
 				if(!string.IsNullOrEmpty(agent))
 				{
 					DateTime t;
-					AgentTimers timers = (AgentTimers)Settings[CourierSettings.AgentTimers];
+					TimersDictionary timers = (TimersDictionary)Settings[CourierSettings.AgentTimers];
 					if(timers.TryGetValue(agent, out t))
 					{
 						if(t < DateTime.Now)
@@ -167,7 +179,7 @@ namespace Courier
 				bool currentFound = false;
 				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
 				string lastagent = (string)Settings[CourierSettings.LastAgent];
-				AgentTimers timers = (AgentTimers)Settings[CourierSettings.AgentTimers];
+				TimersDictionary timers = (TimersDictionary)Settings[CourierSettings.AgentTimers];
 				foreach(string agent in agents)
 				{
 					bool ok = false;
@@ -211,7 +223,7 @@ namespace Courier
 			{
 				DateTime result = DateTime.MaxValue;
 				List<string> agents = (List<string>)Settings[CourierSettings.Agents];
-				AgentTimers timers = (AgentTimers)Settings[CourierSettings.AgentTimers];
+				TimersDictionary timers = (TimersDictionary)Settings[CourierSettings.AgentTimers];
 				foreach(string agent in agents)
 				{
 					DateTime t;
