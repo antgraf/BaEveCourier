@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using EveOperations;
 using ExecutionActors;
 
 namespace Courier
 {
-	public class TimersDictionary : XmlSerializableDictionary<string, DateTime>
-	{}
-
-	public class StringsList : List<string>
-	{
-		public StringsList(IEnumerable<string> collection)
-			: base(collection)
-		{}
-	}
-
 	public static class CourierSettings
 	{
 		public const string Version = "1.0.0";
@@ -39,6 +28,6 @@ namespace Courier
 		public const bool DefaultCurrentCargo = false;
 		public const bool DefaultCircleAgents = false;
 		public const CharacterPosition DefaultPosition = CharacterPosition.Main;
-		public static readonly TimersDictionary DefaultAgentTimers = new TimersDictionary();
+		public static readonly XmlSerializableDictionary<string, DateTime> DefaultAgentTimers = new XmlSerializableDictionary<string, DateTime>();
 	}
 }

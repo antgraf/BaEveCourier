@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using ExecutionActors;
 using BACommon;
-using EveOperations;
 
 namespace Courier
 {
@@ -59,8 +58,8 @@ namespace Courier
 				pPlugin.Settings[CourierSettings.Path] = txtPath.Text;
 				pPlugin.Settings[CourierSettings.Login] = txtLogin.Text;
 				pPlugin.Settings[CourierSettings.Password] = txtPassword.Text;
-				pPlugin.Settings[CourierSettings.Position] = (CharacterPosition)cmbPosition.SelectedIndex;
-				pPlugin.Settings[CourierSettings.Agents] = new StringsList(lstAgents.Items.OfType<string>());
+				pPlugin.Settings[CourierSettings.Position] = cmbPosition.SelectedIndex;
+				pPlugin.Settings[CourierSettings.Agents] = new List<string>(lstAgents.Items.OfType<string>());
 				pPlugin.Settings[CourierSettings.CircleAgents] = chkCircleAgents.Checked;
 				pPlugin.SaveSettings();
 			}
